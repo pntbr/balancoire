@@ -56,6 +56,13 @@ function createEntry(date, account, receiver, piece, debit, credit) {
     };
 }
 
+function retainedEarningsEntry(line, accountNumber) {
+    return [
+        createEntry(line['date'], accountNumber, line['qui reçoit'], line['qui reçoit'], convertToNumber(line['montant']), ''),
+        createEntry(line['date'], accountNumber, line['qui reçoit'], '', '', convertToNumber(line['montant']))
+    ];
+}
+
 function refundEntry(line) {
     const checkCash = line["nature"] === 'esp';
     return [
@@ -64,29 +71,29 @@ function refundEntry(line) {
     ];
 }
 
-function chargeB2TEntry(line) {
+function chargeB2TEntry(line, accountNumber) {
     const checkCash = line["nature"] === 'esp';
     const piece = line['facture correspondante'] ? `<a href="${line['facture correspondante']}">facture</a>` : '';
     return [
-        createEntry(line['date'], findChartOfAccounts({ label: line['poste'] }).account, line['qui reçoit'], '', convertToNumber(line['montant']), ''),
+        createEntry(line['date'], accountNumber, line['qui reçoit'], '', convertToNumber(line['montant']), ''),
         createEntry(line['date'], '401000', line['qui reçoit'], piece, '', convertToNumber(line['montant'])),
         createEntry(line['date'], '401000', line['qui reçoit'], piece, convertToNumber(line['montant']), ''),
         createEntry(line['date'], checkCash ? '530000' : '512000', line['qui reçoit'], '', '', convertToNumber(line['montant']))
     ];
 }
 
-function chargePersonEntry(line) {
+function chargePersonEntry(line, accountNumber) {
     const piece = line['Facture correspondante'] ? `<a href="${line['Facture correspondante']}">facture</a>` : '';
     return [
-        createEntry(line['date'], findChartOfAccounts({ label: line['poste'] }).account, line['qui reçoit'], '', convertToNumber(line['montant']), ''),
+        createEntry(line['date'], accountNumber, line['qui reçoit'], '', convertToNumber(line['montant']), ''),
         createEntry(line['date'], '467000', line['qui reçoit'], piece, '', convertToNumber(line['montant']))
     ];
 }
 
-function saleEntry(line) {
+function saleEntry(line, accountNumber) {
     const checkCash = line["nature"] === 'esp';
     return [
-        createEntry(line['date'], findChartOfAccounts({ label: line['poste'] }).account, line['qui reçoit'], '', '', convertToNumber(line['montant'])),
+        createEntry(line['date'], accountNumber, line['qui reçoit'], '', '', convertToNumber(line['montant'])),
         createEntry(line['date'], '411000', line['qui reçoit'], line['Facture correspondante'], convertToNumber(line['montant']), ''),
         createEntry(line['date'], '411000', line['qui reçoit'], line['Facture correspondante'], '', convertToNumber(line['montant'])),
         createEntry(line['date'], checkCash ? '530000' : '512000', line['qui reçoit'], '', convertToNumber(line['montant']), '')
@@ -96,13 +103,22 @@ function saleEntry(line) {
 export function lineToEntry(line) {
     const accountNumber = findChartOfAccounts({ label: line.poste }).account;
     try {
+        if (line['qui reçoit'] === line['qui paye ?']) {
+            if (line['qui paye ?'] === 'B2T') {
+                return retainedEarningsEntry(line, accountNumber)
+            } else {
+                displayErrorMessage(`Erreur : L'écriture ${JSON.stringify(line)} comporte le même compte de débit et de crédit`);
+                return;
+            }
+        }
         if (accountNumber.startsWith('4')) return refundEntry(line);
-        if (accountNumber.startsWith('6')) return line['qui paye ?'] === 'B2T' ? chargeB2TEntry(line) : chargePersonEntry(line);
-        if (accountNumber.startsWith('7')) return saleEntry(line);
+        if (accountNumber.startsWith('6')) return line['qui paye ?'] === 'B2T' ? chargeB2TEntry(line, accountNumber) : chargePersonEntry(line, accountNumber);
+        if (accountNumber.startsWith('7')) return saleEntry(line, accountNumber);
 
-        throw new Error(`L'écriture ${JSON.stringify(line)} n'a pu être rendue !`);
+        displayErrorMessage(`Erreur : L'écriture ${JSON.stringify(line)} ne comporte pas un compte connu`);
+        return;
     } catch (error) {
-        displayErrorMessage(`Erreur : L'écriture ${JSON.stringify(line)} n'a pu être rendue. Veuillez vérifier les données et réessayer.`);
+        displayErrorMessage(`Erreur : L'écriture ${JSON.stringify(line)} n'a pu être rendue`);
         throw error;
     }
 }
