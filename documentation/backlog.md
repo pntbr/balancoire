@@ -1,6 +1,7 @@
 # Backlog
 
 ## US5 Gérer les à-nouveaux
+- [ ] comprendre les a-nouveaux
 - [x] gérer le report des prêt 467000
 - [ ] dans le sheet résultat
 

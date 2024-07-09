@@ -7,8 +7,6 @@ function displayErrorMessage(message) {
 export function findChartOfAccounts({ account, label }) {
     const chartOfAccounts = {
         "275000": ["dépôts et cautionnements versés"],
-        "401000": ["fournisseurs"],
-        "411000": ["clients"],
         "467000": ["autres comptes débiteurs ou créditeurs", "remboursements", "prêts"],
         "512000": ["banques"],
         "530000": ["Caisse"],
@@ -76,8 +74,6 @@ function chargeB2TEntry(line, accountNumber) {
     const piece = line['facture correspondante'] ? `<a href="${line['facture correspondante']}">facture</a>` : '';
     return [
         createEntry(line['date'], accountNumber, line['qui reçoit'], '', convertToNumber(line['montant']), ''),
-        createEntry(line['date'], '401000', line['qui reçoit'], piece, '', convertToNumber(line['montant'])),
-        createEntry(line['date'], '401000', line['qui reçoit'], piece, convertToNumber(line['montant']), ''),
         createEntry(line['date'], checkCash ? '530000' : '512000', line['qui reçoit'], '', '', convertToNumber(line['montant']))
     ];
 }
@@ -94,8 +90,6 @@ function saleEntry(line, accountNumber) {
     const checkCash = line["nature"] === 'esp';
     return [
         createEntry(line['date'], accountNumber, line['qui reçoit'], '', '', convertToNumber(line['montant'])),
-        createEntry(line['date'], '411000', line['qui reçoit'], line['Facture correspondante'], convertToNumber(line['montant']), ''),
-        createEntry(line['date'], '411000', line['qui reçoit'], line['Facture correspondante'], '', convertToNumber(line['montant'])),
         createEntry(line['date'], checkCash ? '530000' : '512000', line['qui reçoit'], '', convertToNumber(line['montant']), '')
     ];
 }
