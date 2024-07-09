@@ -9,7 +9,7 @@ export function findChartOfAccounts({ account, label }) {
         "275000": ["dépôts et cautionnements versés"],
         "401000": ["fournisseurs"],
         "411000": ["clients"],
-        "467000": ["autres comptes débiteurs ou créditeurs", "remboursements"],
+        "467000": ["autres comptes débiteurs ou créditeurs", "remboursements", "prêts"],
         "512000": ["banques"],
         "530000": ["Caisse"],
         "606000": ["achats non stockés de matière et fournitures"],
@@ -24,9 +24,9 @@ export function findChartOfAccounts({ account, label }) {
         "625000": ["déplacements, missions et réceptions"],
         "626000": ["frais postaux et de télécommunications", "internet", "poste", "téléphone", "hébergement web"],
         "627000": ["services bancaires et assimilés"],
-        "706000": ["prestations de services"],
-        "707000": ["ventes de marchandises"],
-        "754100": ["dons manuels"],
+        "706000": ["prestations de services", "formations"],
+        "707000": ["ventes de marchandises", "ventes"],
+        "754100": ["dons manuels", "dons"],
         "756000": ["cotisations"]
     };
 
