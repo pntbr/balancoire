@@ -6,6 +6,8 @@ function displayErrorMessage(message) {
 
 export function findChartOfAccounts({ account, label }) {
     const chartOfAccounts = {
+        "119000": ["report à nouveau (solde débiteur)"],
+        "129000": ["résultat de l'exercice (déficit)", "pertes"],
         "275000": ["dépôts et cautionnements versés"],
         "467000": ["autres comptes débiteurs ou créditeurs", "remboursements", "prêts"],
         "512000": ["banques"],
@@ -25,7 +27,9 @@ export function findChartOfAccounts({ account, label }) {
         "706000": ["prestations de services", "formations"],
         "707000": ["ventes de marchandises", "ventes"],
         "754100": ["dons manuels", "dons"],
-        "756000": ["cotisations"]
+        "756000": ["cotisations"],
+        "890000": ["Bilan d'ouverture"],
+        "891000": ["Bilan de clôture"],
     };
 
     for (const [key, value] of Object.entries(chartOfAccounts)) {
@@ -55,8 +59,9 @@ function createEntry(date, account, receiver, piece, debit, credit) {
 }
 
 function retainedEarningsEntry(line, accountNumber) {
+    const debitAccount = accountNumber === '129000' ? '119000' : '890000'
     return [
-        createEntry(line['date'], accountNumber, line['qui reçoit'], line['qui reçoit'], convertToNumber(line['montant']), ''),
+        createEntry(line['date'], debitAccount, line['qui reçoit'], 'à-nouveaux', convertToNumber(line['montant']), ''),
         createEntry(line['date'], accountNumber, line['qui reçoit'], '', '', convertToNumber(line['montant']))
     ];
 }

@@ -1,12 +1,18 @@
 # Backlog
 
 ## US5 Gérer les à-nouveaux
-- [ ] comprendre les a-nouveaux
+- [x] comprendre les a-nouveaux
 - [x] gérer le report des prêt 467000
+- [x] 890 bilan d'ouverture
+- [x] report du résultat - 129 C - 119 D
+- [ ] gérer l'inventaire
 - [ ] dans le sheet résultat
 
 ## US6 Construire le bilan
 - [x] créer une page modèle statique
+- [ ] 891 bilan de clôture
+- [ ] solder les comptes charges et recettes sur 120
+- [ ] gérer le résultat 129 perte et 120 bénéfice
 - [ ] injecter avec des données statiques
 - [ ] injecter avec des données exemples
 - [ ] injecter les données réelles
