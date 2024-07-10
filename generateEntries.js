@@ -165,18 +165,18 @@ export function generateLedger(journalEntries) {
 }
 
 export function generateIncomeStatement(journalEntries) {
-    function getAccountBalance(entries, accountNumber) {
+    function sumAccountsByRoot(entries, root) {
         return entries
-            .filter(entry => entry.Compte === accountNumber)
-            .reduce((balance, entry) => balance + entry["Crédit (€)"] - entry["Débit (€)"], 0);
+            .filter(entry => entry.Compte.startsWith(root))
+            .reduce((sum, entry) => sum + (entry["Crédit (€)"] - entry["Débit (€)"]), 0);
     }
 
-    const contributions = getAccountBalance(journalEntries, "756000");
-    const donations = getAccountBalance(journalEntries, "754100");
-    const productSales = getAccountBalance(journalEntries, "707000");
-    const serviceRevenue = getAccountBalance(journalEntries, "706000");
-    const materialsAndSupplies = getAccountBalance(journalEntries, "602600") + getAccountBalance(journalEntries, "606000") + getAccountBalance(journalEntries, "607000");
-    const externalServices = getAccountBalance(journalEntries, "613000") + getAccountBalance(journalEntries, "618500") + getAccountBalance(journalEntries, "622000") + getAccountBalance(journalEntries, "624100") + getAccountBalance(journalEntries, "625000") + getAccountBalance(journalEntries, "626000") + getAccountBalance(journalEntries, "627000");
+    const contributions = sumAccountsByRoot(journalEntries, "756000");
+    const donations = sumAccountsByRoot(journalEntries, "754100");
+    const productSales = sumAccountsByRoot(journalEntries, "707000");
+    const serviceRevenue = sumAccountsByRoot(journalEntries, "706000");
+    const materialsAndSupplies = sumAccountsByRoot(journalEntries, "60")
+    const externalServices = sumAccountsByRoot(journalEntries, "61") + sumAccountsByRoot(journalEntries, "62");
 
     const totalOperatingIncome = contributions + donations + productSales + serviceRevenue;
     const totalOperatingExpenses = materialsAndSupplies + externalServices;
