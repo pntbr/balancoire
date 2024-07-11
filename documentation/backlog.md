@@ -1,17 +1,5 @@
 # Backlog
 
-## US5 Gérer les à-nouveaux
-- [x] comprendre les a-nouveaux
-- [x] gérer le report des prêt 467000
-- [x] 890 bilan d'ouverture
-- [x] report du résultat - 129 C - 119 D
-- [x] dans le sheet résultat
-- [x] passe le token google sheet en .env
-- [x] nouveau gSheet officiel
-- [x] régulariser les données
-- [x] gérer l'inventaire - https://www.calebgestion.com/cours_comptabilite/c60_variations_de_stocks.htm
-  - [x] faire l'inventaire pour 2020 
-
 ## US6 Gérer la clôture
 - [ ] charge constatée d'avance
 - [ ] 891 bilan de clôture
