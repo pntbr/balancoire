@@ -5,8 +5,10 @@
 - [x] gérer le report des prêt 467000
 - [x] 890 bilan d'ouverture
 - [x] report du résultat - 129 C - 119 D
-- [ ] gérer l'inventaire
-- [ ] dans le sheet résultat
+- [x] dans le sheet résultat
+- [x] passe le token google sheet en .env
+- [ ] gérer l'inventaire - https://www.calebgestion.com/cours_comptabilite/c60_variations_de_stocks.htm
+  - [ ] faire l'inventaire pour 2020 
 
 ## US6 Construire le bilan
 - [x] créer une page modèle statique
@@ -19,6 +21,8 @@
 - [ ] calculer les totaux
 
 ## US7 Consolidation
+- [ ] charge constatée d'avance
+- [ ] documenté à-nouveau et charge constatées d'avance : https://valoxy.org/blog/ecritures-dinventaire-en-comptabilite/
 - [ ] problème throw/catch
 - [ ] rbt Stéphane, Yalin
 - [ ] reprendre les comptes dans les sheets (plus humain)
@@ -27,9 +31,13 @@
 - [ ] litige
 - [ ] notice avec exemples de toutes les écritures générées
 - [ ] immobilisations machine
+- [ ] liées les factures
+- [ ] mode d'emploi pour lancer l'environnement
+  - [ ] sandbox avec un fichier excel
 
-#### Notes
 
+### Notes
+- [ ] faire un truc pour les factures manquantes
 - [ ] importer directement les écritures wise
 - [ ] vérifier que les pointage bancaire ne correspondent pas à des dépenses Yalin ou Stéphane mais bien à B2T
 - [ ] wise 2024
@@ -37,3 +45,6 @@
 - [ ] optimiser 
 - [ ] produits bancaires (quel compte) - remboursements
 - [ ] vérifier facture amazon 2024
+
+### Liens
+- https://valoxy.org/blog/parler-langage-comptable/
