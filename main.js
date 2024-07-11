@@ -2,58 +2,63 @@ import { parseCSV } from './parseCSV.js';
 import { lineToEntry, generateLedger, generateIncomeStatement } from './generateEntries.js';
 import { injectEntriesIntoTable, injectLedgerEntries, injectIncomeStatementEntries } from './injectEntries.js';
 
-
 document.addEventListener('DOMContentLoaded', () => {
-    const infoBtn = document.getElementById('infoBtn');
-    const infoModal = document.getElementById('infoModal');
-    const closeBtn = document.querySelector('.close');
+    fetch('.env.json')
+        .then(response => response.json())
+        .then(env => {
+            const SHEET_ID = env.SHEET_ID;
 
-    infoBtn.addEventListener('click', () => {
-        infoModal.style.display = 'block';
-    });
+            const infoBtn = document.getElementById('infoBtn');
+            const infoModal = document.getElementById('infoModal');
+            const closeBtn = document.querySelector('.close');
 
-    closeBtn.addEventListener('click', () => {
-        infoModal.style.display = 'none';
-    });
+            infoBtn.addEventListener('click', () => {
+                infoModal.style.display = 'block';
+            });
 
-    window.addEventListener('click', (event) => {
-        if (event.target == infoModal) {
-            infoModal.style.display = 'none';
-        }
-    });
+            closeBtn.addEventListener('click', () => {
+                infoModal.style.display = 'none';
+            });
 
-    fetch('nav.html')
-        .then(response => response.text())
-        .then(data => {
-            document.getElementById('navigation').innerHTML = data;
-
-            // Gestion des liens de navigation de page
-            const pageLinks = document.querySelectorAll('nav ul:first-of-type li a');
-            const currentPage = location.pathname.split('/').pop();
-            pageLinks.forEach(link => {
-                if (link.getAttribute('href') === currentPage) {
-                    link.parentElement.classList.add('menu-selected');
+            window.addEventListener('click', (event) => {
+                if (event.target == infoModal) {
+                    infoModal.style.display = 'none';
                 }
             });
 
-            // Gestion des liens de navigation d'année
-            const yearLinks = document.querySelectorAll('.year-nav a');
-            const currentYear = localStorage.getItem('selectedYear') || '2024';
-            yearLinks.forEach(link => {
-                if (link.getAttribute('data-year') === currentYear) {
-                    link.classList.add('menu-selected');
-                }
-                link.addEventListener('click', (event) => {
-                    event.preventDefault();
-                    const selectedYear = event.target.getAttribute('data-year');
-                    localStorage.setItem('selectedYear', selectedYear);
-                    loadCSV(selectedYear);
-                    yearLinks.forEach(l => l.classList.remove('menu-selected'));
-                    event.target.classList.add('menu-selected');
+            fetch('nav.html')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('navigation').innerHTML = data;
+
+                    // Gestion des liens de navigation de page
+                    const pageLinks = document.querySelectorAll('nav ul:first-of-type li a');
+                    const currentPage = location.pathname.split('/').pop();
+                    pageLinks.forEach(link => {
+                        if (link.getAttribute('href') === currentPage) {
+                            link.parentElement.classList.add('menu-selected');
+                        }
+                    });
+
+                    // Gestion des liens de navigation d'année
+                    const yearLinks = document.querySelectorAll('.year-nav a');
+                    const currentYear = localStorage.getItem('selectedYear') || '2024';
+                    yearLinks.forEach(link => {
+                        if (link.getAttribute('data-year') === currentYear) {
+                            link.classList.add('menu-selected');
+                        }
+                        link.addEventListener('click', (event) => {
+                            event.preventDefault();
+                            const selectedYear = event.target.getAttribute('data-year');
+                            localStorage.setItem('selectedYear', selectedYear);
+                            loadCSV(SHEET_ID, selectedYear);
+                            yearLinks.forEach(l => l.classList.remove('menu-selected'));
+                            event.target.classList.add('menu-selected');
+                        });
+                    });
+
+                    loadCSV(SHEET_ID, currentYear);
                 });
-            });
-
-            loadCSV(currentYear);
         });
 });
 
@@ -70,16 +75,16 @@ function hideErrorMessage() {
     errorMessageElement.style.display = 'none';
 }
 
-function loadCSV(year) {
+function loadCSV(sheetId, year) {
     const yearToGid = {
-        '2024': '1195572214',
-        '2023': '1699669836',
-        '2022': '970440530',
-        '2021': '1093092905',
-        '2020': '1414269037',
-        '2019': '284692874'
+        '2024': '929320585',
+        '2023': '80488655',
+        '2022': '581969889',
+        '2021': '168710858',
+        '2020': '43794826',
+        '2019': '0'
     };
-    const csvUrl = `https://docs.google.com/spreadsheets/d/1ZW7B8LixvWIWpFwUEF9bsXldgZGINrgu7Q4fF4PJDHk/export?format=csv&pli=1&gid=${yearToGid[year]}#gid=${yearToGid[year]}`;
+    const csvUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&pli=1&gid=${yearToGid[year]}#gid=${yearToGid[year]}`;
     hideErrorMessage();
     showLoader();
     fetch(csvUrl)

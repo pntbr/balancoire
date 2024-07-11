@@ -21,6 +21,22 @@ Dans les trois mois suivant la clôture de l’exercice, vous devez déposer un 
 
 L'association doit établir un inventaire au moins une fois par an pour évaluer ses actifs (stocks, immobilisations, créances) et ses passifs (dettes).
 
+## Pour installer l'application
+
+Après avoir télécharger les fichiers
+
+Ajouter un fichier avec l'identifiant de votre google sheet
+
+*.env.json*
+```
+{
+    "SHEET_ID": "1s2dw-xxxxxxx-w"
+}
+```
+
+Lancer un serveur web dans le dossier de l'application.
+
+
 ### Journal général
 
 Le journal général est un registre comptable dans lequel toutes les opérations financières de l'association sont enregistrées chronologiquement. Pour une association au régime réel simplifié, voici un exemple de ce que pourrait contenir un journal général minimal.

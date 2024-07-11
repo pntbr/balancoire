@@ -6,28 +6,30 @@ function displayErrorMessage(message) {
 
 export function findChartOfAccounts({ account, label }) {
     const chartOfAccounts = {
+        "119000": ["report à nouveau (solde débiteur)"],
+        "129000": ["résultat de l'exercice (déficit)", "pertes"],
         "275000": ["dépôts et cautionnements versés"],
-        "401000": ["fournisseurs"],
-        "411000": ["clients"],
         "467000": ["autres comptes débiteurs ou créditeurs", "remboursements", "prêts"],
         "512000": ["banques"],
         "530000": ["Caisse"],
-        "606000": ["achats non stockés de matière et fournitures"],
+        "606000": ["achats non stockés de matière et fournitures", "fournitures"],
         "602600": ["emballages"],
         "607000": ["achats de marchandises"],
         "613000": ["locations"],
-        "618300": ["documentation technique", "documentation"],
-        "618500": ["frais de colloques, séminaires, conférences"],
-        "622000": ["rémunérations d'intermédiaires et honoraires"],
+        "618300": ["documentation technique", "documentations"],
+        "618500": ["frais de colloques, séminaires, conférences", "conférences"],
+        "622000": ["rémunérations d'intermédiaires et honoraires", "intermédiaires"],
         "623000": ["publicité, publications, relations publiques", "communication"],
         "624100": ["transports sur achats"],
-        "625000": ["déplacements, missions et réceptions"],
-        "626000": ["frais postaux et de télécommunications", "internet", "poste", "téléphone", "hébergement web"],
-        "627000": ["services bancaires et assimilés"],
+        "625000": ["déplacements, missions et réceptions", "déplacements"],
+        "626000": ["frais postaux et de télécommunications", "internet", "frais postaux", "téléphone", "domiciliations"],
+        "627000": ["services bancaires et assimilés", "services bancaires"],
         "706000": ["prestations de services", "formations"],
         "707000": ["ventes de marchandises", "ventes"],
         "754100": ["dons manuels", "dons"],
-        "756000": ["cotisations"]
+        "756000": ["cotisations"],
+        "890000": ["Bilan d'ouverture"],
+        "891000": ["Bilan de clôture"],
     };
 
     for (const [key, value] of Object.entries(chartOfAccounts)) {
@@ -45,11 +47,11 @@ function convertToNumber(euroString) {
     return parseFloat(cleanString || 0);
 }
 
-function createEntry(date, account, receiver, piece, debit, credit) {
+function createEntry(date, account, label, piece, debit, credit) {
     return {
         'Date': date,
         'Compte': account,
-        'Libellé': receiver,
+        'Libellé': label,
         'Pièce': piece || '',
         'Débit (€)': debit || '',
         'Crédit (€)': credit || ''
@@ -57,8 +59,9 @@ function createEntry(date, account, receiver, piece, debit, credit) {
 }
 
 function retainedEarningsEntry(line, accountNumber) {
+    const debitAccount = accountNumber === '129000' ? '119000' : '890000'
     return [
-        createEntry(line['date'], accountNumber, line['qui reçoit'], line['qui reçoit'], convertToNumber(line['montant']), ''),
+        createEntry(line['date'], debitAccount, line['qui reçoit'], 'à-nouveaux', convertToNumber(line['montant']), ''),
         createEntry(line['date'], accountNumber, line['qui reçoit'], '', '', convertToNumber(line['montant']))
     ];
 }
@@ -76,8 +79,6 @@ function chargeB2TEntry(line, accountNumber) {
     const piece = line['facture correspondante'] ? `<a href="${line['facture correspondante']}">facture</a>` : '';
     return [
         createEntry(line['date'], accountNumber, line['qui reçoit'], '', convertToNumber(line['montant']), ''),
-        createEntry(line['date'], '401000', line['qui reçoit'], piece, '', convertToNumber(line['montant'])),
-        createEntry(line['date'], '401000', line['qui reçoit'], piece, convertToNumber(line['montant']), ''),
         createEntry(line['date'], checkCash ? '530000' : '512000', line['qui reçoit'], '', '', convertToNumber(line['montant']))
     ];
 }
@@ -94,8 +95,6 @@ function saleEntry(line, accountNumber) {
     const checkCash = line["nature"] === 'esp';
     return [
         createEntry(line['date'], accountNumber, line['qui reçoit'], '', '', convertToNumber(line['montant'])),
-        createEntry(line['date'], '411000', line['qui reçoit'], line['Facture correspondante'], convertToNumber(line['montant']), ''),
-        createEntry(line['date'], '411000', line['qui reçoit'], line['Facture correspondante'], '', convertToNumber(line['montant'])),
         createEntry(line['date'], checkCash ? '530000' : '512000', line['qui reçoit'], '', convertToNumber(line['montant']), '')
     ];
 }
@@ -103,13 +102,9 @@ function saleEntry(line, accountNumber) {
 export function lineToEntry(line) {
     const accountNumber = findChartOfAccounts({ label: line.poste }).account;
     try {
-        if (line['qui reçoit'] === line['qui paye ?']) {
-            if (line['qui paye ?'] === 'B2T') {
-                return retainedEarningsEntry(line, accountNumber)
-            } else {
-                displayErrorMessage(`Erreur : L'écriture ${JSON.stringify(line)} comporte le même compte de débit et de crédit`);
-                return;
-            }
+        // Gère les à-nouveaux
+        if (line['date'].startsWith('01/01')) {
+            return retainedEarningsEntry(line, accountNumber)
         }
         if (accountNumber.startsWith('4')) return refundEntry(line);
         if (accountNumber.startsWith('6')) return line['qui paye ?'] === 'B2T' ? chargeB2TEntry(line, accountNumber) : chargePersonEntry(line, accountNumber);
@@ -166,18 +161,18 @@ export function generateLedger(journalEntries) {
 }
 
 export function generateIncomeStatement(journalEntries) {
-    function getAccountBalance(entries, accountNumber) {
+    function sumAccountsByRoot(entries, root) {
         return entries
-            .filter(entry => entry.Compte === accountNumber)
-            .reduce((balance, entry) => balance + entry["Crédit (€)"] - entry["Débit (€)"], 0);
+            .filter(entry => entry.Compte.startsWith(root))
+            .reduce((sum, entry) => sum + (entry["Crédit (€)"] - entry["Débit (€)"]), 0);
     }
 
-    const contributions = getAccountBalance(journalEntries, "756000");
-    const donations = getAccountBalance(journalEntries, "754100");
-    const productSales = getAccountBalance(journalEntries, "707000");
-    const serviceRevenue = getAccountBalance(journalEntries, "706000");
-    const materialsAndSupplies = getAccountBalance(journalEntries, "602600") + getAccountBalance(journalEntries, "606000") + getAccountBalance(journalEntries, "607000");
-    const externalServices = getAccountBalance(journalEntries, "613000") + getAccountBalance(journalEntries, "618500") + getAccountBalance(journalEntries, "622000") + getAccountBalance(journalEntries, "624100") + getAccountBalance(journalEntries, "625000") + getAccountBalance(journalEntries, "626000") + getAccountBalance(journalEntries, "627000");
+    const contributions = sumAccountsByRoot(journalEntries, "756000");
+    const donations = sumAccountsByRoot(journalEntries, "754100");
+    const productSales = sumAccountsByRoot(journalEntries, "707000");
+    const serviceRevenue = sumAccountsByRoot(journalEntries, "706000");
+    const materialsAndSupplies = sumAccountsByRoot(journalEntries, "60")
+    const externalServices = sumAccountsByRoot(journalEntries, "61") + sumAccountsByRoot(journalEntries, "62");
 
     const totalOperatingIncome = contributions + donations + productSales + serviceRevenue;
     const totalOperatingExpenses = materialsAndSupplies + externalServices;
