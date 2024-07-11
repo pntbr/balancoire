@@ -47,11 +47,11 @@ function convertToNumber(euroString) {
     return parseFloat(cleanString || 0);
 }
 
-function createEntry(date, account, receiver, piece, debit, credit) {
+function createEntry(date, account, label, piece, debit, credit) {
     return {
         'Date': date,
         'Compte': account,
-        'Libellé': receiver,
+        'Libellé': label,
         'Pièce': piece || '',
         'Débit (€)': debit || '',
         'Crédit (€)': credit || ''
@@ -102,13 +102,9 @@ function saleEntry(line, accountNumber) {
 export function lineToEntry(line) {
     const accountNumber = findChartOfAccounts({ label: line.poste }).account;
     try {
-        if (line['qui reçoit'] === line['qui paye ?']) {
-            if (line['qui paye ?'] === 'B2T') {
-                return retainedEarningsEntry(line, accountNumber)
-            } else {
-                displayErrorMessage(`Erreur : L'écriture ${JSON.stringify(line)} comporte le même compte de débit et de crédit`);
-                return;
-            }
+        // Gère les à-nouveaux
+        if (line['date'].startsWith('01/01')) {
+            return retainedEarningsEntry(line, accountNumber)
         }
         if (accountNumber.startsWith('4')) return refundEntry(line);
         if (accountNumber.startsWith('6')) return line['qui paye ?'] === 'B2T' ? chargeB2TEntry(line, accountNumber) : chargePersonEntry(line, accountNumber);
