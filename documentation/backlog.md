@@ -7,6 +7,8 @@
 - [x] report du résultat - 129 C - 119 D
 - [x] dans le sheet résultat
 - [x] passe le token google sheet en .env
+- [x] nouveau gSheet officiel
+- [ ] régulariser les données
 - [ ] gérer l'inventaire - https://www.calebgestion.com/cours_comptabilite/c60_variations_de_stocks.htm
   - [ ] faire l'inventaire pour 2020 
 
