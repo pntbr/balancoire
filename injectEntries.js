@@ -4,15 +4,29 @@ function formatToCurrency(number) {
     return number ? number.toFixed(2).replace('.', ',') + ' €' : '';
 }
 
-export function injectEntriesIntoTable(entries) {
+export function injectJournalEntries(journalEntries) {
     const tableBody = document.getElementById('journal-entries');
-    tableBody.innerHTML = entries.map(entry => `
+    tableBody.innerHTML = journalEntries.map(entry => `
         <tr>
-            <td>${entry.Date}</td>
-            <td>${entry.Compte}</td>
-            <td>${entry.Pièce}</td>
+            <td>${entry['Date']}</td>
+            <td>${entry['Compte']}</td>
+            <td>${entry['Pièce']}</td>
             <td>${formatToCurrency(entry['Débit (€)'])}</td>
             <td>${formatToCurrency(entry['Crédit (€)'])}</td>
+        </tr>
+    `).join('');
+}
+
+
+export function injectBalanceEntries(balanceEntries) {
+    const tableBody = document.getElementById('balance-entries');
+    tableBody.innerHTML = balanceEntries.map(entry => `
+        <tr>
+            <td>${entry['Compte']}</td>
+            <td>${entry['Libellé']}</td>
+            <td>${formatToCurrency(entry['Débit (€)'])}</td>
+            <td>${formatToCurrency(entry['Crédit (€)'])}</td>
+            <td>${formatToCurrency(entry['Solde (€)'])}</td>
         </tr>
     `).join('');
 }

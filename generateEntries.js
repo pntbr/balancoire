@@ -118,6 +118,35 @@ export function lineToEntry(line) {
     }
 }
 
+export function generateBalance(journalEntries) {
+    const balanceEntries = [];
+    const accounts = [...new Set(journalEntries.map(({ Compte }) => Compte))].sort();
+
+    accounts.forEach(account => {
+        let totalDebit = 0;
+        let totalCredit = 0;
+
+        journalEntries
+            .filter(entry => entry.Compte === account)
+            .map(entry => {
+                const debit = +entry['Débit (€)'] || 0;
+                const credit = +entry['Crédit (€)'] || 0;
+                totalDebit += debit;
+                totalCredit += credit;
+            });
+
+        balanceEntries.push({
+            'Compte': account,
+            'Libellé': findChartOfAccounts({ account: account }).label,
+            'Débit (€)': totalDebit,
+            'Crédit (€)': totalCredit,
+            'Solde (€)': totalCredit - totalDebit
+        });
+    });
+
+    return balanceEntries;
+}
+
 export function generateLedger(journalEntries) {
     const ledgerEntries = {};
     const accounts = [...new Set(journalEntries.map(({ Compte }) => Compte))].sort();
@@ -143,15 +172,15 @@ export function generateLedger(journalEntries) {
             });
 
         ledgerEntries[account].push({
-            Date: '31/12/2021',
-            Libellé: 'Total',
+            'Date': '31/12/2021',
+            'Libellé': 'Total',
             'Débit (€)': totalDebit,
             'Crédit (€)': totalCredit
         });
 
         ledgerEntries[account].push({
-            Date: '31/12/2021',
-            Libellé: 'Solde',
+            'Date': '31/12/2021',
+            'Libellé': 'Solde',
             'Débit (€)': totalDebit > totalCredit ? totalDebit - totalCredit : '',
             'Crédit (€)': totalCredit > totalDebit ? totalCredit - totalDebit : ''
         });

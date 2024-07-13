@@ -1,6 +1,8 @@
 # Backlog
 
 ## US6 Gérer la clôture
+- [x] balance de clôture
+- [ ] AN- en une écriture - (P172 la compta pour les nuls) - avec vérif. équilibre
 - [ ] charge constatée d'avance
 - [ ] 891 bilan de clôture
 - [ ] solder les comptes charges et recettes sur 120
@@ -32,8 +34,14 @@
 - [ ] reprendre les données pour l'année choisie
 
 ### Notes
+- [ ] injectLedgerEntries sert pour balance ?
+- [ ] date de la dernière écriture plutôt que date du jour ?
+- [ ] 47 comptes transitoires - attentes (factures mal identifiées) puis soldé dans 758 ou 658
+- [ ] faire une révision comptable - chap. 16
+- [ ] faire le fichier des écritures comptables
 - [ ] tests unitaires
-- [ ] compte de résultat est-ce que l'on peut retrouver des comptes du Plan Comptable ?
+- [ ] compte de résultat retrouver les comptes du Plan Comptable
+    - [ ] - P315 correspondance entre les comptes - pour les nuls
 - [ ] faire une balance ?
 - [ ] faire un truc pour les factures manquantes
 - [ ] importer directement les écritures wise
@@ -48,3 +56,7 @@
 - https://valoxy.org/blog/parler-langage-comptable/
 - https://www.calebgestion.com/cours_comptabilite/c60_variations_de_stocks.htm
 - https://www.compta-facile.com/comptabilisation-extournes-contrepassation-ecritures/
+- https://libeo.io/blog/comptabilite/ecriture-comptable-cloture-exercice
+- https://libeo.io/blog/comptabilite/fichier-des-ecritures-comptables
+- https://www.appvizer.fr/magazine/finance-comptabilite/comptabilite/les-obligations-comptables-de-lentreprise-1473112800
+- https://www.fec-expert.fr/

@@ -46,7 +46,8 @@ nav ul li a:hover {
 }
 
 .journal,
-.ledger,
+.grand-livre,
+.balance,
 .compte-resultat,
 .bilan {
     max-width: 800px;

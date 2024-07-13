@@ -1,6 +1,6 @@
 import { parseCSV } from './parseCSV.js';
-import { lineToEntry, generateLedger, generateIncomeStatement } from './generateEntries.js';
-import { injectEntriesIntoTable, injectLedgerEntries, injectIncomeStatementEntries } from './injectEntries.js';
+import { lineToEntry, generateBalance, generateLedger, generateIncomeStatement } from './generateEntries.js';
+import { injectJournalEntries, injectBalanceEntries, injectLedgerEntries, injectIncomeStatementEntries } from './injectEntries.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     fetch('.env.json')
@@ -102,7 +102,11 @@ function loadCSV(sheetId, year) {
                 });
 
             if (document.getElementById('journal-entries')) {
-                injectEntriesIntoTable(journalEntries);
+                injectJournalEntries(journalEntries);
+            }
+            if (document.getElementById('balance-entries')) {
+                const balanceEntries = generateBalance(journalEntries);
+                injectBalanceEntries(balanceEntries);
             }
             if (document.getElementById('ledger-entries')) {
                 const ledgerEntries = generateLedger(journalEntries);
