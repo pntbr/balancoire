@@ -9,11 +9,13 @@ export function findChartOfAccounts({ account, label }) {
         "119000": ["report à nouveau (solde débiteur)"],
         "129000": ["résultat de l'exercice (déficit)", "pertes"],
         "275000": ["dépôts et cautionnements versés"],
+        "370000": ["stocks de marchandises", "inventaire"],
         "467000": ["autres comptes débiteurs ou créditeurs", "remboursements", "prêts"],
         "512000": ["banques"],
         "530000": ["Caisse"],
         "606000": ["achats non stockés de matière et fournitures", "fournitures"],
         "602600": ["emballages"],
+        "603000": ["variations des stocks"],
         "607000": ["achats de marchandises"],
         "613000": ["locations"],
         "618300": ["documentation technique", "documentations"],
@@ -59,10 +61,28 @@ function createEntry(date, account, label, piece, debit, credit) {
 }
 
 function retainedEarningsEntry(line, accountNumber) {
-    const debitAccount = accountNumber === '129000' ? '119000' : '890000'
+    let debitAccount = '';
+    let creditAccount = '';
+    if (accountNumber === '370000') {
+        debitAccount = '603000';
+        creditAccount = accountNumber;
+    } else if (accountNumber === '129000') {
+        debitAccount = '119000';
+        creditAccount = accountNumber;
+    } else {
+        debitAccount = '890000';
+        creditAccount = accountNumber;
+    }
     return [
         createEntry(line['date'], debitAccount, line['qui reçoit'], 'à-nouveaux', convertToNumber(line['montant']), ''),
-        createEntry(line['date'], accountNumber, line['qui reçoit'], '', '', convertToNumber(line['montant']))
+        createEntry(line['date'], creditAccount, line['qui reçoit'], 'à-nouveaux', '', convertToNumber(line['montant']))
+    ];
+}
+
+function ClosingEntry(line, accountNumber) {
+    return [
+        createEntry(line['date'], accountNumber, line['qui reçoit'], 'clôture inventaire', convertToNumber(line['montant']), ''),
+        createEntry(line['date'], '603000', line['qui reçoit'], 'clôture inventaire', '', convertToNumber(line['montant']))
     ];
 }
 
@@ -105,6 +125,10 @@ export function lineToEntry(line) {
         // Gère les à-nouveaux
         if (line['date'].startsWith('01/01')) {
             return retainedEarningsEntry(line, accountNumber)
+        }
+        // Gère la clôture
+        if (line['date'].startsWith('31/12')) {
+            return ClosingEntry(line, accountNumber)
         }
         if (accountNumber.startsWith('4')) return refundEntry(line);
         if (accountNumber.startsWith('6')) return line['qui paye ?'] === 'B2T' ? chargeB2TEntry(line, accountNumber) : chargePersonEntry(line, accountNumber);

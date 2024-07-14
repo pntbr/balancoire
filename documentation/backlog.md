@@ -2,11 +2,12 @@
 
 ## US6 Gérer la clôture
 - [x] balance de clôture
+- [x] valorisation du stock + extourne : 603 - 355
+- [ ] casse d'objets pertes
+- [ ] apport initial
+- [ ] solder les comptes charges et recettes sur 120 ou 129
 - [ ] AN- en une écriture - (P172 la compta pour les nuls) - avec vérif. équilibre
 - [ ] charge constatée d'avance
-- [ ] 891 bilan de clôture
-- [ ] solder les comptes charges et recettes sur 120
-- [ ] gérer le résultat 129 perte et 120 bénéfice
 
 ## US7 Construire le bilan
 - [x] créer une page modèle statique
@@ -34,6 +35,7 @@
 - [ ] reprendre les données pour l'année choisie
 
 ### Notes
+- [ ] fournitures thés ?
 - [ ] injectLedgerEntries sert pour balance ?
 - [ ] date de la dernière écriture plutôt que date du jour ?
 - [ ] 47 comptes transitoires - attentes (factures mal identifiées) puis soldé dans 758 ou 658
@@ -57,6 +59,9 @@
 - https://www.calebgestion.com/cours_comptabilite/c60_variations_de_stocks.htm
 - https://www.compta-facile.com/comptabilisation-extournes-contrepassation-ecritures/
 - https://libeo.io/blog/comptabilite/ecriture-comptable-cloture-exercice
+- https://paheko.cloud/comptes-890-891-ou-120-129
 - https://libeo.io/blog/comptabilite/fichier-des-ecritures-comptables
 - https://www.appvizer.fr/magazine/finance-comptabilite/comptabilite/les-obligations-comptables-de-lentreprise-1473112800
 - https://www.fec-expert.fr/
+
+- https://help.assoconnect.com/hc/fr/articles/208800669-Valoriser-les-stocks-%C3%A0-la-cl%C3%B4ture
