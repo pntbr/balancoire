@@ -17,7 +17,7 @@ export function findChartOfAccounts({ account, label }) {
         "602600": ["emballages"],
         "603000": ["variations des stocks"],
         "604000": ["achats d'études et prestations de services", "achats prestations"],
-        "607000": ["achats de marchandises"],
+        "607000": ["achats de marchandises", "marchandises"],
         "613000": ["locations"],
         "618300": ["documentation technique", "documentations"],
         "618500": ["frais de colloques, séminaires, conférences", "conférences"],
@@ -50,12 +50,11 @@ function convertToNumber(euroString) {
     return parseFloat(cleanString || 0);
 }
 
-function createEntry(date, account, label, piece, debit, credit) {
+function createEntry(date, account, label, debit, credit) {
     return {
         'Date': date,
         'Compte': account,
         'Libellé': label,
-        'Pièce': piece || '',
         'Débit (€)': debit || '',
         'Crédit (€)': credit || ''
     };
@@ -79,50 +78,50 @@ function retainedEarningsEntry(line, accountNumber) {
         label = `report à-nouveaux ${line['poste']}`;
     }
     return [
-        createEntry(line['date'], debitAccount, line['qui reçoit'], label, convertToNumber(line['montant']), ''),
-        createEntry(line['date'], creditAccount, line['qui reçoit'], label, '', convertToNumber(line['montant']))
+        createEntry(line['date'], debitAccount, label, convertToNumber(line['montant']), ''),
+        createEntry(line['date'], creditAccount, label, '', convertToNumber(line['montant']))
     ];
 }
 
 function ClosingEntry(line, accountNumber) {
     return [
-        createEntry(line['date'], accountNumber, line['qui reçoit'], 'clôture inventaire', convertToNumber(line['montant']), ''),
-        createEntry(line['date'], '603000', line['qui reçoit'], 'clôture inventaire', '', convertToNumber(line['montant']))
+        createEntry(line['date'], accountNumber, 'clôture inventaire', convertToNumber(line['montant']), ''),
+        createEntry(line['date'], '603000', 'clôture inventaire', '', convertToNumber(line['montant']))
     ];
 }
 
 function refundEntry(line) {
     const checkCash = line["nature"] === 'esp';
     return [
-        createEntry(line['date'], '467000', line['qui reçoit'], line['qui reçoit'], convertToNumber(line['montant']), ''),
-        createEntry(line['date'], checkCash ? '530000' : '512000', line['qui reçoit'], '', '', convertToNumber(line['montant']))
+        createEntry(line['date'], '467000', 'remboursement de frais', convertToNumber(line['montant']), ''),
+        createEntry(line['date'], checkCash ? '530000' : '512000', 'remboursement de frais', '', convertToNumber(line['montant']))
     ];
 }
 
 function chargeB2TEntry(line, accountNumber) {
     const checkCash = line["nature"] === 'esp';
-    console.log("line['facture correspondante']", line);
-    const piece = line['facture correspondante'] ? `<a href="${line['facture correspondante']}">facture</a>` : '';
+    const piece = line['facture correspondante'] ? `- <a href="${line['facture correspondante']}">pièce</a>` : '';
+    const label = `achat B2T : ${line['qui reçoit']} ${piece}`;
     return [
-        createEntry(line['date'], accountNumber, line['qui reçoit'], '', convertToNumber(line['montant']), ''),
-        createEntry(line['date'], checkCash ? '530000' : '512000', line['qui reçoit'], '', '', convertToNumber(line['montant']))
+        createEntry(line['date'], accountNumber, label, convertToNumber(line['montant']), ''),
+        createEntry(line['date'], checkCash ? '530000' : '512000', label, '', convertToNumber(line['montant']))
     ];
 }
 
 function chargePersonEntry(line, accountNumber) {
-    const piece = line['Facture correspondante'] ? `<a href="${line['Facture correspondante']}">facture</a>` : '';
-    const label = `achat personne : ${line['poste']}`
+    const piece = line['facture correspondante'] ? `<a href="${line['facture correspondante']}">pièce</a>` : '';
+    const label = `achat personne : ${line['qui reçoit']} - ${piece}`;
     return [
-        createEntry(line['date'], accountNumber, line['qui reçoit'], label, convertToNumber(line['montant']), ''),
-        createEntry(line['date'], '467000', line['qui reçoit'], label, '', convertToNumber(line['montant']))
+        createEntry(line['date'], accountNumber, label, convertToNumber(line['montant']), ''),
+        createEntry(line['date'], '467000', label, '', convertToNumber(line['montant']))
     ];
 }
 
 function saleEntry(line, accountNumber) {
     const checkCash = line["nature"] === 'esp';
     return [
-        createEntry(line['date'], accountNumber, line['qui reçoit'], '', '', convertToNumber(line['montant'])),
-        createEntry(line['date'], checkCash ? '530000' : '512000', line['qui reçoit'], '', convertToNumber(line['montant']), '')
+        createEntry(line['date'], accountNumber, '', '', convertToNumber(line['montant'])),
+        createEntry(line['date'], checkCash ? '530000' : '512000', '', convertToNumber(line['montant']), '')
     ];
 }
 
@@ -193,7 +192,7 @@ export function generateLedger(journalEntries) {
                 const credit = +entry['Crédit (€)'] || 0;
                 totalDebit += debit;
                 totalCredit += credit;
-
+                console.log("données", entry)
                 return {
                     Date: entry.Date,
                     Libellé: entry.Libellé,

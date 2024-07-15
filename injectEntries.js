@@ -10,7 +10,7 @@ export function injectJournalEntries(journalEntries) {
         <tr>
             <td>${entry['Date']}</td>
             <td>${entry['Compte']}</td>
-            <td>${entry['Pièce']}</td>
+            <td>${entry['Libellé']}</td>
             <td>${formatToCurrency(entry['Débit (€)'])}</td>
             <td>${formatToCurrency(entry['Crédit (€)'])}</td>
         </tr>
