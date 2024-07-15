@@ -16,6 +16,7 @@ export function findChartOfAccounts({ account, label }) {
         "606000": ["achats non stockés de matière et fournitures", "fournitures"],
         "602600": ["emballages"],
         "603000": ["variations des stocks"],
+        "604000": ["achats d'études et prestations de services", "achats prestations"],
         "607000": ["achats de marchandises"],
         "613000": ["locations"],
         "618300": ["documentation technique", "documentations"],
@@ -23,7 +24,7 @@ export function findChartOfAccounts({ account, label }) {
         "622000": ["rémunérations d'intermédiaires et honoraires", "intermédiaires"],
         "623000": ["publicité, publications, relations publiques", "communication"],
         "624100": ["transports sur achats"],
-        "625000": ["déplacements, missions et réceptions", "déplacements"],
+        "625000": ["déplacements, missions et réceptions", "déplacements", "restauration"],
         "626000": ["frais postaux et de télécommunications", "internet", "frais postaux", "téléphone", "domiciliations"],
         "627000": ["services bancaires et assimilés", "services bancaires"],
         "706000": ["prestations de services", "formations"],
@@ -63,19 +64,23 @@ function createEntry(date, account, label, piece, debit, credit) {
 function retainedEarningsEntry(line, accountNumber) {
     let debitAccount = '';
     let creditAccount = '';
+    let label = '';
     if (accountNumber === '370000') {
         debitAccount = '603000';
         creditAccount = accountNumber;
+        label = 'annulation du stock initial';
     } else if (accountNumber === '129000') {
         debitAccount = '119000';
         creditAccount = accountNumber;
+        label = 'pertes de l’exercice précédent';
     } else {
         debitAccount = '890000';
         creditAccount = accountNumber;
+        label = `report à-nouveaux ${line['poste']}`;
     }
     return [
-        createEntry(line['date'], debitAccount, line['qui reçoit'], 'à-nouveaux', convertToNumber(line['montant']), ''),
-        createEntry(line['date'], creditAccount, line['qui reçoit'], 'à-nouveaux', '', convertToNumber(line['montant']))
+        createEntry(line['date'], debitAccount, line['qui reçoit'], label, convertToNumber(line['montant']), ''),
+        createEntry(line['date'], creditAccount, line['qui reçoit'], label, '', convertToNumber(line['montant']))
     ];
 }
 
@@ -96,6 +101,7 @@ function refundEntry(line) {
 
 function chargeB2TEntry(line, accountNumber) {
     const checkCash = line["nature"] === 'esp';
+    console.log("line['facture correspondante']", line);
     const piece = line['facture correspondante'] ? `<a href="${line['facture correspondante']}">facture</a>` : '';
     return [
         createEntry(line['date'], accountNumber, line['qui reçoit'], '', convertToNumber(line['montant']), ''),
@@ -105,9 +111,10 @@ function chargeB2TEntry(line, accountNumber) {
 
 function chargePersonEntry(line, accountNumber) {
     const piece = line['Facture correspondante'] ? `<a href="${line['Facture correspondante']}">facture</a>` : '';
+    const label = `achat personne : ${line['poste']}`
     return [
-        createEntry(line['date'], accountNumber, line['qui reçoit'], '', convertToNumber(line['montant']), ''),
-        createEntry(line['date'], '467000', line['qui reçoit'], piece, '', convertToNumber(line['montant']))
+        createEntry(line['date'], accountNumber, line['qui reçoit'], label, convertToNumber(line['montant']), ''),
+        createEntry(line['date'], '467000', line['qui reçoit'], label, '', convertToNumber(line['montant']))
     ];
 }
 
