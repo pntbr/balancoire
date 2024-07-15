@@ -8,24 +8,26 @@ export function findChartOfAccounts({ account, label }) {
     const chartOfAccounts = {
         "119000": ["report à nouveau (solde débiteur)"],
         "129000": ["résultat de l'exercice (déficit)", "pertes"],
-        "275000": ["dépôts et cautionnements versés"],
+        "275000": ["dépôts et cautionnements versés", "cautions"],
         "370000": ["stocks de marchandises", "inventaire"],
+        "404000": ["fournisseurs d'immobilisations"],
         "467000": ["autres comptes débiteurs ou créditeurs", "remboursements", "prêts"],
         "512000": ["banques"],
         "530000": ["Caisse"],
-        "606000": ["achats non stockés de matière et fournitures", "fournitures"],
         "602600": ["emballages"],
         "603000": ["variations des stocks"],
         "604000": ["achats d'études et prestations de services", "achats prestations"],
+        "606000": ["achats non stockés de matière et fournitures", "fournitures", "décorations", "énergies"],
         "607000": ["achats de marchandises", "marchandises"],
         "613000": ["locations"],
+        "616000": ["primes d'assurances", "assurances"],
         "618300": ["documentation technique", "documentations"],
         "618500": ["frais de colloques, séminaires, conférences", "conférences"],
         "622000": ["rémunérations d'intermédiaires et honoraires", "intermédiaires"],
         "623000": ["publicité, publications, relations publiques", "communication"],
         "624100": ["transports sur achats"],
-        "625000": ["déplacements, missions et réceptions", "déplacements", "restauration"],
-        "626000": ["frais postaux et de télécommunications", "internet", "frais postaux", "téléphone", "domiciliations"],
+        "625000": ["déplacements, missions et réceptions", "déplacements", "restauration", "hébergements"],
+        "626000": ["frais postaux et de télécommunications", "internet", "frais postaux", "télécommunications", "domiciliations"],
         "627000": ["services bancaires et assimilés", "services bancaires"],
         "706000": ["prestations de services", "formations"],
         "707000": ["ventes de marchandises", "ventes"],
@@ -90,6 +92,14 @@ function ClosingEntry(line, accountNumber) {
     ];
 }
 
+function depositEntry(line) {
+    const creditAccount = line['qui paye ?'] === 'B2T' ? (line["nature"] === 'esp' ? '530000' : '512000') : '467000';
+    return [
+        createEntry(line['date'], '275000', `caution ${line['qui reçoit']}`, convertToNumber(line['montant']), ''),
+        createEntry(line['date'], creditAccount, `caution ${line['qui reçoit']}`, '', convertToNumber(line['montant']))
+    ];
+}
+
 function refundEntry(line) {
     const checkCash = line["nature"] === 'esp';
     return [
@@ -138,6 +148,7 @@ export function lineToEntry(line) {
         if (line['date'].startsWith('31/12')) {
             return ClosingEntry(line, accountNumber)
         }
+        if (accountNumber === '275000') return depositEntry(line);
         if (accountNumber.startsWith('4')) return refundEntry(line);
         if (accountNumber.startsWith('6')) return line['qui paye ?'] === 'B2T' ? chargeB2TEntry(line, accountNumber) : chargePersonEntry(line, accountNumber);
         if (accountNumber.startsWith('7')) return saleEntry(line, accountNumber);
@@ -194,7 +205,6 @@ export function generateLedger(journalEntries) {
                 const credit = +entry['Crédit (€)'] || 0;
                 totalDebit += debit;
                 totalCredit += credit;
-                console.log("données", entry)
                 return {
                     Date: entry.Date,
                     Libellé: entry.Libellé,

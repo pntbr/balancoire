@@ -5,8 +5,10 @@
 - [x] valorisation du stock + extourne : 603 - 355
 - [x] label pour les à-nouveaux
 - [x] gestion de l'ensemble des labels
-- [ ] reprise des sheet pour toutes les années
-- [ ] casse d'objets pertes
+- [x] reprise des sheet pour toutes les années
+- [x] casse d'objets pertes
+- [x] écritures de cautions
+- [ ] passer les comptes 2 et 3 ?
 - [ ] apport initial
 - [ ] solder les comptes charges et recettes sur 120 ou 129
 - [ ] AN- en une écriture - (P172 la compta pour les nuls) - avec vérif. équilibre
