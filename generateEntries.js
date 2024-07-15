@@ -119,9 +119,11 @@ function chargePersonEntry(line, accountNumber) {
 
 function saleEntry(line, accountNumber) {
     const checkCash = line["nature"] === 'esp';
+    const piece = line['facture correspondante'] ? `<a href="${line['facture correspondante']}">pièce</a>` : '';
+    const label = `vente : ${line['qui paye ?']} - ${piece}`;
     return [
-        createEntry(line['date'], accountNumber, '', '', convertToNumber(line['montant'])),
-        createEntry(line['date'], checkCash ? '530000' : '512000', '', convertToNumber(line['montant']), '')
+        createEntry(line['date'], accountNumber, label, '', convertToNumber(line['montant'])),
+        createEntry(line['date'], checkCash ? '530000' : '512000', label, convertToNumber(line['montant']), '')
     ];
 }
 

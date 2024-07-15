@@ -4,7 +4,8 @@
 - [x] balance de clôture
 - [x] valorisation du stock + extourne : 603 - 355
 - [x] label pour les à-nouveaux
-- [ ] reprise de toutes les années
+- [x] gestion de l'ensemble des labels
+- [ ] reprise des sheet pour toutes les années
 - [ ] casse d'objets pertes
 - [ ] apport initial
 - [ ] solder les comptes charges et recettes sur 120 ou 129
