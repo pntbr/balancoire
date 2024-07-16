@@ -1,22 +1,16 @@
 # Backlog
 
-## US5 Gérer les à-nouveaux
-- [x] comprendre les a-nouveaux
-- [x] gérer le report des prêt 467000
-- [x] 890 bilan d'ouverture
-- [x] report du résultat - 129 C - 119 D
-- [x] dans le sheet résultat
-- [x] passe le token google sheet en .env
-- [x] nouveau gSheet officiel
-- [x] régulariser les données
-- [x] gérer l'inventaire - https://www.calebgestion.com/cours_comptabilite/c60_variations_de_stocks.htm
-  - [x] faire l'inventaire pour 2020 
-
 ## US6 Gérer la clôture
-- [ ] charge constatée d'avance
-- [ ] 891 bilan de clôture
-- [ ] solder les comptes charges et recettes sur 120
-- [ ] gérer le résultat 129 perte et 120 bénéfice
+- [x] balance de clôture
+- [x] valorisation du stock + extourne : 603 - 355
+- [x] label pour les à-nouveaux
+- [x] gestion de l'ensemble des labels
+- [x] reprise des sheet pour toutes les années
+- [x] casse d'objets pertes
+- [x] écritures de cautions
+- [x] confusion inventaire et variation sur stock
+- [x] consolide le compte de résultat
+- [x] solder les comptes charges et recettes sur 120 ou 129
 
 ## US7 Construire le bilan
 - [x] créer une page modèle statique
@@ -26,6 +20,10 @@
 - [ ] calculer les totaux
 
 ## US8 Consolidation
+- [ ] AN- en une écriture - (P172 la compta pour les nuls) - avec vérif. équilibre
+  - [ ] affectation réserve libre 106
+- [ ] passer les comptes 2 et 3 ?
+- [ ] charge constatée d'avance
 - [ ] documenté à-nouveau et charge constatées d'avance : https://valoxy.org/blog/ecritures-dinventaire-en-comptabilite/
 - [ ] problème throw/catch
 - [ ] rbt Stéphane, Yalin
@@ -44,8 +42,17 @@
 - [ ] reprendre les données pour l'année choisie
 
 ### Notes
+- [ ] apport initial
+- [ ] automatiser la normalisation du nom des factures
+- [ ] fournitures thés ?
+- [ ] injectLedgerEntries sert pour balance ?
+- [ ] date de la dernière écriture plutôt que date du jour ?
+- [ ] 47 comptes transitoires - attentes (factures mal identifiées) puis soldé dans 758 ou 658
+- [ ] faire une révision comptable - chap. 16
+- [ ] faire le fichier des écritures comptables
 - [ ] tests unitaires
-- [ ] compte de résultat est-ce que l'on peut retrouver des comptes du Plan Comptable ?
+- [ ] compte de résultat retrouver les comptes du Plan Comptable
+    - [ ] - P315 correspondance entre les comptes - pour les nuls
 - [ ] faire une balance ?
 - [ ] faire un truc pour les factures manquantes
 - [ ] importer directement les écritures wise
@@ -57,6 +64,18 @@
 - [ ] vérifier facture amazon 2024
 
 ### Liens
-- https://valoxy.org/blog/parler-langage-comptable/
-- https://www.calebgestion.com/cours_comptabilite/c60_variations_de_stocks.htm
+
+#### Affectation résultat
+- https://www.associatheque.fr/fr/gerer-une-association/index.html?amcpage=23
+- https://libeo.io/blog/comptabilite/ecriture-comptable-cloture-exercice
+- https://www.compta-facile.com/cloture-et-reouverture-comptes/
+- https://paheko.cloud/comptes-890-891-ou-120-129
 - https://www.compta-facile.com/comptabilisation-extournes-contrepassation-ecritures/
+- https://www.votre-expert-des-associations.fr/laffectation-du-resultat-dune-association-obeit-elle-a-des-regles-particulieres/
+
+- https://valoxy.org/blog/parler-langage-comptable/
+- https://libeo.io/blog/comptabilite/fichier-des-ecritures-comptables
+- https://www.fec-expert.fr/
+- https://www.appvizer.fr/magazine/finance-comptabilite/comptabilite/les-obligations-comptables-de-lentreprise-1473112800
+- https://help.assoconnect.com/hc/fr/articles/208800669-Valoriser-les-stocks-%C3%A0-la-cl%C3%B4ture
+- https://www.calebgestion.com/cours_comptabilite/c60_variations_de_stocks.htm

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Balance de clôture</title>
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" type="image/png" href="favicon.png" />
+<script type="module" src="main.js" defer></script>
+</head>
+<body>
+  <div id="navigation"></div>
+  <div class="balance">
+    <h1>Balance de clôture<button id="infoBtn">ℹ️</button></h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Compte</th>
+          <th>Libellé</th>
+          <th>Débit (€)</th>
+          <th>Crédit (€)</th>
+          <th>Solde</th>
+        </tr>
+      </thead>
+      <tbody id="balance-entries">
+          <!-- Les entrées du journal seront insérées ici -->
+      </tbody>
+    </table>
+  </div>
+  <div id="infoModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Notice Explicative - Balance</h2>
+      <p>La balance est un document comptable qui n'est pas obligatoire et qui reprend, compte par compte. Chaque compte présente les mouvements au débit et au crédit, et permet de connaître le solde de chaque compte.</p>
+      <h3>Rubriques :</h3>
+      <ul>
+        <li><strong>Débit :</strong> Numéro du compte dans la Plan Comptable Général.</li>
+        <li><strong>Libellé :</strong> Libellé du compte tel qu'exprimé dans le Plan Comptable Général.</li>
+        <li><strong>Débit :</strong> Montant inscrit au débit du compte.</li>
+        <li><strong>Crédit :</strong> Montant inscrit au crédit du compte.</li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>
