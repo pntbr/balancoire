@@ -1,17 +1,5 @@
 # Backlog
 
-## US6 Gérer la clôture
-- [x] balance de clôture
-- [x] valorisation du stock + extourne : 603 - 355
-- [x] label pour les à-nouveaux
-- [x] gestion de l'ensemble des labels
-- [x] reprise des sheet pour toutes les années
-- [x] casse d'objets pertes
-- [x] écritures de cautions
-- [x] confusion inventaire et variation sur stock
-- [x] consolide le compte de résultat
-- [x] solder les comptes charges et recettes sur 120 ou 129
-
 ## US7 Construire le bilan
 - [x] créer une page modèle statique
 - [ ] injecter avec des données statiques
