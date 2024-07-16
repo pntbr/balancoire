@@ -72,7 +72,7 @@ export function injectIncomeStatementEntries(entries) {
         </tr>
         <tr>
             <td>&nbsp;&nbsp;&nbsp;Cotisations des membres</td>
-            <td>${formatToCurrency(entries.contributions)}</td>
+            <td>${formatToCurrency(entries.cotisations)}</td>
         </tr>
         <tr>
             <td>&nbsp;&nbsp;&nbsp;Dons</td>
@@ -80,59 +80,55 @@ export function injectIncomeStatementEntries(entries) {
         </tr>
         <tr>
             <td>&nbsp;&nbsp;&nbsp;Ventes de produits</td>
-            <td>${formatToCurrency(entries.productSales)}</td>
+            <td>${formatToCurrency(entries.produits)}</td>
         </tr>
         <tr>
             <td>&nbsp;&nbsp;&nbsp;Prestations de services</td>
-            <td>${formatToCurrency(entries.serviceRevenue)}</td>
+            <td>${formatToCurrency(entries.prestations)}</td>
         </tr>
         <tr class="total">
             <td>Total des produits d'exploitation</td>
-            <td>${formatToCurrency(entries.totalOperatingIncome)}</td>
+            <td>${formatToCurrency(entries.totalProduits)}</td>
         </tr>
         <tr>
             <td class="income-statement-title">Charges d'exploitation</td>
             <td></td>
         </tr>
         <tr>
-            <td>&nbsp;&nbsp;&nbsp;Achats consommés de matières et fournitures</td>
-            <td>${formatToCurrency(entries.materialsAndSupplies)}</td>
+            <td>&nbsp;&nbsp;&nbsp;Achats de marchandises</td>
+            <td>${formatToCurrency(entries.achatsMarchandises)}</td>
         </tr>
         <tr>
-            <td>&nbsp;&nbsp;&nbsp;Services extérieurs</td>
-            <td>${formatToCurrency(entries.externalServices)}</td>
+            <td>&nbsp;&nbsp;&nbsp;Achats d'approvisionnements</td>
+            <td>${formatToCurrency(entries.achatsApprovisionnements)}</td>
         </tr>
         <tr>
-            <td>&nbsp;&nbsp;&nbsp;Autres charges externes</td>
-            <td>${formatToCurrency(entries.otherExternalCharges)}</td>
+            <td>&nbsp;&nbsp;&nbsp;Variation de stocks</td>
+            <td>${formatToCurrency(entries.variationStocks)}</td>
+        </tr> 
+        <tr>
+            <td>&nbsp;&nbsp;&nbsp;Charges externes</td>
+            <td>${formatToCurrency(entries.chargesExternes)}</td>
         </tr>
         <tr>
             <td>&nbsp;&nbsp;&nbsp;Impôts, taxes et versements assimilés</td>
             <td>${formatToCurrency(entries.taxes)}</td>
         </tr>
-        <tr>
-            <td>&nbsp;&nbsp;&nbsp;Charges financières</td>
-            <td>${formatToCurrency(entries.financialCharges)}</td>
-        </tr>
-        <tr>
-            <td>&nbsp;&nbsp;&nbsp;Dotations aux amortissements et provisions</td>
-            <td>${formatToCurrency(entries.depreciationAndProvisions)}</td>
-        </tr>
         <tr class="total">
             <td>Total des charges d'exploitation</td>
-            <td>${formatToCurrency(entries.totalOperatingExpenses)}</td>
+            <td>${formatToCurrency(entries.totalCharges)}</td>
         </tr>
         <tr class="total">
             <td>Résultat courant avant impôts</td>
-            <td>${formatToCurrency(entries.currentResultBeforeTax)}</td>
+            <td>${formatToCurrency(entries.resultatAvantImpots)}</td>
         </tr>
         <tr>
             <td>Impôt sur les bénéfices</td>
-            <td>${formatToCurrency(entries.taxOnProfits)}</td>
+            <td>${formatToCurrency(entries.impot)}</td>
         </tr>
         <tr class="total">
             <td>Résultat net</td>
-            <td>${formatToCurrency(entries.netResult)}</td>
+            <td>${formatToCurrency(entries.resultatNet)}</td>
         </tr>
     `;
 }

@@ -7,7 +7,8 @@ function displayErrorMessage(message) {
 export function findChartOfAccounts({ account, label }) {
     const chartOfAccounts = {
         "119000": ["report à nouveau (solde débiteur)"],
-        "129000": ["résultat de l'exercice (déficit)", "pertes"],
+        "120000": ["résultat de l'exercice (exécédent)", "excédent"],
+        "129000": ["résultat de l'exercice (déficit)", "déficit"],
         "275000": ["dépôts et cautionnements versés", "cautions"],
         "370000": ["stocks de marchandises", "inventaire"],
         "404000": ["fournisseurs d'immobilisations"],
@@ -68,12 +69,12 @@ function retainedEarningsEntry(line, accountNumber) {
     let label = '';
     if (accountNumber === '370000') {
         debitAccount = '603000';
-        creditAccount = accountNumber;
+        creditAccount = '370000';
         label = 'annulation du stock initial';
     } else if (accountNumber === '129000') {
         debitAccount = '119000';
-        creditAccount = accountNumber;
-        label = 'pertes de l’exercice précédent';
+        creditAccount = '129000';
+        label = 'déficit de l’exercice précédent';
     } else {
         debitAccount = '890000';
         creditAccount = accountNumber;
@@ -85,12 +86,20 @@ function retainedEarningsEntry(line, accountNumber) {
     ];
 }
 
-function ClosingEntry(line, accountNumber) {
+function inventoryClosingEntry(line, accountNumber) {
     return [
-        createEntry(line['date'], accountNumber, 'clôture inventaire', convertToNumber(line['montant']), ''),
+        createEntry(line['date'], '370000', 'clôture inventaire', convertToNumber(line['montant']), ''),
         createEntry(line['date'], '603000', 'clôture inventaire', '', convertToNumber(line['montant']))
     ];
 }
+
+function lossClosingEntry(line, accountNumber) {
+    return [
+        createEntry(line['date'], '129000', 'Déficit sur l\'exercice', convertToNumber(line['montant']), ''),
+        createEntry(line['date'], '119000', 'Déficit sur l\'exercice', '', convertToNumber(line['montant']))
+    ];
+}
+
 
 function depositEntry(line) {
     const creditAccount = line['qui paye ?'] === 'B2T' ? (line["nature"] === 'esp' ? '530000' : '512000') : '467000';
@@ -146,8 +155,14 @@ export function lineToEntry(line) {
         }
         // Gère la clôture
         if (line['date'].startsWith('31/12')) {
-            return ClosingEntry(line, accountNumber)
+            if (accountNumber === '370000') {
+                return inventoryClosingEntry(line, accountNumber)
+            } else if (accountNumber === '129000') {
+                return lossClosingEntry(line, accountNumber)
+            }
         }
+
+        // Gère les écritures courantes
         if (accountNumber === '275000') return depositEntry(line);
         if (accountNumber.startsWith('4')) return refundEntry(line);
         if (accountNumber.startsWith('6')) return line['qui paye ?'] === 'B2T' ? chargeB2TEntry(line, accountNumber) : chargePersonEntry(line, accountNumber);
@@ -238,35 +253,40 @@ export function generateIncomeStatement(journalEntries) {
             .reduce((sum, entry) => sum + (entry["Crédit (€)"] - entry["Débit (€)"]), 0);
     }
 
-    const contributions = sumAccountsByRoot(journalEntries, "756000");
+    const cotisations = sumAccountsByRoot(journalEntries, "756000");
     const donations = sumAccountsByRoot(journalEntries, "754100");
-    const productSales = sumAccountsByRoot(journalEntries, "707000");
-    const serviceRevenue = sumAccountsByRoot(journalEntries, "706000");
-    const materialsAndSupplies = sumAccountsByRoot(journalEntries, "60")
-    const externalServices = sumAccountsByRoot(journalEntries, "61") + sumAccountsByRoot(journalEntries, "62");
+    const produits = sumAccountsByRoot(journalEntries, "707000");
+    const prestations = sumAccountsByRoot(journalEntries, "706000");
 
-    const totalOperatingIncome = contributions + donations + productSales + serviceRevenue;
-    const totalOperatingExpenses = materialsAndSupplies + externalServices;
+    const achatsMarchandises = sumAccountsByRoot(journalEntries, "607") + sumAccountsByRoot(journalEntries, "6097");
+    const achatsApprovisionnements = sumAccountsByRoot(journalEntries, "601") + sumAccountsByRoot(journalEntries, "602") + sumAccountsByRoot(journalEntries, "604") + sumAccountsByRoot(journalEntries, "605") + +sumAccountsByRoot(journalEntries, "606");
+    const variationStocks = sumAccountsByRoot(journalEntries, "603");
+    const chargesExternes = sumAccountsByRoot(journalEntries, "61") + sumAccountsByRoot(journalEntries, "62");
+    const taxes = sumAccountsByRoot(journalEntries, "63");
+    const autresCharges = sumAccountsByRoot(journalEntries, "65");
 
-    const currentResultBeforeTax = totalOperatingIncome + totalOperatingExpenses;
-    const taxOnProfits = currentResultBeforeTax > 0 ? currentResultBeforeTax * 0.15 : 0.00;
-    const netResult = currentResultBeforeTax - taxOnProfits;
+    const totalProduits = cotisations + donations + produits + prestations;
+    const totalCharges = achatsMarchandises + achatsApprovisionnements + variationStocks + chargesExternes + taxes + autresCharges;
+
+    const resultatAvantImpots = totalProduits + totalCharges;
+    const impot = resultatAvantImpots > 0 ? resultatAvantImpots * 0.15 : 0.00;
+    const resultatNet = resultatAvantImpots - impot;
 
     return {
-        contributions,
+        cotisations,
         donations,
-        productSales,
-        serviceRevenue,
-        totalOperatingIncome,
-        materialsAndSupplies,
-        externalServices,
-        otherExternalCharges: 0.00,
-        taxes: 0.00,
-        financialCharges: 0.00,
-        depreciationAndProvisions: 0.00,
-        totalOperatingExpenses,
-        currentResultBeforeTax,
-        taxOnProfits,
-        netResult
+        produits,
+        prestations,
+        totalProduits,
+        achatsMarchandises,
+        achatsApprovisionnements,
+        variationStocks,
+        chargesExternes,
+        taxes,
+        autresCharges,
+        totalCharges,
+        resultatAvantImpots,
+        impot,
+        resultatNet
     };
 }

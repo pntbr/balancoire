@@ -8,9 +8,11 @@
 - [x] reprise des sheet pour toutes les années
 - [x] casse d'objets pertes
 - [x] écritures de cautions
+- [ ] solder les comptes charges et recettes sur 120 ou 129
+  - [ ] affectation réserve libre 106
+  - [ ] confusion inventaire et variation sur stock
 - [ ] passer les comptes 2 et 3 ?
 - [ ] apport initial
-- [ ] solder les comptes charges et recettes sur 120 ou 129
 - [ ] AN- en une écriture - (P172 la compta pour les nuls) - avec vérif. équilibre
 - [ ] charge constatée d'avance
 
@@ -68,5 +70,6 @@
 - https://libeo.io/blog/comptabilite/fichier-des-ecritures-comptables
 - https://www.appvizer.fr/magazine/finance-comptabilite/comptabilite/les-obligations-comptables-de-lentreprise-1473112800
 - https://www.fec-expert.fr/
+- https://www.votre-expert-des-associations.fr/laffectation-du-resultat-dune-association-obeit-elle-a-des-regles-particulieres/
 
 - https://help.assoconnect.com/hc/fr/articles/208800669-Valoriser-les-stocks-%C3%A0-la-cl%C3%B4ture
