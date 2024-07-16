@@ -8,13 +8,9 @@
 - [x] reprise des sheet pour toutes les années
 - [x] casse d'objets pertes
 - [x] écritures de cautions
-- [ ] solder les comptes charges et recettes sur 120 ou 129
-  - [ ] affectation réserve libre 106
-  - [ ] confusion inventaire et variation sur stock
-- [ ] passer les comptes 2 et 3 ?
-- [ ] apport initial
-- [ ] AN- en une écriture - (P172 la compta pour les nuls) - avec vérif. équilibre
-- [ ] charge constatée d'avance
+- [x] confusion inventaire et variation sur stock
+- [x] consolide le compte de résultat
+- [x] solder les comptes charges et recettes sur 120 ou 129
 
 ## US7 Construire le bilan
 - [x] créer une page modèle statique
@@ -24,6 +20,10 @@
 - [ ] calculer les totaux
 
 ## US8 Consolidation
+- [ ] AN- en une écriture - (P172 la compta pour les nuls) - avec vérif. équilibre
+  - [ ] affectation réserve libre 106
+- [ ] passer les comptes 2 et 3 ?
+- [ ] charge constatée d'avance
 - [ ] documenté à-nouveau et charge constatées d'avance : https://valoxy.org/blog/ecritures-dinventaire-en-comptabilite/
 - [ ] problème throw/catch
 - [ ] rbt Stéphane, Yalin
@@ -42,6 +42,8 @@
 - [ ] reprendre les données pour l'année choisie
 
 ### Notes
+- [ ] apport initial
+- [ ] automatiser la normalisation du nom des factures
 - [ ] fournitures thés ?
 - [ ] injectLedgerEntries sert pour balance ?
 - [ ] date de la dernière écriture plutôt que date du jour ?
@@ -62,14 +64,18 @@
 - [ ] vérifier facture amazon 2024
 
 ### Liens
-- https://valoxy.org/blog/parler-langage-comptable/
-- https://www.calebgestion.com/cours_comptabilite/c60_variations_de_stocks.htm
-- https://www.compta-facile.com/comptabilisation-extournes-contrepassation-ecritures/
+
+#### Affectation résultat
+- https://www.associatheque.fr/fr/gerer-une-association/index.html?amcpage=23
 - https://libeo.io/blog/comptabilite/ecriture-comptable-cloture-exercice
+- https://www.compta-facile.com/cloture-et-reouverture-comptes/
 - https://paheko.cloud/comptes-890-891-ou-120-129
-- https://libeo.io/blog/comptabilite/fichier-des-ecritures-comptables
-- https://www.appvizer.fr/magazine/finance-comptabilite/comptabilite/les-obligations-comptables-de-lentreprise-1473112800
-- https://www.fec-expert.fr/
+- https://www.compta-facile.com/comptabilisation-extournes-contrepassation-ecritures/
 - https://www.votre-expert-des-associations.fr/laffectation-du-resultat-dune-association-obeit-elle-a-des-regles-particulieres/
 
+- https://valoxy.org/blog/parler-langage-comptable/
+- https://libeo.io/blog/comptabilite/fichier-des-ecritures-comptables
+- https://www.fec-expert.fr/
+- https://www.appvizer.fr/magazine/finance-comptabilite/comptabilite/les-obligations-comptables-de-lentreprise-1473112800
 - https://help.assoconnect.com/hc/fr/articles/208800669-Valoriser-les-stocks-%C3%A0-la-cl%C3%B4ture
+- https://www.calebgestion.com/cours_comptabilite/c60_variations_de_stocks.htm

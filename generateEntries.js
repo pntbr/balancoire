@@ -6,8 +6,9 @@ function displayErrorMessage(message) {
 
 export function findChartOfAccounts({ account, label }) {
     const chartOfAccounts = {
+        "106000": ["réserves"],
         "119000": ["report à nouveau (solde débiteur)"],
-        "120000": ["résultat de l'exercice (exécédent)", "excédent"],
+        "120000": ["résultat de l'exercice (excédent)", "excédent"],
         "129000": ["résultat de l'exercice (déficit)", "déficit"],
         "275000": ["dépôts et cautionnements versés", "cautions"],
         "370000": ["stocks de marchandises", "inventaire"],
@@ -75,6 +76,10 @@ function retainedEarningsEntry(line, accountNumber) {
         debitAccount = '119000';
         creditAccount = '129000';
         label = 'déficit de l’exercice précédent';
+    } else if (accountNumber === '120000') {
+        debitAccount = '106000';
+        creditAccount = '120000';
+        label = 'excédent de l’exercice précédent';
     } else {
         debitAccount = '890000';
         creditAccount = accountNumber;
@@ -95,11 +100,17 @@ function inventoryClosingEntry(line, accountNumber) {
 
 function lossClosingEntry(line, accountNumber) {
     return [
-        createEntry(line['date'], '129000', 'Déficit sur l\'exercice', convertToNumber(line['montant']), ''),
-        createEntry(line['date'], '119000', 'Déficit sur l\'exercice', '', convertToNumber(line['montant']))
+        createEntry(line['date'], '129000', 'déficit sur l\'exercice', convertToNumber(line['montant']), ''),
+        createEntry(line['date'], '119000', 'déficit sur l\'exercice', '', convertToNumber(line['montant']))
     ];
 }
 
+function gainClosingEntry(line, accountNumber) {
+    return [
+        createEntry(line['date'], '120000', 'excédent sur l\'exercice', convertToNumber(line['montant']), ''),
+        createEntry(line['date'], '106000', 'excédent sur l\'exercice', '', convertToNumber(line['montant']))
+    ];
+}
 
 function depositEntry(line) {
     const creditAccount = line['qui paye ?'] === 'B2T' ? (line["nature"] === 'esp' ? '530000' : '512000') : '467000';
@@ -151,14 +162,16 @@ export function lineToEntry(line) {
     try {
         // Gère les à-nouveaux
         if (line['date'].startsWith('01/01')) {
-            return retainedEarningsEntry(line, accountNumber)
+            return retainedEarningsEntry(line, accountNumber);
         }
         // Gère la clôture
         if (line['date'].startsWith('31/12')) {
             if (accountNumber === '370000') {
-                return inventoryClosingEntry(line, accountNumber)
+                return inventoryClosingEntry(line, accountNumber);
             } else if (accountNumber === '129000') {
-                return lossClosingEntry(line, accountNumber)
+                return lossClosingEntry(line, accountNumber);
+            } else if (accountNumber === '120000') {
+                return gainClosingEntry(line, accountNumber);
             }
         }
 
