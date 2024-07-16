@@ -1,6 +1,8 @@
 # Backlog
 
 ## US7 Construire le bilan
+- [ ] passe tous les termes comptables en francais
+- [ ] solder les comptes de charges et de produits 
 - [x] créer une page modèle statique
 - [ ] injecter avec des données statiques
 - [ ] injecter avec des données exemples
@@ -14,7 +16,7 @@
 - [ ] charge constatée d'avance
 - [ ] documenté à-nouveau et charge constatées d'avance : https://valoxy.org/blog/ecritures-dinventaire-en-comptabilite/
 - [ ] problème throw/catch
-- [ ] rbt Stéphane, Yalin
+- [ ] rbt Stéphane, Yalin simplifier les sheets de saisies
 - [x] reprendre les comptes dans les sheets (plus humain)
 - [ ] reprendre les labels pour le grand livre
 - [ ] stripe écritures
@@ -41,7 +43,6 @@
 - [ ] tests unitaires
 - [ ] compte de résultat retrouver les comptes du Plan Comptable
     - [ ] - P315 correspondance entre les comptes - pour les nuls
-- [ ] faire une balance ?
 - [ ] faire un truc pour les factures manquantes
 - [ ] importer directement les écritures wise
 - [ ] vérifier que les pointage bancaire ne correspondent pas à des dépenses Yalin ou Stéphane mais bien à B2T

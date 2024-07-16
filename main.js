@@ -1,6 +1,6 @@
 import { parseCSV } from './parseCSV.js';
-import { lineToEntry, generateBalance, generateLedger, generateIncomeStatement } from './generateEntries.js';
-import { injectJournalEntries, injectBalanceEntries, injectLedgerEntries, injectIncomeStatementEntries } from './injectEntries.js';
+import { ligneEnEcriture, creationBalance, creationGrandLivre, creationCompteResultat } from './creationEcritures.js';
+import { injecteJournalEcritures, injecteBalanceEcritures, injecteGrandLivreEcritures, injecteCompteResultatEcritures } from './injecteEcritures.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     fetch('.env.json')
@@ -94,27 +94,26 @@ function loadCSV(sheetId, year) {
         })
         .then(csvText => {
             const jsonData = parseCSV(csvText);
-            const journalEntries = jsonData.flatMap(line => lineToEntry(line))
+            const journalEcritures = jsonData.flatMap(ligne => ligneEnEcriture(ligne))
                 .sort((a, b) => {
                     const dateA = new Date(a.Date.split('/').reverse().join('-'));
                     const dateB = new Date(b.Date.split('/').reverse().join('-'));
                     return dateA - dateB;
                 });
-
-            if (document.getElementById('journal-entries')) {
-                injectJournalEntries(journalEntries);
+            if (document.getElementById('journal-ecritures')) {
+                injecteJournalEcritures(journalEcritures);
             }
-            if (document.getElementById('balance-entries')) {
-                const balanceEntries = generateBalance(journalEntries);
-                injectBalanceEntries(balanceEntries);
+            if (document.getElementById('balance-ecritures')) {
+                const balanceEcritures = creationBalance(journalEcritures);
+                injecteBalanceEcritures(balanceEcritures);
             }
-            if (document.getElementById('ledger-entries')) {
-                const ledgerEntries = generateLedger(journalEntries);
-                injectLedgerEntries(ledgerEntries);
+            if (document.getElementById('grand-livre-ecritures')) {
+                const grandLivreEcritures = creationGrandLivre(journalEcritures);
+                injecteGrandLivreEcritures(grandLivreEcritures);
             }
-            if (document.getElementById('income-statement-entries')) {
-                const incomeStatementEntries = generateIncomeStatement(journalEntries);
-                injectIncomeStatementEntries(incomeStatementEntries);
+            if (document.getElementById('compte-resultat-ecritures')) {
+                const compteResultatEcritures = creationCompteResultat(journalEcritures);
+                injecteCompteResultatEcritures(compteResultatEcritures);
             }
             hideLoader();
         })
