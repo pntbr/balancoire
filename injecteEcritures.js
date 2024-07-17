@@ -1,8 +1,4 @@
-import { trouverCompte } from './creationEcritures.js';
-
-function formatToCurrency(number) {
-    return number ? number.toFixed(2).replace('.', ',') + ' €' : '';
-}
+import { trouverCompte, formatToCurrency } from './utils.js';
 
 export function injecteJournalEcritures(journalEcritures) {
     const tableBody = document.getElementById('journal-ecritures');
@@ -63,7 +59,7 @@ export function injecteGrandLivreEcritures(grandLivreEcritures) {
     }).join('');
 }
 
-export function injecteCompteResultatEcritures(ecritures) {
+export function injecteCompteResultatEcritures(soldes) {
     const tableBody = document.getElementById('compte-resultat-ecritures');
     tableBody.innerHTML = `
         <tr>
@@ -72,23 +68,23 @@ export function injecteCompteResultatEcritures(ecritures) {
         </tr>
         <tr>
             <td>&nbsp;&nbsp;&nbsp;Cotisations des membres</td>
-            <td>${formatToCurrency(ecritures.cotisations)}</td>
+            <td>${formatToCurrency(soldes.produits.cotisations)}</td>
         </tr>
         <tr>
             <td>&nbsp;&nbsp;&nbsp;Dons</td>
-            <td>${formatToCurrency(ecritures.donations)}</td>
-        </tr>
-        <tr>
-            <td>&nbsp;&nbsp;&nbsp;Ventes de produits</td>
-            <td>${formatToCurrency(ecritures.produits)}</td>
+            <td>${formatToCurrency(soldes.produits.donations)}</td>
         </tr>
         <tr>
             <td>&nbsp;&nbsp;&nbsp;Prestations de services</td>
-            <td>${formatToCurrency(ecritures.prestations)}</td>
+            <td>${formatToCurrency(soldes.produits.prestations)}</td>
+        </tr>
+        <tr>
+            <td>&nbsp;&nbsp;&nbsp;Ventes de produits</td>
+            <td>${formatToCurrency(soldes.produits.marchandises)}</td>
         </tr>
         <tr class="total">
             <td>Total des produits d'exploitation</td>
-            <td>${formatToCurrency(ecritures.totalProduits)}</td>
+            <td>${formatToCurrency(soldes.produits.total)}</td>
         </tr>
         <tr>
             <td class="compte-resultat-titre">Charges d'exploitation</td>
@@ -96,39 +92,43 @@ export function injecteCompteResultatEcritures(ecritures) {
         </tr>
         <tr>
             <td>&nbsp;&nbsp;&nbsp;Achats de marchandises</td>
-            <td>${formatToCurrency(ecritures.achatsMarchandises)}</td>
+            <td>${formatToCurrency(soldes.charges.marchandises)}</td>
         </tr>
         <tr>
             <td>&nbsp;&nbsp;&nbsp;Achats d'approvisionnements</td>
-            <td>${formatToCurrency(ecritures.achatsApprovisionnements)}</td>
+            <td>${formatToCurrency(soldes.charges.approvisionnements)}</td>
         </tr>
         <tr>
             <td>&nbsp;&nbsp;&nbsp;Variation de stocks</td>
-            <td>${formatToCurrency(ecritures.variationStocks)}</td>
+            <td>${formatToCurrency(soldes.charges.stocks)}</td>
         </tr> 
         <tr>
             <td>&nbsp;&nbsp;&nbsp;Charges externes</td>
-            <td>${formatToCurrency(ecritures.chargesExternes)}</td>
+            <td>${formatToCurrency(soldes.charges.externes)}</td>
         </tr>
         <tr>
             <td>&nbsp;&nbsp;&nbsp;Impôts, taxes et versements assimilés</td>
-            <td>${formatToCurrency(ecritures.taxes)}</td>
+            <td>${formatToCurrency(soldes.charges.taxes)}</td>
+        </tr>
+        <tr>
+            <td>&nbsp;&nbsp;&nbsp;Autres charges</td>
+            <td>${formatToCurrency(soldes.charges.autres)}</td>
         </tr>
         <tr class="total">
             <td>Total des charges d'exploitation</td>
-            <td>${formatToCurrency(ecritures.totalCharges)}</td>
+            <td>${formatToCurrency(soldes.charges.total)}</td>
         </tr>
         <tr class="total">
             <td>Résultat courant avant impôts</td>
-            <td>${formatToCurrency(ecritures.resultatAvantImpots)}</td>
+            <td>${formatToCurrency(soldes.resultats.avantImpots)}</td>
         </tr>
         <tr>
             <td>Impôt sur les bénéfices</td>
-            <td>${formatToCurrency(ecritures.impots)}</td>
+            <td>${formatToCurrency(soldes.resultats.impots)}</td>
         </tr>
         <tr class="total">
             <td>Résultat net</td>
-            <td>${formatToCurrency(ecritures.resultatNet)}</td>
+            <td>${formatToCurrency(soldes.resultats.net)}</td>
         </tr>
     `;
 }

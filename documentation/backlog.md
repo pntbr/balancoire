@@ -1,9 +1,11 @@
 # Backlog
 
 ## US7 Construire le bilan
-- [ ] passe tous les termes comptables en francais
-- [ ] solder les comptes de charges et de produits 
 - [x] créer une page modèle statique
+- [x] passe tous les termes comptables en francais
+- [x] injecte automatiquement le résultat
+- [x] solder les comptes de charges et de produits 
+- [x] reprendre le code 
 - [ ] injecter avec des données statiques
 - [ ] injecter avec des données exemples
 - [ ] injecter les données réelles
@@ -30,6 +32,7 @@
 ## US9 Gérer les inventaires
 - [ ] créer une page inventaire
 - [ ] reprendre les données pour l'année choisie
+- [ ] aller chercher l'inventaire pour les clôtures et à-nouveaux
 
 ### Notes
 - [ ] apport initial
