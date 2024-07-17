@@ -1,4 +1,4 @@
-import { sommeCompteParRacine } from './utils.js';
+import { sommeCompteParRacine, formatToCurrency } from './utils.js';
 
 export function creationCompteResultat(journalEcritures) {
     const cotisations = sommeCompteParRacine(journalEcritures, "756000");
@@ -44,4 +44,78 @@ export function creationCompteResultat(journalEcritures) {
             'net': resultatNet,
         }
     };
+}
+
+export function injecteCompteResultatEcritures(soldes) {
+    const tableBody = document.getElementById('compte-resultat-ecritures');
+    tableBody.innerHTML = `
+        <tr>
+            <td class="compte-resultat-titre">Produits d'exploitation</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>&nbsp;&nbsp;&nbsp;Cotisations des membres</td>
+            <td>${formatToCurrency(soldes.produits.cotisations)}</td>
+        </tr>
+        <tr>
+            <td>&nbsp;&nbsp;&nbsp;Dons</td>
+            <td>${formatToCurrency(soldes.produits.donations)}</td>
+        </tr>
+        <tr>
+            <td>&nbsp;&nbsp;&nbsp;Prestations de services</td>
+            <td>${formatToCurrency(soldes.produits.prestations)}</td>
+        </tr>
+        <tr>
+            <td>&nbsp;&nbsp;&nbsp;Ventes de produits</td>
+            <td>${formatToCurrency(soldes.produits.marchandises)}</td>
+        </tr>
+        <tr class="total">
+            <td>Total des produits d'exploitation</td>
+            <td>${formatToCurrency(soldes.produits.total)}</td>
+        </tr>
+        <tr>
+            <td class="compte-resultat-titre">Charges d'exploitation</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>&nbsp;&nbsp;&nbsp;Achats de marchandises</td>
+            <td>${formatToCurrency(soldes.charges.marchandises)}</td>
+        </tr>
+        <tr>
+            <td>&nbsp;&nbsp;&nbsp;Achats d'approvisionnements</td>
+            <td>${formatToCurrency(soldes.charges.approvisionnements)}</td>
+        </tr>
+        <tr>
+            <td>&nbsp;&nbsp;&nbsp;Variation de stocks</td>
+            <td>${formatToCurrency(soldes.charges.stocks)}</td>
+        </tr> 
+        <tr>
+            <td>&nbsp;&nbsp;&nbsp;Charges externes</td>
+            <td>${formatToCurrency(soldes.charges.externes)}</td>
+        </tr>
+        <tr>
+            <td>&nbsp;&nbsp;&nbsp;Impôts, taxes et versements assimilés</td>
+            <td>${formatToCurrency(soldes.charges.taxes)}</td>
+        </tr>
+        <tr>
+            <td>&nbsp;&nbsp;&nbsp;Autres charges</td>
+            <td>${formatToCurrency(soldes.charges.autres)}</td>
+        </tr>
+        <tr class="total">
+            <td>Total des charges d'exploitation</td>
+            <td>${formatToCurrency(soldes.charges.total)}</td>
+        </tr>
+        <tr class="total">
+            <td>Résultat courant avant impôts</td>
+            <td>${formatToCurrency(soldes.resultats.avantImpots)}</td>
+        </tr>
+        <tr>
+            <td>Impôt sur les bénéfices</td>
+            <td>${formatToCurrency(soldes.resultats.impots)}</td>
+        </tr>
+        <tr class="total">
+            <td>Résultat net</td>
+            <td>${formatToCurrency(soldes.resultats.net)}</td>
+        </tr>
+    `;
 }

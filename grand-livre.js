@@ -1,3 +1,5 @@
+import { trouverCompte, formatToCurrency } from './utils.js';
+
 export function creationGrandLivre(ecritures, currentYear) {
     const grandLivreEcritures = {};
     const comptes = [...new Set(ecritures.map(({ Compte }) => Compte))].sort();
@@ -37,4 +39,36 @@ export function creationGrandLivre(ecritures, currentYear) {
     });
 
     return grandLivreEcritures;
+}
+
+export function injecteGrandLivreEcritures(grandLivreEcritures) {
+    const grandLivreContainer = document.getElementById('grand-livre-ecritures');
+    grandLivreContainer.innerHTML = Object.entries(grandLivreEcritures).map(([compte, ecritures]) => {
+                const compteLabel = trouverCompte({ compte }).label;
+                return `
+            <div class="compte">
+                <h2>${compte} - ${compteLabel}</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Libellé</th>
+                            <th>Débit (€)</th>
+                            <th>Crédit (€)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${ecritures.map(ecriture => `
+                            <tr class="${ecriture.Libellé === 'Total' ? 'total' : ecriture.Libellé === 'Solde' ? 'solde' : ''}">
+                                <td>${ecriture.Date}</td>
+                                <td>${ecriture.Libellé}</td>
+                                <td>${formatToCurrency(ecriture['Débit (€)'])}</td>
+                                <td>${formatToCurrency(ecriture['Crédit (€)'])}</td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            </div>
+        `;
+    }).join('');
 }

@@ -1,4 +1,4 @@
-import { trouverCompte, sommeCompteParRacine } from './utils.js';
+import { trouverCompte, sommeCompteParRacine, formatToCurrency } from './utils.js';
 
 export function creationBalance(ecritures) {
     const balanceEcritures = [];
@@ -16,4 +16,17 @@ export function creationBalance(ecritures) {
     });
 
     return balanceEcritures;
+}
+
+export function injecteBalanceEcritures(balanceEcritures) {
+    const tableBody = document.getElementById('balance-ecritures');
+    tableBody.innerHTML = balanceEcritures.map(ecriture => `
+        <tr>
+            <td>${ecriture['Compte']}</td>
+            <td>${ecriture['Libellé']}</td>
+            <td>${formatToCurrency(ecriture['Débit (€)'])}</td>
+            <td>${formatToCurrency(ecriture['Crédit (€)'])}</td>
+            <td>${formatToCurrency(ecriture['Solde (€)'])}</td>
+        </tr>
+    `).join('');
 }

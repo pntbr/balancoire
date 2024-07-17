@@ -1,9 +1,8 @@
 import { parseCSV } from './parseCSV.js';
-import { creationBalance } from './balance.js';
-import { creationGrandLivre } from './grand-livre.js';
-import { creationCompteResultat } from './compte-resultat.js';
-import { ligneEnEcriture, arretComptesClotureEcritures } from './journal.js';
-import { injecteJournalEcritures, injecteBalanceEcritures, injecteGrandLivreEcritures, injecteCompteResultatEcritures } from './injecteEcritures.js';
+import { creationBalance, injecteBalanceEcritures } from './balance.js';
+import { creationGrandLivre, injecteGrandLivreEcritures } from './grand-livre.js';
+import { creationCompteResultat, injecteCompteResultatEcritures } from './compte-resultat.js';
+import { ligneEnEcriture, arretComptesClotureEcritures, injecteJournalEcritures } from './journal.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     fetch('.env.json')

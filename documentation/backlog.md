@@ -6,10 +6,13 @@
 - [x] injecte automatiquement le résultat
 - [x] solder les comptes de charges et de produits 
 - [x] reprendre le code 
+- [x] passe les injections dans les fichiers respectifs
 - [ ] injecter avec des données statiques
 - [ ] injecter avec des données exemples
 - [ ] injecter les données réelles
 - [ ] calculer les totaux
+
+notes : Pour solder les comptes du bilan, les comptes débiteurs sont crédités et les compte créditeurs sont débités. comme au bilan l'actif est égales au passif, on peut donc passer une écriture unique ou passer deux écritures en utilisant le compte 891
 
 ## US8 Consolidation
 - [ ] AN- en une écriture - (P172 la compta pour les nuls) - avec vérif. équilibre
