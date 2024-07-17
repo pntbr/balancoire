@@ -29,8 +29,8 @@ function aNouveauEcriture(line, numeroCompte) {
         creditCompte = '129000';
         label = 'déficit de l’exercice précédent';
     } else if (numeroCompte === '120000') {
-        debitCompte = '106000';
-        creditCompte = '120000';
+        debitCompte = '120000';
+        creditCompte = '106000';
         label = 'excédent de l’exercice précédent';
     } else {
         debitCompte = '890000';
