@@ -2,6 +2,7 @@ import { parseCSV } from './parseCSV.js';
 import { creationBalance, injecteBalanceEcritures } from './balance.js';
 import { creationGrandLivre, injecteGrandLivreEcritures } from './grand-livre.js';
 import { creationCompteResultat, injecteCompteResultatEcritures } from './compte-resultat.js';
+import { creationBilan, injecteBilanEcritures } from './bilan.js';
 import { ligneEnEcriture, arretComptesClotureEcritures, injecteJournalEcritures } from './journal.js';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -117,6 +118,10 @@ function loadCSV(sheetId, currentYear) {
             if (document.getElementById('compte-resultat-ecritures')) {
                 const compteResultatEcritures = creationCompteResultat(ligneEnEcritures);
                 injecteCompteResultatEcritures(compteResultatEcritures);
+            }
+            if (document.getElementById('bilan-ecritures')) {
+                const bilanEcritures = creationBilan(arretComptesEcritures);
+                injecteBilanEcritures(bilanEcritures);
             }
             hideLoader();
         })

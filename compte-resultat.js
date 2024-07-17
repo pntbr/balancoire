@@ -1,19 +1,19 @@
 import { sommeCompteParRacine, formatToCurrency } from './utils.js';
 
-export function creationCompteResultat(journalEcritures) {
-    const cotisations = sommeCompteParRacine(journalEcritures, "756000");
-    const donations = sommeCompteParRacine(journalEcritures, "754100");
-    const prestations = sommeCompteParRacine(journalEcritures, "706000");
-    const marchandises = sommeCompteParRacine(journalEcritures, "707000");
+export function creationCompteResultat(ecritures) {
+    const cotisations = sommeCompteParRacine(ecritures, "756000");
+    const donations = sommeCompteParRacine(ecritures, "754100");
+    const prestations = sommeCompteParRacine(ecritures, "706000");
+    const marchandises = sommeCompteParRacine(ecritures, "707000");
 
     const totalProduits = cotisations + donations + prestations + marchandises;
 
-    const achatsMarchandises = sommeCompteParRacine(journalEcritures, "607") + sommeCompteParRacine(journalEcritures, "6097");
-    const achatsApprovisionnements = sommeCompteParRacine(journalEcritures, "601") + sommeCompteParRacine(journalEcritures, "602") + sommeCompteParRacine(journalEcritures, "604") + sommeCompteParRacine(journalEcritures, "605") + +sommeCompteParRacine(journalEcritures, "606");
-    const variationStocks = sommeCompteParRacine(journalEcritures, "603");
-    const chargesExternes = sommeCompteParRacine(journalEcritures, "61") + sommeCompteParRacine(journalEcritures, "62");
-    const taxes = sommeCompteParRacine(journalEcritures, "63");
-    const autresCharges = sommeCompteParRacine(journalEcritures, "6") - achatsMarchandises - achatsApprovisionnements - variationStocks - chargesExternes - taxes;
+    const achatsMarchandises = sommeCompteParRacine(ecritures, "607") + sommeCompteParRacine(ecritures, "6097");
+    const achatsApprovisionnements = sommeCompteParRacine(ecritures, "601") + sommeCompteParRacine(ecritures, "602") + sommeCompteParRacine(ecritures, "604") + sommeCompteParRacine(ecritures, "605") + +sommeCompteParRacine(ecritures, "606");
+    const variationStocks = sommeCompteParRacine(ecritures, "603");
+    const chargesExternes = sommeCompteParRacine(ecritures, "61") + sommeCompteParRacine(ecritures, "62");
+    const taxes = sommeCompteParRacine(ecritures, "63");
+    const autresCharges = sommeCompteParRacine(ecritures, "6") - achatsMarchandises - achatsApprovisionnements - variationStocks - chargesExternes - taxes;
 
     const totalCharges = achatsMarchandises + achatsApprovisionnements + variationStocks + chargesExternes + taxes + autresCharges;
 

@@ -7,10 +7,12 @@
 - [x] solder les comptes de charges et de produits 
 - [x] reprendre le code 
 - [x] passe les injections dans les fichiers respectifs
-- [ ] injecter avec des données statiques
-- [ ] injecter avec des données exemples
-- [ ] injecter les données réelles
-- [ ] calculer les totaux
+- [x] injecter avec des données statiques
+- [x] injecter avec des données exemples
+- [x] injecter les données réelles
+- [x] calculer les totaux
+- [x] attribuer les comptes
+- [ ] vérifier et consolider
 
 notes : Pour solder les comptes du bilan, les comptes débiteurs sont crédités et les compte créditeurs sont débités. comme au bilan l'actif est égales au passif, on peut donc passer une écriture unique ou passer deux écritures en utilisant le compte 891
 
@@ -42,11 +44,12 @@ notes : Pour solder les comptes du bilan, les comptes débiteurs sont crédités
 - [ ] automatiser la normalisation du nom des factures
 - [ ] fournitures thés ?
 - [ ] injectLedgerEntries sert pour balance ?
-- [ ] date de la dernière écriture plutôt que date du jour ?
 - [ ] 47 comptes transitoires - attentes (factures mal identifiées) puis soldé dans 758 ou 658
 - [ ] faire une révision comptable - chap. 16
 - [ ] faire le fichier des écritures comptables
 - [ ] tests unitaires
+- [ ] rédiger les annexes
+- [ ] rédiger les AGO
 - [ ] compte de résultat retrouver les comptes du Plan Comptable
     - [ ] - P315 correspondance entre les comptes - pour les nuls
 - [ ] faire un truc pour les factures manquantes
