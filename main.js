@@ -1,9 +1,10 @@
 import { parseCSV } from './parseCSV.js';
+import { arretComptesClotureEcritures } from './ecritures.js';
 import { creationBalance, injecteBalanceEcritures } from './balance.js';
 import { creationGrandLivre, injecteGrandLivreEcritures } from './grand-livre.js';
 import { creationCompteResultat, injecteCompteResultatEcritures } from './compte-resultat.js';
 import { creationBilan, injecteBilanEcritures } from './bilan.js';
-import { ligneEnEcriture, arretComptesClotureEcritures, injecteJournalEcritures } from './journal.js';
+import { creationJournal, injecteJournalEcritures } from './journal.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     fetch('.env.json')
@@ -97,32 +98,28 @@ function loadCSV(sheetId, currentYear) {
         })
         .then(csvText => {
             const jsonData = parseCSV(csvText);
-            const ligneEnEcritures = jsonData.flatMap(ligne => ligneEnEcriture(ligne))
-                .sort((a, b) => {
-                    const dateA = new Date(a.Date.split('/').reverse().join('-'));
-                    const dateB = new Date(b.Date.split('/').reverse().join('-'));
-                    return dateA - dateB;
-                });
-            const arretComptesEcritures = arretComptesClotureEcritures(ligneEnEcritures, currentYear);
+
             if (document.getElementById('journal-ecritures')) {
-                injecteJournalEcritures(arretComptesEcritures);
+                const journalEcritures = creationJournal(jsonData, currentYear);
+                injecteJournalEcritures(journalEcritures);
             }
             if (document.getElementById('balance-ecritures')) {
-                const balanceEcritures = creationBalance(arretComptesEcritures);
+                const balanceEcritures = creationBalance(jsonData, currentYear);
                 injecteBalanceEcritures(balanceEcritures);
             }
             if (document.getElementById('grand-livre-ecritures')) {
-                const grandLivreEcritures = creationGrandLivre(arretComptesEcritures, currentYear);
+                const grandLivreEcritures = creationGrandLivre(jsonData, currentYear);
                 injecteGrandLivreEcritures(grandLivreEcritures);
             }
             if (document.getElementById('compte-resultat-ecritures')) {
-                const compteResultatEcritures = creationCompteResultat(ligneEnEcritures);
+                const compteResultatEcritures = creationCompteResultat(jsonData, currentYear);
                 injecteCompteResultatEcritures(compteResultatEcritures);
             }
             if (document.getElementById('bilan-ecritures')) {
-                const bilanEcritures = creationBilan(arretComptesEcritures);
+                const bilanEcritures = creationBilan(jsonData, currentYear);
                 injecteBilanEcritures(bilanEcritures);
             }
+            // const arretComptesEcritures = arretComptesClotureEcritures(ligneEnEcriture, currentYear);
             hideLoader();
         })
         .catch(error => {

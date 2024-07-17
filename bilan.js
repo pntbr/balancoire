@@ -1,21 +1,26 @@
 import { sommeCompteParRacine, formatToCurrency } from './utils.js';
+import { lignesEnEcritures } from './ecritures.js';
 
-export function creationBilan(ecritures) {
+export function creationBilan(jsonData, currentYear) {
+    const ecritures = lignesEnEcritures(jsonData, currentYear);
+
+    const circulantCreance = sommeCompteParRacine(ecritures, '46');
+
     const actifImmobilisationCorporelles = sommeCompteParRacine(ecritures, '21');
     const actifImmobilisationFinancieres = sommeCompteParRacine(ecritures, '27');
     const totalActifImmobilisation = actifImmobilisationCorporelles + actifImmobilisationFinancieres;
 
     const actifCirculantStocks = sommeCompteParRacine(ecritures, '37');
-    const actifCirculantCreances = sommeCompteParRacine(ecritures, '46');
+    const actifCirculantCreances = circulantCreance < 0 ? circulantCreance : 0;
     const actifCirculantDisponibilites = sommeCompteParRacine(ecritures, '51') + sommeCompteParRacine(ecritures, '53');
     const totalActifCirculant = actifCirculantStocks + actifCirculantCreances + actifCirculantDisponibilites;
     const totalActif = totalActifCirculant + totalActifImmobilisation;
 
-    const passifCapitauxReserves = -sommeCompteParRacine(ecritures, '10');
-    const passifCapitauxExercices = -sommeCompteParRacine(ecritures, '12');
+    const passifCapitauxReserves = sommeCompteParRacine(ecritures, '10');
+    const passifCapitauxExercices = sommeCompteParRacine(ecritures, '12');
     const totalPassifCapitaux = passifCapitauxReserves + passifCapitauxExercices;
     const passifCirculantFournisseurs = 0;
-    const passifCirculantDettes = 0;
+    const passifCirculantDettes = circulantCreance > 0 ? circulantCreance : 0;;
     const totalPassifCirculant = passifCirculantFournisseurs + passifCirculantDettes;
     const totalPassif = totalPassifCapitaux + totalPassifCirculant;
 

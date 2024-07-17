@@ -1,6 +1,9 @@
 import { trouverCompte, sommeCompteParRacine, formatToCurrency } from './utils.js';
+import { lignesEnEcritures } from './ecritures.js';
 
-export function creationBalance(ecritures) {
+export function creationBalance(jsonData, currentYear) {
+    const ecritures = lignesEnEcritures(jsonData, currentYear);
+
     const balanceEcritures = [];
     const comptes = [...new Set(ecritures.map(({ Compte }) => Compte))].sort();
     comptes.forEach(compte => {
@@ -11,7 +14,7 @@ export function creationBalance(ecritures) {
             'Libellé': trouverCompte({ compte: compte }).label,
             'Débit (€)': totalDebit,
             'Crédit (€)': totalCredit,
-            'Solde (€)': (totalCredit - totalDebit)
+            'Solde (€)': (totalCredit + totalDebit)
         });
     });
 

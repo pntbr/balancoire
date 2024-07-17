@@ -1,12 +1,16 @@
 import { sommeCompteParRacine, formatToCurrency } from './utils.js';
+import { lignesEnEcritures } from './ecritures.js';
 
-export function creationCompteResultat(ecritures) {
+export function creationCompteResultat(jsonData, currentYear) {
+    const ecritures = lignesEnEcritures(jsonData, currentYear);
+
     const cotisations = sommeCompteParRacine(ecritures, "756000");
     const donations = sommeCompteParRacine(ecritures, "754100");
     const prestations = sommeCompteParRacine(ecritures, "706000");
     const marchandises = sommeCompteParRacine(ecritures, "707000");
+    const autresProduits = sommeCompteParRacine(ecritures, "7") - cotisations - donations - prestations - marchandises;
 
-    const totalProduits = cotisations + donations + prestations + marchandises;
+    const totalProduits = cotisations + donations + prestations + marchandises + autresProduits;
 
     const achatsMarchandises = sommeCompteParRacine(ecritures, "607") + sommeCompteParRacine(ecritures, "6097");
     const achatsApprovisionnements = sommeCompteParRacine(ecritures, "601") + sommeCompteParRacine(ecritures, "602") + sommeCompteParRacine(ecritures, "604") + sommeCompteParRacine(ecritures, "605") + +sommeCompteParRacine(ecritures, "606");
@@ -18,8 +22,8 @@ export function creationCompteResultat(ecritures) {
     const totalCharges = achatsMarchandises + achatsApprovisionnements + variationStocks + chargesExternes + taxes + autresCharges;
 
     const resultatAvantImpots = totalProduits + totalCharges;
-    const impots = resultatAvantImpots > 0 ? resultatAvantImpots * 0.15 : 0.00;
-    const resultatNet = resultatAvantImpots - impots;
+    const impots = sommeCompteParRacine(ecritures, "695");
+    const resultatNet = resultatAvantImpots + impots;
 
     return {
         'produits': {
@@ -27,6 +31,7 @@ export function creationCompteResultat(ecritures) {
             'dons': donations,
             'prestations': prestations,
             'marchandises': marchandises,
+            'autres': autresProduits,
             'total': totalProduits,
         },
         'charges': {
@@ -68,6 +73,10 @@ export function injecteCompteResultatEcritures(soldes) {
         <tr>
             <td>&nbsp;&nbsp;&nbsp;Ventes de produits</td>
             <td>${formatToCurrency(soldes.produits.marchandises)}</td>
+        </tr>
+        <tr>
+            <td>&nbsp;&nbsp;&nbsp;Autres produits</td>
+            <td>${formatToCurrency(soldes.produits.autres)}</td>
         </tr>
         <tr class="total">
             <td>Total des produits d'exploitation</td>

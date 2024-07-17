@@ -1,6 +1,9 @@
 import { trouverCompte, formatToCurrency } from './utils.js';
+import { lignesEnEcritures } from './ecritures.js';
 
-export function creationGrandLivre(ecritures, currentYear) {
+export function creationGrandLivre(jsonData, currentYear) {
+    const ecritures = lignesEnEcritures(jsonData, currentYear);
+
     const grandLivreEcritures = {};
     const comptes = [...new Set(ecritures.map(({ Compte }) => Compte))].sort();
 
