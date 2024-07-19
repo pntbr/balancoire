@@ -20,7 +20,7 @@
 notes : Pour solder les comptes du bilan, les comptes débiteurs sont crédités et les compte créditeurs sont débités. comme au bilan l'actif est égales au passif, on peut donc passer une écriture unique ou passer deux écritures en utilisant le compte 891
 
 ## US8 Consolidation
-- [ ] 603 non défini
+- [ ] revoir les erreurs
 - [ ] reprendre les textes d'aides
 - [ ] impot de l'exercice en charge constaté ?
 - [ ] passer les comptes 2 et 3 ?
