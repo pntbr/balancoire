@@ -1,6 +1,10 @@
 import { parseCSV } from './parseCSV.js';
-import { lineToEntry, generateBalance, generateLedger, generateIncomeStatement } from './generateEntries.js';
-import { injectJournalEntries, injectBalanceEntries, injectLedgerEntries, injectIncomeStatementEntries } from './injectEntries.js';
+import { arretComptesClotureEcritures } from './ecritures.js';
+import { creationBalance, injecteBalanceEcritures } from './balance.js';
+import { creationGrandLivre, injecteGrandLivreEcritures } from './grand-livre.js';
+import { creationCompteResultat, injecteCompteResultatEcritures } from './compte-resultat.js';
+import { creationBilan, injecteBilanEcritures } from './bilan.js';
+import { creationJournal, injecteJournalEcritures } from './journal.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     fetch('.env.json')
@@ -75,7 +79,7 @@ function hideErrorMessage() {
     errorMessageElement.style.display = 'none';
 }
 
-function loadCSV(sheetId, year) {
+function loadCSV(sheetId, currentYear) {
     const yearToGid = {
         '2024': '929320585',
         '2023': '80488655',
@@ -84,7 +88,7 @@ function loadCSV(sheetId, year) {
         '2020': '43794826',
         '2019': '0'
     };
-    const csvUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&pli=1&gid=${yearToGid[year]}#gid=${yearToGid[year]}`;
+    const csvUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&pli=1&gid=${yearToGid[currentYear]}#gid=${yearToGid[currentYear]}`;
     hideErrorMessage();
     showLoader();
     fetch(csvUrl)
@@ -94,28 +98,28 @@ function loadCSV(sheetId, year) {
         })
         .then(csvText => {
             const jsonData = parseCSV(csvText);
-            const journalEntries = jsonData.flatMap(line => lineToEntry(line))
-                .sort((a, b) => {
-                    const dateA = new Date(a.Date.split('/').reverse().join('-'));
-                    const dateB = new Date(b.Date.split('/').reverse().join('-'));
-                    return dateA - dateB;
-                });
 
-            if (document.getElementById('journal-entries')) {
-                injectJournalEntries(journalEntries);
+            if (document.getElementById('journal-ecritures')) {
+                const journalEcritures = creationJournal(jsonData, currentYear);
+                injecteJournalEcritures(journalEcritures);
             }
-            if (document.getElementById('balance-entries')) {
-                const balanceEntries = generateBalance(journalEntries);
-                injectBalanceEntries(balanceEntries);
+            if (document.getElementById('balance-ecritures')) {
+                const balanceEcritures = creationBalance(jsonData, currentYear);
+                injecteBalanceEcritures(balanceEcritures);
             }
-            if (document.getElementById('ledger-entries')) {
-                const ledgerEntries = generateLedger(journalEntries);
-                injectLedgerEntries(ledgerEntries);
+            if (document.getElementById('grand-livre-ecritures')) {
+                const grandLivreEcritures = creationGrandLivre(jsonData, currentYear);
+                injecteGrandLivreEcritures(grandLivreEcritures);
             }
-            if (document.getElementById('income-statement-entries')) {
-                const incomeStatementEntries = generateIncomeStatement(journalEntries);
-                injectIncomeStatementEntries(incomeStatementEntries);
+            if (document.getElementById('compte-resultat-ecritures')) {
+                const compteResultatEcritures = creationCompteResultat(jsonData, currentYear);
+                injecteCompteResultatEcritures(compteResultatEcritures);
             }
+            if (document.getElementById('bilan-ecritures')) {
+                const bilanEcritures = creationBilan(jsonData, currentYear);
+                injecteBilanEcritures(bilanEcritures);
+            }
+            // const arretComptesEcritures = arretComptesClotureEcritures(ligneEnEcriture, currentYear);
             hideLoader();
         })
         .catch(error => {

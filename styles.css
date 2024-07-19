@@ -84,22 +84,27 @@ h1 {
     margin-bottom: 20px;
 }
 
-.account {
+.compte {
     margin-bottom: 20px;
 }
 
-.account h2 {
+.compte h2 {
     margin-bottom: 10px;
 }
 
 .total,
 .solde,
-.income-statement-title {
+.compte-resultat-titre {
     font-weight: bold;
 }
 
-.income-statement-title {
+.compte-resultat-titre {
     font-style: italic;
+}
+
+.bilan-titre {
+    background-color: #ddd;
+    text-align: center;
 }
 
 .modal {

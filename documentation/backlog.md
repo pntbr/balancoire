@@ -1,34 +1,33 @@
 # Backlog
 
-## US6 Gérer la clôture
-- [x] balance de clôture
-- [x] valorisation du stock + extourne : 603 - 355
-- [x] label pour les à-nouveaux
-- [x] gestion de l'ensemble des labels
-- [x] reprise des sheet pour toutes les années
-- [x] casse d'objets pertes
-- [x] écritures de cautions
-- [x] confusion inventaire et variation sur stock
-- [x] consolide le compte de résultat
-- [x] solder les comptes charges et recettes sur 120 ou 129
-
 ## US7 Construire le bilan
 - [x] créer une page modèle statique
-- [ ] injecter avec des données statiques
-- [ ] injecter avec des données exemples
-- [ ] injecter les données réelles
-- [ ] calculer les totaux
+- [x] passe tous les termes comptables en francais
+- [x] injecte automatiquement le résultat
+- [x] solder les comptes de charges et de produits 
+- [x] reprendre le code 
+- [x] passe les injections dans les fichiers respectifs
+- [x] injecter avec des données statiques
+- [x] injecter avec des données exemples
+- [x] injecter les données réelles
+- [x] calculer les totaux
+- [x] attribuer les comptes
+- [x] affectation resultat precedent 101
+- [x] AN- en une écriture - (P172 la compta pour les nuls) - avec vérif. équilibre
+  - [x] affectation réserve libre 106
+- [x] vérifier et consolider
+
+notes : Pour solder les comptes du bilan, les comptes débiteurs sont crédités et les compte créditeurs sont débités. comme au bilan l'actif est égales au passif, on peut donc passer une écriture unique ou passer deux écritures en utilisant le compte 891
 
 ## US8 Consolidation
-- [ ] AN- en une écriture - (P172 la compta pour les nuls) - avec vérif. équilibre
-  - [ ] affectation réserve libre 106
+- [ ] revoir les erreurs
+- [ ] reprendre les textes d'aides
+- [ ] impot de l'exercice en charge constaté ?
 - [ ] passer les comptes 2 et 3 ?
 - [ ] charge constatée d'avance
 - [ ] documenté à-nouveau et charge constatées d'avance : https://valoxy.org/blog/ecritures-dinventaire-en-comptabilite/
 - [ ] problème throw/catch
-- [ ] rbt Stéphane, Yalin
-- [x] reprendre les comptes dans les sheets (plus humain)
-- [ ] reprendre les labels pour le grand livre
+- [ ] rbt Stéphane, Yalin simplifier les sheets de saisies
 - [ ] stripe écritures
 - [ ] litige
 - [ ] notice avec exemples de toutes les écritures générées
@@ -40,20 +39,19 @@
 ## US9 Gérer les inventaires
 - [ ] créer une page inventaire
 - [ ] reprendre les données pour l'année choisie
+- [ ] aller chercher l'inventaire pour les clôtures et à-nouveaux
 
 ### Notes
 - [ ] apport initial
 - [ ] automatiser la normalisation du nom des factures
 - [ ] fournitures thés ?
 - [ ] injectLedgerEntries sert pour balance ?
-- [ ] date de la dernière écriture plutôt que date du jour ?
 - [ ] 47 comptes transitoires - attentes (factures mal identifiées) puis soldé dans 758 ou 658
 - [ ] faire une révision comptable - chap. 16
 - [ ] faire le fichier des écritures comptables
 - [ ] tests unitaires
-- [ ] compte de résultat retrouver les comptes du Plan Comptable
-    - [ ] - P315 correspondance entre les comptes - pour les nuls
-- [ ] faire une balance ?
+- [ ] rédiger les annexes
+- [ ] rédiger les AGO
 - [ ] faire un truc pour les factures manquantes
 - [ ] importer directement les écritures wise
 - [ ] vérifier que les pointage bancaire ne correspondent pas à des dépenses Yalin ou Stéphane mais bien à B2T
@@ -62,6 +60,7 @@
 - [ ] optimiser 
 - [ ] produits bancaires (quel compte) - remboursements
 - [ ] vérifier facture amazon 2024
+- [ ] récupérer les AN de l'exercice N-1 automatiquement ?s
 
 ### Liens
 
