@@ -1,26 +1,7 @@
 # Backlog
 
-## US7 Construire le bilan
-- [x] créer une page modèle statique
-- [x] passe tous les termes comptables en francais
-- [x] injecte automatiquement le résultat
-- [x] solder les comptes de charges et de produits 
-- [x] reprendre le code 
-- [x] passe les injections dans les fichiers respectifs
-- [x] injecter avec des données statiques
-- [x] injecter avec des données exemples
-- [x] injecter les données réelles
-- [x] calculer les totaux
-- [x] attribuer les comptes
-- [x] affectation resultat precedent 101
-- [x] AN- en une écriture - (P172 la compta pour les nuls) - avec vérif. équilibre
-  - [x] affectation réserve libre 106
-- [x] vérifier et consolider
-
-notes : Pour solder les comptes du bilan, les comptes débiteurs sont crédités et les compte créditeurs sont débités. comme au bilan l'actif est égales au passif, on peut donc passer une écriture unique ou passer deux écritures en utilisant le compte 891
-
 ## US8 Consolidation
-- [ ] revoir les erreurs
+- [x] revoir les erreurs
 - [ ] reprendre les textes d'aides
 - [ ] impot de l'exercice en charge constaté ?
 - [ ] passer les comptes 2 et 3 ?
