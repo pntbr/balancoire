@@ -24,7 +24,6 @@ function creationEcriture(date, compte, label, debit, credit) {
 
 function aNouveauEcriture(line, numeroCompte, currentYear) {
     const montant = convertToNumber(line['montant']);
-
     const ecritures = {
         '370000': [
             creationEcriture(`01/01/${currentYear}`, '370000', 'annulation du stock initial', montant, ''),
@@ -53,7 +52,7 @@ function aNouveauEcriture(line, numeroCompte, currentYear) {
         return [creationEcriture(`01/01/${currentYear}`, numeroCompte, `reprise de ${line['poste']}`, debit, credit)];
     }
 
-    return handleError(`L'écriture d'a-nouveau n'a pu être rendue`, line);
+    handleError(`L'écriture d'a-nouveau n'a pu être rendue`, line);
 }
 
 function inventaireClotureEcriture(line) {
@@ -67,10 +66,10 @@ function cautionEcriture(line) {
     const creditCompte = line['qui paye ?'] === 'B2T' ? (line["nature"] === 'esp' ? '530000' : '512000') : '467000';
     return [
         creationEcriture(line['date'], '275000', `
-                    caution $ { line['qui reçoit'] }
+                    caution ${ line['qui reçoit'] }
                     `, convertToNumber(line['montant']), ''),
         creationEcriture(line['date'], creditCompte, `
-                    caution $ { line['qui reçoit'] }
+                    caution ${ line['qui reçoit'] }
                     `, '', convertToNumber(line['montant']))
     ];
 }
@@ -125,7 +124,6 @@ function impotExercice(ecritures, currentYear) {
 function ligneEnEcriture(line, currentYear) {
     const numeroCompte = trouverCompte({ label: line.poste }).compte;
     try {
-        // Esquive les à-nouveaux
         if (line['date'].startsWith('01/01')) {
             return aNouveauEcriture(line, numeroCompte, currentYear);
         }
@@ -142,9 +140,9 @@ function ligneEnEcriture(line, currentYear) {
         if (numeroCompte.startsWith('6')) return line['qui paye ?'] === 'B2T' ? depenseEcriture(line, numeroCompte) : depensePersonneEcriture(line, numeroCompte);
         if (numeroCompte.startsWith('7')) return venteEcriture(line, numeroCompte);
 
-        return handleError(`L'écriture ne comporte pas un compte connu`, line);
+        handleError(`L'écriture ne comporte pas un compte connu`, line);
     } catch (error) {
-        return handleError(`L'écriture n'a pu être rendue`, line);
+        handleError(`L'écriture n'a pu être rendue`, line);
     }
 }
 
