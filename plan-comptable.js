@@ -1,6 +1,6 @@
 export const PLAN_COMPTABLE = {
     "106000": ["réserves"],
-    "119000": ["report à nouveau (solde débiteur)"],
+    "119000": ["report à nouveau (solde débiteur)", "report"],
     "120000": ["résultat de l'exercice (excédent)", "excédent"],
     "129000": ["résultat de l'exercice (déficit)", "déficit"],
     "275000": ["dépôts et cautionnements versés", "cautions"],

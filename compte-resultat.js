@@ -76,7 +76,7 @@ export function injecteCompteResultatEcritures(soldes) {
         </tr>
         <tr>
             <td>&nbsp;&nbsp;&nbsp;Autres produits</td>
-            <td>${formatToCurrency(soldes.produits.autres)}</td>
+            <td> ${formatToCurrency(soldes.produits.autres)}</td>
         </tr>
         <tr class="total">
             <td>Total des produits d'exploitation</td>

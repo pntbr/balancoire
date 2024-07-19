@@ -16,45 +16,57 @@ function creationEcriture(date, compte, label, debit, credit) {
     };
 }
 
-function aNouveauEcriture(line, numeroCompte) {
-    let debitCompte = '';
-    let creditCompte = '';
-    let label = '';
-    if (numeroCompte === '370000') {
-        debitCompte = '603700';
-        creditCompte = '370000';
-        label = 'annulation du stock initial';
-    } else if (numeroCompte === '129000') {
-        debitCompte = '119000';
-        creditCompte = '129000';
-        label = 'déficit de l’exercice précédent';
-    } else if (numeroCompte === '120000') {
-        debitCompte = '120000';
-        creditCompte = '106000';
-        label = 'excédent de l’exercice précédent';
-    } else {
-        debitCompte = '890000';
-        creditCompte = numeroCompte;
-        label = `report à-nouveaux ${line['poste']}`;
+function aNouveauEcriture(line, numeroCompte, currentYear) {
+    const montant = convertToNumber(line['montant']);
+
+    const ecritures = {
+        '370000': [
+            creationEcriture(`01/01/${currentYear}`, '370000', 'annulation du stock initial', montant, ''),
+            creationEcriture(`01/01/${currentYear}`, '603700', 'annulation du stock initial', montant, ''),
+            creationEcriture(`01/01/${currentYear}`, '370000', 'annulation du stock initial', '', montant)
+        ],
+        '129000': [
+            creationEcriture(`01/01/${currentYear}`, '129000', 'reprise du résultat déficitaire N-1', montant, ''),
+            creationEcriture(`01/01/${currentYear}`, '119000', 'affectation du résultat déficitaire N-1', montant, ''),
+            creationEcriture(`01/01/${currentYear}`, '129000', 'affectation du résultat déficitaire N-1', '', montant)
+        ],
+        '120000': [
+            creationEcriture(`01/01/${currentYear}`, '120000', 'reprise du résultat déficitaire N-1', '', montant),
+            creationEcriture(`01/01/${currentYear}`, '120000', 'affectation du résultat déficitaire N-1', montant, ''),
+            creationEcriture(`01/01/${currentYear}`, '106000', 'affectation du résultat déficitaire N-1', '', montant)
+        ]
+    };
+
+    if (ecritures[numeroCompte]) {
+        return ecritures[numeroCompte];
     }
-    return [
-        creationEcriture(line['date'], debitCompte, label, convertToNumber(line['montant']), ''),
-        creationEcriture(line['date'], creditCompte, label, '', convertToNumber(line['montant']))
-    ];
+
+    if (/^[12345]/.test(numeroCompte)) {
+        const debit = montant < 0 ? Math.abs(montant) : '';
+        const credit = montant > 0 ? Math.abs(montant) : '';
+        return [creationEcriture(`01/01/${currentYear}`, numeroCompte, `reprise de ${line['poste']}`, debit, credit)];
+    }
+
+    displayErrorMessage(`Erreur : L'écriture d'a-nouveau ${JSON.stringify(line)} n'a pu être rendue`);
+    throw error;
 }
 
 function inventaireClotureEcriture(line) {
     return [
         creationEcriture(line['date'], '370000', 'clôture inventaire', convertToNumber(line['montant']), ''),
-        creationEcriture(line['date'], '603000', 'clôture inventaire', '', convertToNumber(line['montant']))
+        creationEcriture(line['date'], '603700', 'clôture inventaire', '', convertToNumber(line['montant']))
     ];
 }
 
 function cautionEcriture(line) {
     const creditCompte = line['qui paye ?'] === 'B2T' ? (line["nature"] === 'esp' ? '530000' : '512000') : '467000';
     return [
-        creationEcriture(line['date'], '275000', `caution ${line['qui reçoit']}`, convertToNumber(line['montant']), ''),
-        creationEcriture(line['date'], creditCompte, `caution ${line['qui reçoit']}`, '', convertToNumber(line['montant']))
+        creationEcriture(line['date'], '275000', `
+                    caution $ { line['qui reçoit'] }
+                    `, convertToNumber(line['montant']), ''),
+        creationEcriture(line['date'], creditCompte, `
+                    caution $ { line['qui reçoit'] }
+                    `, '', convertToNumber(line['montant']))
     ];
 }
 
@@ -68,7 +80,7 @@ function remboursementEcriture(line) {
 
 function depenseEcriture(line, numeroCompte) {
     const checkCash = line["nature"] === 'esp';
-    const piece = line['facture correspondante'] ? `- <a href="${line['facture correspondante']}">pièce</a>` : '';
+    const piece = line['facture correspondante'] ? ` - <a href = "${line['facture correspondante']}" > pièce </a>` : '';
     const label = `achat B2T : ${line['qui reçoit']} ${piece}`;
     return [
         creationEcriture(line['date'], numeroCompte, label, convertToNumber(line['montant']), ''),
@@ -95,20 +107,6 @@ function venteEcriture(line, numeroCompte) {
     ];
 }
 
-function resultatExercice(ecritures, currentYear) {
-    const resultat = sommeCompteParRacine(ecritures, '7') + sommeCompteParRacine(ecritures, '6');
-
-    const isExcédentaire = resultat > 0;
-    const compteDebit = isExcédentaire ? '120000' : '119000';
-    const compteCredit = isExcédentaire ? '106000' : '129000';
-    const label = isExcédentaire ? 'résultat excédentaire' : 'résultat déficitaire';
-
-    return [
-        creationEcriture(`31/12/${currentYear}`, compteDebit, label, Math.abs(resultat), ''),
-        creationEcriture(`31/12/${currentYear}`, compteCredit, label, '', Math.abs(resultat))
-    ];
-}
-
 function impotExercice(ecritures, currentYear) {
     const resultat = sommeCompteParRacine(ecritures, '7') + sommeCompteParRacine(ecritures, '6');
     const montantImpot = resultat * 0.15;
@@ -119,12 +117,12 @@ function impotExercice(ecritures, currentYear) {
     ];
 }
 
-function ligneEnEcriture(line) {
+function ligneEnEcriture(line, currentYear) {
     const numeroCompte = trouverCompte({ label: line.poste }).compte;
     try {
-        // Gère les à-nouveaux
+        // Esquive les à-nouveaux
         if (line['date'].startsWith('01/01')) {
-            return aNouveauEcriture(line, numeroCompte);
+            return aNouveauEcriture(line, numeroCompte, currentYear);
         }
         // Gère la clôture
         if (line['date'].startsWith('31/12')) {
@@ -140,7 +138,7 @@ function ligneEnEcriture(line) {
         if (numeroCompte.startsWith('7')) return venteEcriture(line, numeroCompte);
 
         displayErrorMessage(`Erreur : L'écriture ${JSON.stringify(line)} ne comporte pas un compte connu`);
-        return;
+        throw error;
     } catch (error) {
         displayErrorMessage(`Erreur : L'écriture ${JSON.stringify(line)} n'a pu être rendue`);
         throw error;
@@ -148,10 +146,9 @@ function ligneEnEcriture(line) {
 }
 
 export function lignesEnEcritures(jsonData, currentYear) {
-    const ecritures = jsonData.flatMap(ligne => ligneEnEcriture(ligne));
+    const ecritures = jsonData.flatMap(ligne => ligneEnEcriture(ligne, currentYear));
 
     return ecritures
-        .concat(resultatExercice(ecritures, currentYear))
         .concat(impotExercice(ecritures, currentYear))
         .sort((a, b) => {
             const dateA = new Date(a.Date.split('/').reverse().join('-'));
@@ -161,6 +158,7 @@ export function lignesEnEcritures(jsonData, currentYear) {
 }
 
 export function arretComptesClotureEcritures(ecritures, currentYear) {
+    const resultat = sommeCompteParRacine(ecritures, '7') + sommeCompteParRacine(ecritures, '6');
     const ecrituresArret = [...ecritures];
     const comptesClasses6et7 = [...new Set(ecrituresArret
         .filter(ecriture => ecriture['Compte'].startsWith('6') || ecriture['Compte'].startsWith('7'))
@@ -178,6 +176,12 @@ export function arretComptesClotureEcritures(ecritures, currentYear) {
             }
         }
     });
+
+    const isExcédentaire = resultat > 0;
+    const compte = isExcédentaire ? '120000' : '129000';
+    const label = isExcédentaire ? 'résultat excédentaire' : 'résultat déficitaire';
+
+    ecrituresArret.push(creationEcriture(`31/12/${currentYear}`, compte, label, !isExcédentaire && Math.abs(resultat), isExcédentaire && Math.abs(resultat)));
 
     return ecrituresArret;
 }

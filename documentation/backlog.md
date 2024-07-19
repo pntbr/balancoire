@@ -12,23 +12,22 @@
 - [x] injecter les données réelles
 - [x] calculer les totaux
 - [x] attribuer les comptes
-- [ ] vérifier et consolider
+- [x] affectation resultat precedent 101
+- [x] AN- en une écriture - (P172 la compta pour les nuls) - avec vérif. équilibre
+  - [x] affectation réserve libre 106
+- [x] vérifier et consolider
 
 notes : Pour solder les comptes du bilan, les comptes débiteurs sont crédités et les compte créditeurs sont débités. comme au bilan l'actif est égales au passif, on peut donc passer une écriture unique ou passer deux écritures en utilisant le compte 891
 
 ## US8 Consolidation
-- [ ] affectation resultat precedent 101
+- [ ] 603 non défini
 - [ ] reprendre les textes d'aides
 - [ ] impot de l'exercice en charge constaté ?
-- [ ] AN- en une écriture - (P172 la compta pour les nuls) - avec vérif. équilibre
-  - [ ] affectation réserve libre 106
 - [ ] passer les comptes 2 et 3 ?
 - [ ] charge constatée d'avance
 - [ ] documenté à-nouveau et charge constatées d'avance : https://valoxy.org/blog/ecritures-dinventaire-en-comptabilite/
 - [ ] problème throw/catch
 - [ ] rbt Stéphane, Yalin simplifier les sheets de saisies
-- [x] reprendre les comptes dans les sheets (plus humain)
-- [ ] reprendre les labels pour le grand livre
 - [ ] stripe écritures
 - [ ] litige
 - [ ] notice avec exemples de toutes les écritures générées
@@ -53,8 +52,6 @@ notes : Pour solder les comptes du bilan, les comptes débiteurs sont crédités
 - [ ] tests unitaires
 - [ ] rédiger les annexes
 - [ ] rédiger les AGO
-- [ ] compte de résultat retrouver les comptes du Plan Comptable
-    - [ ] - P315 correspondance entre les comptes - pour les nuls
 - [ ] faire un truc pour les factures manquantes
 - [ ] importer directement les écritures wise
 - [ ] vérifier que les pointage bancaire ne correspondent pas à des dépenses Yalin ou Stéphane mais bien à B2T
@@ -63,6 +60,7 @@ notes : Pour solder les comptes du bilan, les comptes débiteurs sont crédités
 - [ ] optimiser 
 - [ ] produits bancaires (quel compte) - remboursements
 - [ ] vérifier facture amazon 2024
+- [ ] récupérer les AN de l'exercice N-1 automatiquement ?s
 
 ### Liens
 

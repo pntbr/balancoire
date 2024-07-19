@@ -1,26 +1,29 @@
 import { sommeCompteParRacine, formatToCurrency } from './utils.js';
-import { lignesEnEcritures } from './ecritures.js';
+import { lignesEnEcritures, arretComptesClotureEcritures } from './ecritures.js';
 
 export function creationBilan(jsonData, currentYear) {
     const ecritures = lignesEnEcritures(jsonData, currentYear);
+    const ecrituresArret = arretComptesClotureEcritures(ecritures, currentYear);
+    const compte46 = sommeCompteParRacine(ecrituresArret, '46');
+    const compte444 = sommeCompteParRacine(ecrituresArret, '444');
 
-    const circulantCreance = sommeCompteParRacine(ecritures, '46');
-
-    const actifImmobilisationCorporelles = sommeCompteParRacine(ecritures, '21');
-    const actifImmobilisationFinancieres = sommeCompteParRacine(ecritures, '27');
+    const actifImmobilisationCorporelles = sommeCompteParRacine(ecrituresArret, '21');
+    const actifImmobilisationFinancieres = sommeCompteParRacine(ecrituresArret, '27');
     const totalActifImmobilisation = actifImmobilisationCorporelles + actifImmobilisationFinancieres;
 
-    const actifCirculantStocks = sommeCompteParRacine(ecritures, '37');
-    const actifCirculantCreances = circulantCreance < 0 ? circulantCreance : 0;
-    const actifCirculantDisponibilites = sommeCompteParRacine(ecritures, '51') + sommeCompteParRacine(ecritures, '53');
+    const actifCirculantStocks = sommeCompteParRacine(ecrituresArret, '37');
+    const actifCirculantCreances = (compte46 < 0 ? compte46 : 0) + (compte444 > 0 ? compte444 : 0);
+    const actifCirculantDisponibilites = sommeCompteParRacine(ecrituresArret, '51') + sommeCompteParRacine(ecrituresArret, '53');
     const totalActifCirculant = actifCirculantStocks + actifCirculantCreances + actifCirculantDisponibilites;
     const totalActif = totalActifCirculant + totalActifImmobilisation;
 
-    const passifCapitauxReserves = sommeCompteParRacine(ecritures, '10');
-    const passifCapitauxExercices = sommeCompteParRacine(ecritures, '12');
-    const totalPassifCapitaux = passifCapitauxReserves + passifCapitauxExercices;
+    const passifCapitauxReserves = sommeCompteParRacine(ecrituresArret, '10');
+    const passifCapitauxExercices = sommeCompteParRacine(ecrituresArret, '12');
+    const passifCapitauxReport = sommeCompteParRacine(ecrituresArret, '119');
+    const totalPassifCapitaux = passifCapitauxReserves + passifCapitauxExercices + passifCapitauxReport;
     const passifCirculantFournisseurs = 0;
-    const passifCirculantDettes = circulantCreance > 0 ? circulantCreance : 0;;
+    const passifCirculantDettesFiscales = compte444 > 0 ? compte444 : 0;
+    const passifCirculantDettes = compte46 > 0 ? compte46 : 0;
     const totalPassifCirculant = passifCirculantFournisseurs + passifCirculantDettes;
     const totalPassif = totalPassifCapitaux + totalPassifCirculant;
 
@@ -43,10 +46,12 @@ export function creationBilan(jsonData, currentYear) {
             'capitaux': {
                 'reserves': passifCapitauxReserves,
                 'exercice': passifCapitauxExercices,
+                'report': passifCapitauxReport,
                 'total': totalPassifCapitaux
             },
             'circulant': {
                 'fournisseurs': passifCirculantFournisseurs,
+                'fiscales': passifCirculantDettesFiscales,
                 'dettes': passifCirculantDettes,
                 'total': totalPassifCirculant
             },
@@ -116,6 +121,10 @@ export function injecteBilanEcritures(soldes) {
             <td>&nbsp;&nbsp;&nbsp;Résultat de l'exercice</td>
             <td>${formatToCurrency(soldes.passif.capitaux.exercice)}</td>
         </tr>
+        <tr>
+            <td>&nbsp;&nbsp;&nbsp;Report à-nouveau</td>
+            <td>${formatToCurrency(soldes.passif.capitaux.report)}</td>
+        </tr>
         <tr class="total">
             <td>Total Capitaux propres</td>
             <td>${formatToCurrency(soldes.passif.capitaux.total)}</td>
@@ -127,6 +136,10 @@ export function injecteBilanEcritures(soldes) {
         <tr>
             <td>&nbsp;&nbsp;&nbsp;Dettes fournisseurs</td>
             <td>${formatToCurrency(soldes.passif.circulant.fournisseurs)}</td>
+        </tr>
+        <tr>
+            <td>&nbsp;&nbsp;&nbsp;Dettes fiscales</td>
+            <td>${formatToCurrency(soldes.passif.circulant.fiscales)}</td>
         </tr>
         <tr>
             <td>&nbsp;&nbsp;&nbsp;Autres dettes</td>
