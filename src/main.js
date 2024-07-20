@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(response => response.json())
         .then(env => {
             const SHEET_ID = env.SHEET_ID;
+            const SHEETNAME_TO_GID = env.SHEETNAME_TO_GID;
 
             const infoBtn = document.getElementById('infoBtn');
             const infoModal = document.getElementById('infoModal');
@@ -61,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         });
                     });
 
-                    loadCSV(SHEET_ID, currentYear);
+                    loadCSV(SHEET_ID, SHEETNAME_TO_GID, currentYear);
                 });
         });
 });
@@ -79,16 +80,11 @@ function hideErrorMessage() {
     errorMessageElement.style.display = 'none';
 }
 
-function loadCSV(sheetId, currentYear) {
-    const yearToGid = {
-        '2024': '929320585',
-        '2023': '80488655',
-        '2022': '581969889',
-        '2021': '168710858',
-        '2020': '43794826',
-        '2019': '0'
-    };
-    const csvUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&pli=1&gid=${yearToGid[currentYear]}#gid=${yearToGid[currentYear]}`;
+function loadCSV(sheetId, sheetNameToGid, currentYear) {
+    console.log("sheetNameToGid", sheetNameToGid)
+    
+    const sheetName = currentYear;
+    const csvUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&pli=1&gid=${sheetNameToGid[sheetName]}#gid=${sheetNameToGid[sheetName]}`;
     hideErrorMessage();
     showLoader();
     fetch(csvUrl)
