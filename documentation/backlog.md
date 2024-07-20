@@ -1,13 +1,18 @@
 # Backlog
 
 ## US8 Consolidation
+
 - [x] revoir les erreurs
+- [x] mettre en place des tests unitaires
+  - [x] placer le code dans src
+  - [x] installer jest
+  - [x] réaliser quelques tests
+  - [ ] mettre en place tous les test
 - [ ] reprendre les textes d'aides
 - [ ] impot de l'exercice en charge constaté ?
 - [ ] passer les comptes 2 et 3 ?
 - [ ] charge constatée d'avance
 - [ ] documenté à-nouveau et charge constatées d'avance : https://valoxy.org/blog/ecritures-dinventaire-en-comptabilite/
-- [ ] problème throw/catch
 - [ ] rbt Stéphane, Yalin simplifier les sheets de saisies
 - [ ] stripe écritures
 - [ ] litige
@@ -16,13 +21,17 @@
 - [ ] liées les factures
 - [ ] mode d'emploi pour lancer l'environnement
   - [ ] sandbox avec un fichier excel
+- [ ] refactoring github companion
 
 ## US9 Gérer les inventaires
+
 - [ ] créer une page inventaire
 - [ ] reprendre les données pour l'année choisie
 - [ ] aller chercher l'inventaire pour les clôtures et à-nouveaux
 
 ### Notes
+
+- [ ] balances de clôture .
 - [ ] apport initial
 - [ ] automatiser la normalisation du nom des factures
 - [ ] fournitures thés ?
@@ -38,7 +47,7 @@
 - [ ] vérifier que les pointage bancaire ne correspondent pas à des dépenses Yalin ou Stéphane mais bien à B2T
 - [ ] wise 2024
 - [ ] vérifier avec une comptable
-- [ ] optimiser 
+- [ ] optimiser
 - [ ] produits bancaires (quel compte) - remboursements
 - [ ] vérifier facture amazon 2024
 - [ ] récupérer les AN de l'exercice N-1 automatiquement ?s
@@ -46,6 +55,7 @@
 ### Liens
 
 #### Affectation résultat
+
 - https://www.associatheque.fr/fr/gerer-une-association/index.html?amcpage=23
 - https://libeo.io/blog/comptabilite/ecriture-comptable-cloture-exercice
 - https://www.compta-facile.com/cloture-et-reouverture-comptes/
