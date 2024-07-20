@@ -4,10 +4,9 @@
 
 - [x] créer une page inventaire
 - [x] passer les sheets dans .env
-- [ ] reprendre les données pour l'année choisie
-- [ ] déplacer le code modal error dans main
-- [ ] aller chercher l'inventaire pour les clôtures et à-nouveaux
-- [ ] faire les totaux
+- [x] reprendre les données pour l'année choisie
+- [x] refactoriser main
+- [x] faire les totaux
 
 ## US10 Faire un bac à sable
 
@@ -18,35 +17,36 @@
 - [ ] README
   - [ ] mode d'emploi pour lancer l'environnement
 
-## US10 Faire le fichier des écritures comptables - FEC
+## US11 Faire le fichier des écritures comptables - FEC
+
+- [ ] créer une page
 
 ### Notes
 
-- [ ] documenté à-nouveau et charge constatées d'avance : https://valoxy.org/blog/ecritures-dinventaire-en-comptabilite/
+- [ ] récupérer les AN de l'exercice N-1 automatiquement
+- [ ] aller chercher l'inventaire pour les clôtures et AN
+
 - [ ] stripe écritures
+- [ ] importer directement les écritures wise
+- [ ] liées les factures
+- [ ] balances de clôture
+- [ ] automatiser la normalisation du nom des factures
+
 - [ ] litige
 - [ ] immobilisations machine
-- [ ] liées les factures
 - [ ] refactoring github copilot
 - [ ] mettre en place tous les tests
 - [ ] mettre en place des tests fonctionnels
-- [ ] balances de clôture .
 - [ ] apport initial
-- [ ] automatiser la normalisation du nom des factures
-- [ ] fournitures thés ?
-- [ ] injectLedgerEntries sert pour balance ?
+- [ ] documenté à-nouveau et charge constatées d'avance : https://valoxy.org/blog/ecritures-dinventaire-en-comptabilite/
 - [ ] 47 comptes transitoires - attentes (factures mal identifiées) puis soldé dans 758 ou 658
 - [ ] faire une révision comptable - chap. 16
-- [ ] tests unitaires
 - [ ] rédiger les annexes
-- [ ] importer directement les écritures wise
-- [ ] vérifier que les pointage bancaire ne correspondent pas à des dépenses Yalin ou Stéphane mais bien à B2T
-- [ ] wise 2024
 - [ ] vérifier avec une comptable
-- [ ] optimiser
 - [ ] produits bancaires (quel compte) - remboursements
-- [ ] récupérer les AN de l'exercice N-1 automatiquement ?s
 
+- [ ] wise 2024
+- [ ] vérifier que les pointage bancaire ne correspondent pas à des dépenses Yalin ou Stéphane mais bien à B2T
 - [ ] rédiger les AGO
 - [ ] vérifier facture amazon 2024
 - [ ] faire un truc pour les factures manquantes
