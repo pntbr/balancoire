@@ -1,33 +1,24 @@
 # Backlog
 
-## US7 Construire le bilan
-- [x] créer une page modèle statique
-- [x] passe tous les termes comptables en francais
-- [x] injecte automatiquement le résultat
-- [x] solder les comptes de charges et de produits 
-- [x] reprendre le code 
-- [x] passe les injections dans les fichiers respectifs
-- [x] injecter avec des données statiques
-- [x] injecter avec des données exemples
-- [x] injecter les données réelles
-- [x] calculer les totaux
-- [x] attribuer les comptes
-- [x] affectation resultat precedent 101
-- [x] AN- en une écriture - (P172 la compta pour les nuls) - avec vérif. équilibre
-  - [x] affectation réserve libre 106
-- [x] vérifier et consolider
-
-notes : Pour solder les comptes du bilan, les comptes débiteurs sont crédités et les compte créditeurs sont débités. comme au bilan l'actif est égales au passif, on peut donc passer une écriture unique ou passer deux écritures en utilisant le compte 891
-
 ## US8 Consolidation
-- [ ] revoir les erreurs
-- [ ] reprendre les textes d'aides
-- [ ] impot de l'exercice en charge constaté ?
-- [ ] passer les comptes 2 et 3 ?
-- [ ] charge constatée d'avance
+
+- [x] revoir les erreurs
+- [x] mettre en place des tests unitaires
+  - [x] placer le code dans src
+  - [x] installer jest
+  - [x] réaliser quelques tests
+- [x] reprendre les textes d'aides
+- [x] rbt Stéphane, Yalin simplifier les sheets de saisies
+
+## US9 Gérer les inventaires
+
+- [ ] créer une page inventaire
+- [ ] reprendre les données pour l'année choisie
+- [ ] aller chercher l'inventaire pour les clôtures et à-nouveaux
+
+### Notes
+
 - [ ] documenté à-nouveau et charge constatées d'avance : https://valoxy.org/blog/ecritures-dinventaire-en-comptabilite/
-- [ ] problème throw/catch
-- [ ] rbt Stéphane, Yalin simplifier les sheets de saisies
 - [ ] stripe écritures
 - [ ] litige
 - [ ] notice avec exemples de toutes les écritures générées
@@ -35,13 +26,10 @@ notes : Pour solder les comptes du bilan, les comptes débiteurs sont crédités
 - [ ] liées les factures
 - [ ] mode d'emploi pour lancer l'environnement
   - [ ] sandbox avec un fichier excel
-
-## US9 Gérer les inventaires
-- [ ] créer une page inventaire
-- [ ] reprendre les données pour l'année choisie
-- [ ] aller chercher l'inventaire pour les clôtures et à-nouveaux
-
-### Notes
+- [ ] refactoring github copilot
+- [ ] mettre en place tous les tests
+- [ ] mettre en place des tests fonctionnels
+- [ ] balances de clôture .
 - [ ] apport initial
 - [ ] automatiser la normalisation du nom des factures
 - [ ] fournitures thés ?
@@ -57,7 +45,7 @@ notes : Pour solder les comptes du bilan, les comptes débiteurs sont crédités
 - [ ] vérifier que les pointage bancaire ne correspondent pas à des dépenses Yalin ou Stéphane mais bien à B2T
 - [ ] wise 2024
 - [ ] vérifier avec une comptable
-- [ ] optimiser 
+- [ ] optimiser
 - [ ] produits bancaires (quel compte) - remboursements
 - [ ] vérifier facture amazon 2024
 - [ ] récupérer les AN de l'exercice N-1 automatiquement ?s
@@ -65,6 +53,7 @@ notes : Pour solder les comptes du bilan, les comptes débiteurs sont crédités
 ### Liens
 
 #### Affectation résultat
+
 - https://www.associatheque.fr/fr/gerer-une-association/index.html?amcpage=23
 - https://libeo.io/blog/comptabilite/ecriture-comptable-cloture-exercice
 - https://www.compta-facile.com/cloture-et-reouverture-comptes/

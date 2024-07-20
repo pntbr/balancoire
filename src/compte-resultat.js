@@ -55,7 +55,7 @@ export function injecteCompteResultatEcritures(soldes) {
     const tableBody = document.getElementById('compte-resultat-ecritures');
     tableBody.innerHTML = `
         <tr>
-            <td class="compte-resultat-titre">Produits d'exploitation</td>
+            <td class="compte-resultat-titre">Produits de l'activité</td>
             <td></td>
         </tr>
         <tr>
@@ -79,11 +79,11 @@ export function injecteCompteResultatEcritures(soldes) {
             <td> ${formatToCurrency(soldes.produits.autres)}</td>
         </tr>
         <tr class="total">
-            <td>Total des produits d'exploitation</td>
+            <td>Total des produits de l'activité</td>
             <td>${formatToCurrency(soldes.produits.total)}</td>
         </tr>
         <tr>
-            <td class="compte-resultat-titre">Charges d'exploitation</td>
+            <td class="compte-resultat-titre">Charges de l'activité</td>
             <td></td>
         </tr>
         <tr>
@@ -111,7 +111,7 @@ export function injecteCompteResultatEcritures(soldes) {
             <td>${formatToCurrency(soldes.charges.autres)}</td>
         </tr>
         <tr class="total">
-            <td>Total des charges d'exploitation</td>
+            <td>Total des charges de l'activité</td>
             <td>${formatToCurrency(soldes.charges.total)}</td>
         </tr>
         <tr class="total">

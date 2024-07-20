@@ -11,7 +11,7 @@ Brut de Thé est une association à but non lucratif ayant une activité commerc
 
 ## Obligations légales
 
-Les entreprises soumises au régime réel simplifié doivent tenir une comptabilité classique : un bilan, un compte de résultat et des annexes. Des dispositions particulières s’appliquent pour alléger vos obligations comptables :
+Les associations soumises au régime réel simplifié doivent tenir une comptabilité classique : un bilan, un compte de résultat et des annexes. Des dispositions particulières s’appliquent pour alléger vos obligations comptables :
 
 - le livre journal n’enregistre journellement que les recettes encaissées et les dépenses payées,
 - les créances et les dettes sont constatées à la clôture de l’exercice,
@@ -27,7 +27,8 @@ Après avoir télécharger les fichiers
 
 Ajouter un fichier avec l'identifiant de votre google sheet
 
-*.env.json*
+_.env.json_
+
 ```
 {
     "SHEET_ID": "1s2dw-xxxxxxx-w"
@@ -35,7 +36,6 @@ Ajouter un fichier avec l'identifiant de votre google sheet
 ```
 
 Lancer un serveur web dans le dossier de l'application.
-
 
 ### Journal général
 
@@ -52,16 +52,16 @@ Le journal général est un registre comptable dans lequel toutes les opération
 
 ### Exemple d'un Journal Général Minimal
 
-| Date       | Pièce Justif. | Libellé de l'opération                | Compte Débit       | Compte Crédit      | Montant  |
-|------------|---------------|---------------------------------------|--------------------|--------------------|----------|
-| 01/01/2024 | Facture 001   | Achat de fournitures de bureau        | 606100 Fournitures | 401000 Fournisseurs | 150,00 € |
-| 03/01/2024 | Reçu 002      | Vente de produits lors d'un événement | 411000 Clients     | 701000 Ventes      | 200,00 € |
-| 05/01/2024 | Reçu 003      | Cotisations des membres               | 512000 Banque      | 756000 Cotisations | 300,00 € |
-| 07/01/2024 | Facture 004   | Paiement du loyer                     | 613200 Loyer       | 512000 Banque      | 500,00 € |
-| 10/01/2024 | Facture 005   | Remboursement de frais de déplacement | 625100 Déplacements| 401000 Fournisseurs | 75,00 € |
-| 15/01/2024 | Reçu 006      | Don reçu                              | 512000 Banque      | 758000 Dons        | 100,00 € |
-| 20/01/2024 | Facture 007   | Prestation de services                | 622600 Prestations | 401000 Fournisseurs | 250,00 € |
-| 25/01/2024 | Reçu 008      | Intérêts bancaires                    | 512000 Banque      | 764000 Produits financiers | 10,00 € |
+| Date       | Pièce Justif. | Libellé de l'opération                | Compte Débit        | Compte Crédit              | Montant  |
+| ---------- | ------------- | ------------------------------------- | ------------------- | -------------------------- | -------- |
+| 01/01/2024 | Facture 001   | Achat de fournitures de bureau        | 606100 Fournitures  | 401000 Fournisseurs        | 150,00 € |
+| 03/01/2024 | Reçu 002      | Vente de produits lors d'un événement | 411000 Clients      | 701000 Ventes              | 200,00 € |
+| 05/01/2024 | Reçu 003      | Cotisations des membres               | 512000 Banque       | 756000 Cotisations         | 300,00 € |
+| 07/01/2024 | Facture 004   | Paiement du loyer                     | 613200 Loyer        | 512000 Banque              | 500,00 € |
+| 10/01/2024 | Facture 005   | Remboursement de frais de déplacement | 625100 Déplacements | 401000 Fournisseurs        | 75,00 €  |
+| 15/01/2024 | Reçu 006      | Don reçu                              | 512000 Banque       | 758000 Dons                | 100,00 € |
+| 20/01/2024 | Facture 007   | Prestation de services                | 622600 Prestations  | 401000 Fournisseurs        | 250,00 € |
+| 25/01/2024 | Reçu 008      | Intérêts bancaires                    | 512000 Banque       | 764000 Produits financiers | 10,00 €  |
 
 ### Explications
 
@@ -105,13 +105,14 @@ Il permet de suivre les mouvements de chaque compte comptable de manière détai
 
 #### Utilité du Grand Livre
 
-1. **Transparence Financière** : Le grand livre permet de vérifier les écritures du journal et de s'assurer de leur exactitude. 
+1. **Transparence Financière** : Le grand livre permet de vérifier les écritures du journal et de s'assurer de leur exactitude.
 2. **Analyse Comptable** : Il facilite l'analyse des comptes en fournissant une vue d'ensemble des mouvements de chaque compte.
 3. **Justificatif** : En cas de contrôle fiscal ou de révision des comptes, le grand livre est un document de référence essentiel.
 
 #### Structure du Grand Livre
 
 Chaque compte du plan comptable y est détaillé, avec pour chacun les informations suivantes :
+
 - **Date de l'opération**
 - **Numéro de pièce justificative**
 - **Libellé de l'opération**
@@ -123,20 +124,20 @@ Chaque compte du plan comptable y est détaillé, avec pour chacun les informati
 
 #### Compte 512000 - Banque
 
-| Date       | Pièce Justif. | Libellé de l'opération        | Débit   | Crédit  | Solde     |
-|------------|---------------|------------------------------|---------|---------|-----------|
-| 05/01/2024 | Reçu 003      | Cotisations des membres      | 300,00 €|         | 300,00 €  |
-| 07/01/2024 | Facture 004   | Paiement du loyer            |         | 500,00 €| (200,00 €)|
-| 15/01/2024 | Reçu 006      | Don reçu                     | 100,00 €|         | (100,00 €)|
-| 25/01/2024 | Reçu 008      | Intérêts bancaires           | 10,00 € |         | (90,00 €) |
+| Date       | Pièce Justif. | Libellé de l'opération  | Débit    | Crédit   | Solde      |
+| ---------- | ------------- | ----------------------- | -------- | -------- | ---------- |
+| 05/01/2024 | Reçu 003      | Cotisations des membres | 300,00 € |          | 300,00 €   |
+| 07/01/2024 | Facture 004   | Paiement du loyer       |          | 500,00 € | (200,00 €) |
+| 15/01/2024 | Reçu 006      | Don reçu                | 100,00 € |          | (100,00 €) |
+| 25/01/2024 | Reçu 008      | Intérêts bancaires      | 10,00 €  |          | (90,00 €)  |
 
 #### Compte 401000 - Fournisseurs
 
-| Date       | Pièce Justif. | Libellé de l'opération        | Débit   | Crédit  | Solde     |
-|------------|---------------|------------------------------|---------|---------|-----------|
-| 01/01/2024 | Facture 001   | Achat de fournitures de bureau|         | 150,00 €| 150,00 €  |
-| 10/01/2024 | Facture 005   | Remboursement de frais de déplacement |         | 75,00 €| 225,00 €  |
-| 20/01/2024 | Facture 007   | Prestation de services        |         | 250,00 €| 475,00 €  |
+| Date       | Pièce Justif. | Libellé de l'opération                | Débit | Crédit   | Solde    |
+| ---------- | ------------- | ------------------------------------- | ----- | -------- | -------- |
+| 01/01/2024 | Facture 001   | Achat de fournitures de bureau        |       | 150,00 € | 150,00 € |
+| 10/01/2024 | Facture 005   | Remboursement de frais de déplacement |       | 75,00 €  | 225,00 € |
+| 20/01/2024 | Facture 007   | Prestation de services                |       | 250,00 € | 475,00 € |
 
 #### Explications
 
@@ -160,34 +161,34 @@ Ce modèle de grand livre, associé au journal général, permet à l'associatio
 
 **Actif**
 
-| Actifs Immobilisés        | Montant (€) |
-|---------------------------|-------------|
+| Actifs Immobilisés          | Montant (€) |
+| --------------------------- | ----------- |
 | Immobilisations corporelles | 10 000      |
-|                            |             |
+|                             |             |
 
-| Actifs Circulants         | Montant (€) |
-|---------------------------|-------------|
-| Stocks                     | 5 000       |
-| Créances                   | 3 000       |
-| Disponibilités             | 7 000       |
-|                            |             |
+| Actifs Circulants | Montant (€) |
+| ----------------- | ----------- |
+| Stocks            | 5 000       |
+| Créances          | 3 000       |
+| Disponibilités    | 7 000       |
+|                   |             |
 
 **Total Actif** : 25 000 €
 
 **Passif**
 
-| Capitaux Propres          | Montant (€) |
-|---------------------------|-------------|
-| Capital associatif         | 15 000      |
-| Résultat de l'exercice     | 2 000       |
-|                            |             |
+| Capitaux Propres       | Montant (€) |
+| ---------------------- | ----------- |
+| Capital associatif     | 15 000      |
+| Résultat de l'exercice | 2 000       |
+|                        |             |
 
-| Dettes                     | Montant (€) |
-|---------------------------|-------------|
-| Dettes financières à court terme | 3 000 |
-| Dettes fournisseurs        | 5 000       |
-| Autres dettes à court terme | 0         |
-|                            |             |
+| Dettes                           | Montant (€) |
+| -------------------------------- | ----------- |
+| Dettes financières à court terme | 3 000       |
+| Dettes fournisseurs              | 5 000       |
+| Autres dettes à court terme      | 0           |
+|                                  |             |
 
 **Total Passif** : 25 000 €
 
@@ -202,25 +203,25 @@ Ce modèle de bilan présente de manière concise les principaux actifs et passi
 
 ### Compte de Résultat Simplifié
 
-| **Produits**              | Montant (€) |
-|---------------------------|-------------|
-| Ventes                    | 20 000      |
-| Autres produits           | 1 000       |
-|                           |             |
-| **Total Produits**         | **21 000**  |
+| **Produits**       | Montant (€) |
+| ------------------ | ----------- |
+| Ventes             | 20 000      |
+| Autres produits    | 1 000       |
+|                    |             |
+| **Total Produits** | **21 000**  |
 
-| **Charges**               | Montant (€) |
-|---------------------------|-------------|
-| Achats                    | 8 000       |
-| Charges externes          | 4 000       |
-| Charges de personnel      | 3 000       |
-| Autres charges            | 1 000       |
-|                           |             |
-| **Total Charges**          | **16 000**  |
+| **Charges**          | Montant (€) |
+| -------------------- | ----------- |
+| Achats               | 8 000       |
+| Charges externes     | 4 000       |
+| Charges de personnel | 3 000       |
+| Autres charges       | 1 000       |
+|                      |             |
+| **Total Charges**    | **16 000**  |
 
-| **Résultat de l'exercice**| Montant (€) |
-|---------------------------|-------------|
-|                           | **5 000**   |
+| **Résultat de l'exercice** | Montant (€) |
+| -------------------------- | ----------- |
+|                            | **5 000**   |
 
 #### Explications
 
@@ -231,5 +232,3 @@ Ce modèle de bilan présente de manière concise les principaux actifs et passi
 - **Résultat de l'exercice** : Ce montant représente la différence entre les produits et les charges, indiquant le bénéfice net ou la perte nette réalisée par l'association au cours de l'exercice.
 
 Ce modèle de compte de résultat simplifié offre une vue d'ensemble des revenus et des dépenses de l'association, en respectant les exigences légales tout en étant adapté au régime réel simplifié.
-
-

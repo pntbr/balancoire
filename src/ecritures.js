@@ -6,6 +6,12 @@ function displayErrorMessage(message) {
     errorMessageElement.style.display = 'block';
 }
 
+function handleError(message, line) {
+    displayErrorMessage(message);
+    console.error(`Erreur: ${message} - Ligne: ${JSON.stringify(line)}`);
+    throw new Error(message);
+}
+
 function creationEcriture(date, compte, label, debit, credit) {
     return {
         'Date': date,
@@ -18,7 +24,6 @@ function creationEcriture(date, compte, label, debit, credit) {
 
 function aNouveauEcriture(line, numeroCompte, currentYear) {
     const montant = convertToNumber(line['montant']);
-
     const ecritures = {
         '370000': [
             creationEcriture(`01/01/${currentYear}`, '370000', 'annulation du stock initial', montant, ''),
@@ -47,8 +52,7 @@ function aNouveauEcriture(line, numeroCompte, currentYear) {
         return [creationEcriture(`01/01/${currentYear}`, numeroCompte, `reprise de ${line['poste']}`, debit, credit)];
     }
 
-    displayErrorMessage(`Erreur : L'écriture d'a-nouveau ${JSON.stringify(line)} n'a pu être rendue`);
-    throw error;
+    handleError(`L'écriture d'a-nouveau n'a pu être rendue`, line);
 }
 
 function inventaireClotureEcriture(line) {
@@ -62,10 +66,10 @@ function cautionEcriture(line) {
     const creditCompte = line['qui paye ?'] === 'B2T' ? (line["nature"] === 'esp' ? '530000' : '512000') : '467000';
     return [
         creationEcriture(line['date'], '275000', `
-                    caution $ { line['qui reçoit'] }
+                    caution ${ line['qui reçoit'] }
                     `, convertToNumber(line['montant']), ''),
         creationEcriture(line['date'], creditCompte, `
-                    caution $ { line['qui reçoit'] }
+                    caution ${ line['qui reçoit'] }
                     `, '', convertToNumber(line['montant']))
     ];
 }
@@ -120,7 +124,6 @@ function impotExercice(ecritures, currentYear) {
 function ligneEnEcriture(line, currentYear) {
     const numeroCompte = trouverCompte({ label: line.poste }).compte;
     try {
-        // Esquive les à-nouveaux
         if (line['date'].startsWith('01/01')) {
             return aNouveauEcriture(line, numeroCompte, currentYear);
         }
@@ -137,11 +140,9 @@ function ligneEnEcriture(line, currentYear) {
         if (numeroCompte.startsWith('6')) return line['qui paye ?'] === 'B2T' ? depenseEcriture(line, numeroCompte) : depensePersonneEcriture(line, numeroCompte);
         if (numeroCompte.startsWith('7')) return venteEcriture(line, numeroCompte);
 
-        displayErrorMessage(`Erreur : L'écriture ${JSON.stringify(line)} ne comporte pas un compte connu`);
-        throw error;
+        handleError(`L'écriture ne comporte pas un compte connu`, line);
     } catch (error) {
-        displayErrorMessage(`Erreur : L'écriture ${JSON.stringify(line)} n'a pu être rendue`);
-        throw error;
+        handleError(`L'écriture n'a pu être rendue`, line);
     }
 }
 
