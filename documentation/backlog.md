@@ -7,20 +7,8 @@
   - [x] placer le code dans src
   - [x] installer jest
   - [x] réaliser quelques tests
-- [ ] reprendre les textes d'aides
-- [ ] impot de l'exercice en charge constaté ?
-- [ ] passer les comptes 2 et 3 ?
-- [ ] charge constatée d'avance
-- [ ] documenté à-nouveau et charge constatées d'avance : https://valoxy.org/blog/ecritures-dinventaire-en-comptabilite/
-- [ ] rbt Stéphane, Yalin simplifier les sheets de saisies
-- [ ] stripe écritures
-- [ ] litige
-- [ ] notice avec exemples de toutes les écritures générées
-- [ ] immobilisations machine
-- [ ] liées les factures
-- [ ] mode d'emploi pour lancer l'environnement
-  - [ ] sandbox avec un fichier excel
-- [ ] refactoring github companion
+- [x] reprendre les textes d'aides
+- [x] rbt Stéphane, Yalin simplifier les sheets de saisies
 
 ## US9 Gérer les inventaires
 
@@ -30,6 +18,15 @@
 
 ### Notes
 
+- [ ] documenté à-nouveau et charge constatées d'avance : https://valoxy.org/blog/ecritures-dinventaire-en-comptabilite/
+- [ ] stripe écritures
+- [ ] litige
+- [ ] notice avec exemples de toutes les écritures générées
+- [ ] immobilisations machine
+- [ ] liées les factures
+- [ ] mode d'emploi pour lancer l'environnement
+  - [ ] sandbox avec un fichier excel
+- [ ] refactoring github copilot
 - [ ] mettre en place tous les tests
 - [ ] mettre en place des tests fonctionnels
 - [ ] balances de clôture .
