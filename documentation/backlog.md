@@ -7,7 +7,6 @@
   - [x] placer le code dans src
   - [x] installer jest
   - [x] réaliser quelques tests
-  - [ ] mettre en place tous les test
 - [ ] reprendre les textes d'aides
 - [ ] impot de l'exercice en charge constaté ?
 - [ ] passer les comptes 2 et 3 ?
@@ -31,6 +30,8 @@
 
 ### Notes
 
+- [ ] mettre en place tous les tests
+- [ ] mettre en place des tests fonctionnels
 - [ ] balances de clôture .
 - [ ] apport initial
 - [ ] automatiser la normalisation du nom des factures
