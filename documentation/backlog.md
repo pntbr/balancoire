@@ -1,20 +1,11 @@
 # Backlog
 
-## US8 Consolidation
-
-- [x] revoir les erreurs
-- [x] mettre en place des tests unitaires
-  - [x] placer le code dans src
-  - [x] installer jest
-  - [x] réaliser quelques tests
-- [x] reprendre les textes d'aides
-- [x] rbt Stéphane, Yalin simplifier les sheets de saisies
-
 ## US9 Gérer les inventaires
 
-- [ ] créer une page inventaire
+- [x] créer une page inventaire
 - [ ] reprendre les données pour l'année choisie
 - [ ] aller chercher l'inventaire pour les clôtures et à-nouveaux
+- [ ] faire les totaux
 
 ### Notes
 

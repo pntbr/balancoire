@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Inventaires</title>
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" type="image/png" href="favicon.png" />
+<script type="module" src="./src/main.js" defer></script>
+</head>
+<body>
+  <div id="navigation"></div>
+  <div class="journal">
+    <h1>Inventaires<button id="infoBtn">ℹ️</button></h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Description</th>
+          <th>Numéro</th>
+          <th>Quantité</th>
+          <th>Valeur unique</th>
+          <th>Valeur totale</th>
+        </tr>
+      </thead>
+      <tbody id="inventaire-ecritures">
+          <!-- Les entrées du journal seront insérées ici -->
+      </tbody>
+    </table>
+  </div>
+  <div id="infoModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Notice Explicative - inventaire</h2>
+      <p>L'inventaire reprend l'intégralité du stock à la clôture de l'exercice et permet de valoriser le stock. Chaque entrée reprend l'ensemble les informations nécessaires pour une desune écriture et comprend plusieurs élément marchandises qui compose le stock invendu :</p>
+      <h3>Rubriques :</h3>
+      <ul>
+        <li><strong>Description :</strong> La description de l'article.</li>
+        <li><strong>Numéro :</strong> Numéro unique de l'article.</li>
+        <li><strong>Libellé :</strong> Quantité présente dans le stock.</li>
+        <li><strong>Valeur unique :</strong> Valeur pondérée pour un article.</li>
+        <li><strong>Valeur totale :</strong> Valeur totale pour l'ensembles des articles présents.</li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>
