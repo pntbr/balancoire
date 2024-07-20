@@ -1,13 +1,5 @@
 # Backlog
 
-## US9 Gérer les inventaires
-
-- [x] créer une page inventaire
-- [x] passer les sheets dans .env
-- [x] reprendre les données pour l'année choisie
-- [x] refactoriser main
-- [x] faire les totaux
-
 ## US10 Faire un bac à sable
 
 - [ ] si pas de .env - un sheet par défaut
