@@ -7,16 +7,25 @@
 - [ ] aller chercher l'inventaire pour les clôtures et à-nouveaux
 - [ ] faire les totaux
 
+## US10 Faire un bac à sable
+
+- [ ] si pas de .env - un sheet par défaut
+- [ ] passer les sheets dans .env
+- [ ] publier un oisiflorus.compta.com
+- [ ] mode d'emploi
+- [ ] notice avec exemples de toutes les écritures générées
+- [ ] README
+  - [ ] mode d'emploi pour lancer l'environnement
+
+## US10 Faire le fichier des écritures comptables - FEC
+
 ### Notes
 
 - [ ] documenté à-nouveau et charge constatées d'avance : https://valoxy.org/blog/ecritures-dinventaire-en-comptabilite/
 - [ ] stripe écritures
 - [ ] litige
-- [ ] notice avec exemples de toutes les écritures générées
 - [ ] immobilisations machine
 - [ ] liées les factures
-- [ ] mode d'emploi pour lancer l'environnement
-  - [ ] sandbox avec un fichier excel
 - [ ] refactoring github copilot
 - [ ] mettre en place tous les tests
 - [ ] mettre en place des tests fonctionnels
@@ -27,19 +36,19 @@
 - [ ] injectLedgerEntries sert pour balance ?
 - [ ] 47 comptes transitoires - attentes (factures mal identifiées) puis soldé dans 758 ou 658
 - [ ] faire une révision comptable - chap. 16
-- [ ] faire le fichier des écritures comptables
 - [ ] tests unitaires
 - [ ] rédiger les annexes
-- [ ] rédiger les AGO
-- [ ] faire un truc pour les factures manquantes
 - [ ] importer directement les écritures wise
 - [ ] vérifier que les pointage bancaire ne correspondent pas à des dépenses Yalin ou Stéphane mais bien à B2T
 - [ ] wise 2024
 - [ ] vérifier avec une comptable
 - [ ] optimiser
 - [ ] produits bancaires (quel compte) - remboursements
-- [ ] vérifier facture amazon 2024
 - [ ] récupérer les AN de l'exercice N-1 automatiquement ?s
+
+- [ ] rédiger les AGO
+- [ ] vérifier facture amazon 2024
+- [ ] faire un truc pour les factures manquantes
 
 ### Liens
 
