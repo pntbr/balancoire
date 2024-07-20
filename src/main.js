@@ -5,67 +5,79 @@ import { creationGrandLivre, injecteGrandLivreEcritures } from './grand-livre.js
 import { creationCompteResultat, injecteCompteResultatEcritures } from './compte-resultat.js';
 import { creationBilan, injecteBilanEcritures } from './bilan.js';
 import { creationJournal, injecteJournalEcritures } from './journal.js';
+import { creationInventaire, injecteInventaireEcritures } from './inventaire.js';
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', init);
+
+function init() {
     fetch('.env.json')
         .then(response => response.json())
         .then(env => {
-            const SHEET_ID = env.SHEET_ID;
-            const SHEETNAME_TO_GID = env.SHEETNAME_TO_GID;
-
-            const infoBtn = document.getElementById('infoBtn');
-            const infoModal = document.getElementById('infoModal');
-            const closeBtn = document.querySelector('.close');
-
-            infoBtn.addEventListener('click', () => {
-                infoModal.style.display = 'block';
-            });
-
-            closeBtn.addEventListener('click', () => {
-                infoModal.style.display = 'none';
-            });
-
-            window.addEventListener('click', (event) => {
-                if (event.target == infoModal) {
-                    infoModal.style.display = 'none';
-                }
-            });
-
-            fetch('nav.html')
-                .then(response => response.text())
-                .then(data => {
-                    document.getElementById('navigation').innerHTML = data;
-
-                    // Gestion des liens de navigation de page
-                    const pageLinks = document.querySelectorAll('nav ul:first-of-type li a');
-                    const currentPage = location.pathname.split('/').pop();
-                    pageLinks.forEach(link => {
-                        if (link.getAttribute('href') === currentPage) {
-                            link.parentElement.classList.add('menu-selected');
-                        }
-                    });
-
-                    // Gestion des liens de navigation d'année
-                    const yearLinks = document.querySelectorAll('.year-nav a');
-                    const currentYear = localStorage.getItem('selectedYear') || '2024';
-                    yearLinks.forEach(link => {
-                        if (link.getAttribute('data-year') === currentYear) {
-                            link.classList.add('menu-selected');
-                        }
-                        link.addEventListener('click', (event) => {
-                            event.preventDefault();
-                            const selectedYear = event.target.getAttribute('data-year');
-                            localStorage.setItem('selectedYear', selectedYear);
-                            loadCSV(SHEET_ID, selectedYear);
-                            yearLinks.forEach(l => l.classList.remove('menu-selected'));
-                            event.target.classList.add('menu-selected');
-                        });
-                    });
-
-                    loadCSV(SHEET_ID, SHEETNAME_TO_GID, currentYear);
-                });
+            const { SHEET_ID, SHEETNAME_TO_GID } = env;
+            setupInfoModal();
+            loadNavigation(SHEET_ID, SHEETNAME_TO_GID);
         });
-});
+}
+
+function setupInfoModal() {
+    const infoBtn = document.getElementById('infoBtn');
+    const infoModal = document.getElementById('infoModal');
+    const closeBtn = document.querySelector('.close');
+
+    infoBtn.addEventListener('click', () => {
+        infoModal.style.display = 'block';
+    });
+
+    closeBtn.addEventListener('click', () => {
+        infoModal.style.display = 'none';
+    });
+
+    window.addEventListener('click', (event) => {
+        if (event.target == infoModal) {
+            infoModal.style.display = 'none';
+        }
+    });
+}
+
+function loadNavigation(SHEET_ID, SHEETNAME_TO_GID) {
+    fetch('nav.html')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('navigation').innerHTML = data;
+            setupPageLinks();
+            setupYearLinks(SHEET_ID, SHEETNAME_TO_GID);
+        });
+}
+
+function setupPageLinks() {
+    const pageLinks = document.querySelectorAll('nav ul:first-of-type li a');
+    const currentPage = location.pathname.split('/').pop();
+    pageLinks.forEach(link => {
+        if (link.getAttribute('href') === currentPage) {
+            link.parentElement.classList.add('menu-selected');
+        }
+    });
+}
+
+function setupYearLinks(SHEET_ID, SHEETNAME_TO_GID) {
+    const yearLinks = document.querySelectorAll('.year-nav a');
+    const currentYear = localStorage.getItem('selectedYear') || '2024';
+    yearLinks.forEach(link => {
+        if (link.getAttribute('data-year') === currentYear) {
+            link.classList.add('menu-selected');
+        }
+        link.addEventListener('click', (event) => {
+            event.preventDefault();
+            const selectedYear = event.target.getAttribute('data-year');
+            localStorage.setItem('selectedYear', selectedYear);
+            loadCSV(SHEET_ID, SHEETNAME_TO_GID, selectedYear);
+            yearLinks.forEach(l => l.classList.remove('menu-selected'));
+            event.target.classList.add('menu-selected');
+        });
+    });
+
+    loadCSV(SHEET_ID, SHEETNAME_TO_GID, currentYear);
+}
 
 function showLoader() {
     document.getElementById('loader').style.display = 'block';
@@ -81,12 +93,13 @@ function hideErrorMessage() {
 }
 
 function loadCSV(sheetId, sheetNameToGid, currentYear) {
-    console.log("sheetNameToGid", sheetNameToGid)
-    
-    const sheetName = currentYear;
+    const currentPage = location.pathname.split('/').pop();
+    const sheetName = currentPage && currentPage.startsWith('inventaire') ? 'inventaire' : currentYear;
     const csvUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&pli=1&gid=${sheetNameToGid[sheetName]}#gid=${sheetNameToGid[sheetName]}`;
+
     hideErrorMessage();
     showLoader();
+
     fetch(csvUrl)
         .then(response => {
             if (!response.ok) throw new Error('Network response was not ok');
@@ -94,32 +107,30 @@ function loadCSV(sheetId, sheetNameToGid, currentYear) {
         })
         .then(csvText => {
             const jsonData = parseCSV(csvText);
-
-            if (document.getElementById('journal-ecritures')) {
-                const journalEcritures = creationJournal(jsonData, currentYear);
-                injecteJournalEcritures(journalEcritures);
-            }
-            if (document.getElementById('balance-ecritures')) {
-                const balanceEcritures = creationBalance(jsonData, currentYear);
-                injecteBalanceEcritures(balanceEcritures);
-            }
-            if (document.getElementById('grand-livre-ecritures')) {
-                const grandLivreEcritures = creationGrandLivre(jsonData, currentYear);
-                injecteGrandLivreEcritures(grandLivreEcritures);
-            }
-            if (document.getElementById('compte-resultat-ecritures')) {
-                const compteResultatEcritures = creationCompteResultat(jsonData, currentYear);
-                injecteCompteResultatEcritures(compteResultatEcritures);
-            }
-            if (document.getElementById('bilan-ecritures')) {
-                const bilanEcritures = creationBilan(jsonData, currentYear);
-                injecteBilanEcritures(bilanEcritures);
-            }
-            // const arretComptesEcritures = arretComptesClotureEcritures(ligneEnEcriture, currentYear);
+            injectDataIntoPage(jsonData, currentYear);
             hideLoader();
         })
         .catch(error => {
             console.error('There has been a problem with your fetch operation:', error);
             hideLoader();
         });
+}
+
+function injectDataIntoPage(jsonData, currentYear) {
+    const mappings = [
+        { id: 'journal-ecritures', create: creationJournal, inject: injecteJournalEcritures },
+        { id: 'balance-ecritures', create: creationBalance, inject: injecteBalanceEcritures },
+        { id: 'grand-livre-ecritures', create: creationGrandLivre, inject: injecteGrandLivreEcritures },
+        { id: 'compte-resultat-ecritures', create: creationCompteResultat, inject: injecteCompteResultatEcritures },
+        { id: 'bilan-ecritures', create: creationBilan, inject: injecteBilanEcritures },
+        { id: 'inventaire-ecritures', create: creationInventaire, inject: injecteInventaireEcritures }
+    ];
+
+    mappings.forEach(({ id, create, inject }) => {
+        const element = document.getElementById(id);
+        if (element) {
+            const ecritures = create(jsonData, currentYear);
+            inject(ecritures);
+        }
+    });
 }
