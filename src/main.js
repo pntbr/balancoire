@@ -10,13 +10,17 @@ import { creationInventaire, injecteInventaireEcritures } from './inventaire.js'
 document.addEventListener('DOMContentLoaded', init);
 
 function init() {
-    fetch('.env.json')
-        .then(response => response.json())
+    fetchEnvConfig()
         .then(env => {
             const { SHEET_ID, SHEETNAME_TO_GID } = env;
             setupInfoModal();
             loadNavigation(SHEET_ID, SHEETNAME_TO_GID);
         });
+}
+
+async function fetchEnvConfig() {
+    const response = await fetch('.env.json');
+    return response.json();
 }
 
 function setupInfoModal() {
@@ -33,7 +37,7 @@ function setupInfoModal() {
     });
 
     window.addEventListener('click', (event) => {
-        if (event.target == infoModal) {
+        if (event.target === infoModal) {
             infoModal.style.display = 'none';
         }
     });
