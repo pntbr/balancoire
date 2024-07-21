@@ -18,9 +18,24 @@ function init() {
         });
 }
 
+function loadEnvConfig() {
+    return fetch('.env.json')
+        .then(response => {
+            if (!response.ok) {
+                return fetch('.env.example.json').then(responseExample => {
+                    if (!responseExample.ok) {
+                        throw new Error('Impossible de charger la configuration');
+                    }
+                    return responseExample.json();
+                });
+            }
+            return response.json();
+        })
+        .catch(error => console.error('Erreur lors du chargement de la configuration:', error));
+}
+
 async function fetchEnvConfig() {
-    const response = await fetch('.env.json');
-    return response.json();
+    return loadEnvConfig();
 }
 
 function setupInfoModal() {

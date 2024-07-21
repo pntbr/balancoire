@@ -2,8 +2,8 @@
 
 ## US10 Faire un bac à sable
 
-- [ ] si pas de .env - un sheet par défaut
-- [ ] publier un oisiflorus.compta.com
+- [x] si pas de .env - un sheet par défaut
+- [x] publier un oisiflorus.compta.com
 - [ ] mode d'emploi
 - [ ] notice avec exemples de toutes les écritures générées
 - [ ] README
