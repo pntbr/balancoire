@@ -6,7 +6,7 @@ export const PLAN_COMPTABLE = {
     "275000": ["dépôts et cautionnements versés", "cautions"],
     "370000": ["stocks de marchandises", "inventaire"],
     "404000": ["fournisseurs d'immobilisations"],
-    "444000": ["état - impôts sur les bénéfices"],
+    "444000": ["état - impôts sur les bénéfices", "impots"],
     "467000": ["autres comptes débiteurs ou créditeurs", "remboursements", "prêts"],
     "512000": ["banques"],
     "530000": ["caisse"],

@@ -1,0 +1,68 @@
+qui paye ?	date	qui reçoit	poste	montant	nature	pointage	note	facture correspondante
+Association	01/01/2024	Association	excédent	295,38 €				
+Association	01/01/2024	Association	impots	-52,10 €				
+Association	01/01/2024	Association	prêts	567,50 €				
+Association	01/01/2024	Association	banque	-155,00 €				
+Association	01/01/2024	Association	caisse	-760,00 €				
+Association	01/01/2024	Association	inventaire	0,00 €				
+Association	03/01/2024	Fournisseur	marchandises	310,00 €	cb	x	achat de nichoirs	20240103_nichoirs.pdf
+Membre	10/01/2024	Association	ventes de marchandises	55,00 €	esp		vente de mangeoires	
+Client	15/01/2024	Association	ventes de marchandises	70,00 €	stripe	x	vente de livres ornithologiques	
+Association	20/01/2024	Heroku	internet	7,20 €	cb	x	abonnement mensuel	20240120_heroku.pdf
+Souad	25/01/2024	La poste	frais postaux	5,20 €	cb		envoi de brochures	20240125_laposte.pdf
+Association	30/01/2024	Swann	remboursements	210,00 €	vir		remboursement frais	
+Membre	05/02/2024	Association	cotisations	120,00 €	vir	x	paiement annuel	
+Association	10/02/2024	Ovh	internet	1,60 €	cb	x	hébergement site web	20240210_ovh.pdf
+Client	15/02/2024	Association	prestations de services	160,00 €	esp		atelier découverte ornithologique	
+Souad	20/02/2024	La poste	frais postaux	6,20 €	cb		envoi de matériel	20240220_laposte.pdf
+Swann	25/02/2024	Association	prestations de services	180,00 €	esp		atelier construction de nichoirs	
+Membre	05/03/2024	Association	dons	60,00 €	esp		dons pour activités	
+Association	10/03/2024	Andréas	locations	310,00 €	vir	x	loyer local	20240310_loyer.pdf
+Client	15/03/2024	Association	ventes de marchandises	75,00 €	stripe	x	vente de jumelles	
+Souad	20/03/2024	La poste	frais postaux	5,60 €	cb		envoi de documents	20240320_laposte.pdf
+Swann	25/03/2024	Amazon	fournitures	50,00 €	cb		achat de matériel pédagogique	20240325_amazon.pdf
+Membre	05/04/2024	Association	prestations de services	110,00 €	esp		atelier découverte ornithologique	
+Association	10/04/2024	Heroku	internet	7,80 €	cb	x	abonnement mensuel	20240410_heroku.pdf
+Client	15/04/2024	Association	ventes de marchandises	65,00 €	esp		vente de mangeoires	
+Souad	20/04/2024	La poste	frais postaux	4,80 €	cb		envoi de matériel	20240420_laposte.pdf
+Swann	25/04/2024	Association	prestations de services	130,00 €	esp		atelier construction de nichoirs	
+Membre	05/05/2024	Association	dons	40,00 €	vir	x	dons pour activités	
+Association	10/05/2024	Ovh	internet	2,10 €	cb	x	hébergement site web	20240510_ovh.pdf
+Client	15/05/2024	Association	ventes de marchandises	85,00 €	stripe	x	vente de livres ornithologiques	
+Souad	20/05/2024	La poste	frais postaux	5,30 €	cb		envoi de brochures	20240520_laposte.pdf
+Swann	25/05/2024	Association	remboursements	220,00 €	vir		remboursement frais	
+Membre	05/06/2024	Association	cotisations	110,00 €	vir	x	paiement annuel	
+Association	10/06/2024	Heroku	internet	7,90 €	cb	x	abonnement mensuel	20240610_heroku.pdf
+Client	15/06/2024	Association	prestations de services	140,00 €	esp		atelier découverte ornithologique	
+Souad	20/06/2024	La poste	frais postaux	6,40 €	cb		envoi de matériel	20240620_laposte.pdf
+Swann	25/06/2024	Association	ventes de marchandises	90,00 €	stripe		vente de jumelles	
+Membre	05/07/2024	Association	dons	45,00 €	esp		dons pour activités	
+Association	10/07/2024	Ovh	internet	1,70 €	cb	x	hébergement site web	20240710_ovh.pdf
+Client	15/07/2024	Association	ventes de marchandises	80,00 €	esp		vente de mangeoires	
+Souad	20/07/2024	La poste	frais postaux	5,70 €	cb		envoi de documents	20240720_laposte.pdf
+Swann	25/07/2024	Association	prestations de services	170,00 €	esp		atelier construction de nichoirs	
+Membre	05/08/2024	Association	cotisations	100,00 €	vir	x	paiement annuel	
+Association	10/08/2024	Heroku	internet	8,00 €	cb	x	abonnement mensuel	20240810_heroku.pdf
+Client	15/08/2024	Association	prestations de services	150,00 €	esp		atelier découverte ornithologique	
+Souad	20/08/2024	La poste	frais postaux	6,00 €	cb		envoi de matériel	20240820_laposte.pdf
+Swann	25/08/2024	Association	ventes de marchandises	95,00 €	stripe		vente de livres ornithologiques	
+Membre	05/09/2024	Association	dons	50,00 €	esp		dons pour activités	
+Association	10/09/2024	Ovh	internet	1,80 €	cb	x	hébergement site web	20240910_ovh.pdf
+Client	15/09/2024	Association	ventes de marchandises	85,00 €	esp		vente de mangeoires	
+Souad	20/09/2024	La poste	frais postaux	5,40 €	cb		envoi de matériel	20240920_laposte.pdf
+Swann	25/09/2024	Association	prestations de services	160,00 €	esp		atelier construction de nichoirs	
+Membre	05/10/2024	Association	cotisations	120,00 €	vir	x	paiement annuel	
+Association	10/10/2024	Heroku	internet	7,70 €	cb	x	abonnement mensuel	20241010_heroku.pdf
+Client	15/10/2024	Association	ventes de marchandises	70,00 €	stripe	x	vente de jumelles	
+Souad	20/10/2024	La poste	frais postaux	6,50 €	cb		envoi de documents	20241020_laposte.pdf
+Association	25/10/2024	Swann	remboursements	230,00 €	vir		remboursement frais	
+Membre	05/11/2024	Association	dons	55,00 €	esp		dons pour activités	
+Association	10/11/2024	Ovh	internet	2,00 €	cb	x	hébergement site web	20241110_ovh.pdf
+Client	15/11/2024	Association	ventes de marchandises	90,00 €	esp		vente de mangeoires	
+Souad	20/11/2024	La poste	frais postaux	5,60 €	cb		envoi de matériel	20241120_laposte.pdf
+Swann	25/11/2024	Association	prestations de services	140,00 €	esp		atelier construction de nichoirs	
+Membre	05/12/2024	Association	cotisations	115,00 €	vir	x	paiement annuel	
+Association	10/12/2024	Heroku	internet	8,10 €	cb	x	abonnement mensuel	20241210_heroku.pdf
+Client	15/12/2024	Association	ventes de marchandises	95,00 €	stripe	x	vente de livres ornithologiques	
+Souad	20/12/2024	La poste	frais postaux	6,20 €	cb		envoi de documents	20241220_laposte.pdf
+Swann	25/12/2024	Association	prestations de services	180,00 €	esp		atelier découverte ornithologique	

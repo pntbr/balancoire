@@ -20,7 +20,7 @@ function init() {
 
 async function loadEnvConfig() {
     try {
-        let response = await fetch('.env.json');
+        let response = await fetch('.enva.json');
         if (!response.ok) {
             response = await fetch('env.example.json');
             if (!response.ok) {

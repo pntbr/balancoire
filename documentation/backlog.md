@@ -10,7 +10,7 @@
 - [x] n'afficher que les années présentes dans .env
 - [x] ajouter un lien vers le google sheet
 - [x] ajouter des données dans le bac à sable
-- [x] tous les soirs remettre des données
+- [ ] tous les soirs remettre des données
 - [ ] mettre les comptes dans le sheet (onglet comptes)
 - [ ] récupérer directement les onglets
 
