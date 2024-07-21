@@ -10,9 +10,7 @@
 - [x] n'afficher que les années présentes dans .env
 - [x] ajouter un lien vers le google sheet
 - [x] ajouter des données dans le bac à sable
-- [ ] tous les soirs remettre des données
-- [ ] mettre les comptes dans le sheet (onglet comptes)
-- [ ] récupérer directement les onglets
+- [x] tous les soirs remettre des données
 
 ## US11 Faire le fichier des écritures comptables - FEC
 
