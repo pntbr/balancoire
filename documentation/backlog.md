@@ -7,13 +7,17 @@
 - [x] README
   - [x] mode d'emploi pour lancer l'environnement
 - [x] corrige le fait que github ne charge pas le .env-example
-- [ ] n'afficher que les années présentes dans .env
-- [ ] ajouter un lien vers le google sheet
+- [x] n'afficher que les années présentes dans .env
+- [x] ajouter un lien vers le google sheet
+- [x] ajouter des données dans le bac à sable
+- [x] tous les soirs remettre des données
 - [ ] mettre les comptes dans le sheet (onglet comptes)
+- [ ] récupérer directement les onglets
 
 ## US11 Faire le fichier des écritures comptables - FEC
 
 - [ ] créer une page
+- [ ] valider le fichier
 
 ### Notes
 

@@ -65,6 +65,7 @@ function loadNavigation(SHEET_ID, SHEETNAME_TO_GID) {
             setupPageLinks();
             injectYearLinks(SHEETNAME_TO_GID);
             setupYearLinks(SHEET_ID, SHEETNAME_TO_GID);
+            injectSheetLink(SHEET_ID);
         });
 }
 
@@ -79,23 +80,22 @@ function setupPageLinks() {
 }
 
 function injectYearLinks(SHEETNAME_TO_GID) {
-    const yearNav = document.getElementById('year-nav');
-    console.log("yearNav", document.getElementById('nav'))
+    const yearNav = document.getElementById('annee-nav');
     Object.keys(SHEETNAME_TO_GID).forEach(year => {
         if (!isNaN(year)) {
-            const li = document.createElement('li'); // Créer un élément <li>
+            const li = document.createElement('li');
             const link = document.createElement('a');
             link.href = '#';
             link.textContent = year;
             link.setAttribute('data-year', year);
-            li.appendChild(link); // Ajouter le lien à l'élément <li>
-            yearNav.appendChild(li); // Ajouter l'élément <li> au conteneur
+            li.appendChild(link); 
+            yearNav.appendChild(li); 
         }
     });
 }
 
 function setupYearLinks(SHEET_ID, SHEETNAME_TO_GID) {
-    const yearLinks = document.querySelectorAll('.year-nav a');
+    const yearLinks = document.querySelectorAll('.annee-nav a');
     const currentYear = localStorage.getItem('selectedYear') || '2024';
     yearLinks.forEach(link => {
         if (link.getAttribute('data-year') === currentYear) {
@@ -112,6 +112,15 @@ function setupYearLinks(SHEET_ID, SHEETNAME_TO_GID) {
     });
 
     loadCSV(SHEET_ID, SHEETNAME_TO_GID, currentYear);
+}
+
+function injectSheetLink(sheetId) {
+    const sheetLink = document.getElementById('sheet-nav');
+    const link = document.createElement('a');
+    link.href = `https://docs.google.com/spreadsheets/d/${sheetId}`;
+    link.textContent = 'Voir les données (sheet)';
+    link.target = '_blank';
+    sheetLink.appendChild(link);
 }
 
 function showLoader() {
