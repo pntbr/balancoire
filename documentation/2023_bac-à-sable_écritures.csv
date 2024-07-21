@@ -1,0 +1,36 @@
+qui paye ?	date	qui reçoit	poste	montant	nature	pointage	note	facture correspondante
+Association	02/01/2023	Fournisseur	marchandises	300,00 €	cb	x	achat de nichoirs	20230102_nichoirs.pdf
+Membre	15/01/2023	Association	ventes de marchandises	50,00 €	esp		vente de mangeoires	
+Membre	22/01/2023	Association	cotisations	100,00 €	vir	x	paiement annuel	
+Association	10/02/2023	Heroku	internet	7,00 €	cb	x	abonnement mensuel	20230210_heroku.pdf
+Association	12/02/2023	La poste	frais postaux	5,00 €	cb	x	envoi de brochures	20230212_laposte.pdf
+Association	18/02/2023	Souad	remboursements	200,00 €	vir		remboursement frais	
+Client	25/02/2023	Association	ventes de marchandises	75,00 €	stripe	x	vente de livres ornithologiques	
+Association	10/03/2023	Ovh	internet	1,50 €	cb	x	hébergement site web	20230310_ovh.pdf
+Membre	18/03/2023	Association	prestations de services	150,00 €	esp		atelier découverte ornithologique	
+Swann	25/03/2023	La poste	frais postaux	6,00 €	cb	x	envoi de matériel	20230325_laposte.pdf
+Membre	02/04/2023	Association	dons	50,00 €	esp		dons pour activités	
+Association	10/04/2023	Andréas	locations	300,00 €	vir	x	loyer local	20230410_loyer.pdf
+Souad	15/05/2023	La poste	frais postaux	5,50 €	cb		envoi de documents	20230515_laposte.pdf
+Swann	18/05/2023	Amazon	fournitures	45,00 €	cb		achat de matériel pédagogique	20230518_amazon.pdf
+Client	25/05/2023	Association	ventes de marchandises	60,00 €	stripe	x	vente de jumelles	
+Association	05/06/2023	Heroku	internet	7,50 €	cb	x	abonnement mensuel	20230605_heroku.pdf
+Membre	15/06/2023	Association	prestations de services	100,00 €	esp		atelier construction de nichoirs	
+Membre	22/06/2023	Association	dons	30,00 €	vir	x	dons pour activités	
+Souad	10/07/2023	La poste	frais postaux	4,50 €	cb		envoi de brochures	20230710_laposte.pdf
+Swann	18/07/2023	La poste	frais postaux	6,00 €	cb		envoi de matériel	20230718_laposte.pdf
+Client	25/07/2023	Association	ventes de marchandises	40,00 €	esp		vente de mangeoires	
+Association	10/08/2023	Ovh	internet	1,80 €	cb	x	hébergement site web	20230810_ovh.pdf
+Membre	20/08/2023	Association	prestations de services	150,00 €	esp		atelier découverte ornithologique	
+Membre	05/09/2023	Association	dons	50,00 €	esp		dons pour activités	
+Swann	18/09/2023	Free	télécommunications	12,00 €	cb		abonnement internet	20230918_free.pdf
+Souad	25/09/2023	La poste	frais postaux	5,50 €	cb		envoi de documents	20230925_laposte.pdf
+Swann	10/10/2023	La poste	frais postaux	4,50 €	cb		envoi de matériel	20231010_laposte.pdf
+Association	15/10/2023	Heroku	internet	7,70 €	cb	x	abonnement mensuel	20231015_heroku.pdf
+Client	22/10/2023	Association	ventes de marchandises	50,00 €	esp		vente de livres ornithologiques	
+Membre	05/11/2023	Association	prestations de services	120,00 €	esp		atelier construction de nichoirs	
+Souad	15/11/2023	Gamm vert	fournitures	40,00 €	cb		achat de matériel de jardinage	20231115_gamm_vert.pdf
+Association	25/11/2023	Ovh	internet	2,00 €	cb	x	hébergement site web	20231125_ovh.pdf
+Membre	10/12/2023	Association	dons	30,00 €	vir	x	dons pour activités	
+Swann	18/12/2023	La poste	frais postaux	6,00 €	cb		envoi de brochures	20231218_laposte.pdf
+Client	22/12/2023	Association	ventes de marchandises	60,00 €	stripe	x	vente de jumelles	

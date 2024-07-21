@@ -17,7 +17,7 @@ export function creationCompteResultat(jsonData, currentYear) {
     const variationStocks = sommeCompteParRacine(ecritures, "603");
     const chargesExternes = sommeCompteParRacine(ecritures, "61") + sommeCompteParRacine(ecritures, "62");
     const taxes = sommeCompteParRacine(ecritures, "63");
-    const autresCharges = sommeCompteParRacine(ecritures, "6") - achatsMarchandises - achatsApprovisionnements - variationStocks - chargesExternes - taxes;
+    const autresCharges = sommeCompteParRacine(ecritures, "6") - achatsMarchandises - achatsApprovisionnements - variationStocks - chargesExternes - taxes - sommeCompteParRacine(ecritures, "695");
 
     const totalCharges = achatsMarchandises + achatsApprovisionnements + variationStocks + chargesExternes + taxes + autresCharges;
 

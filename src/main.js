@@ -18,20 +18,19 @@ function init() {
         });
 }
 
-function loadEnvConfig() {
-    return fetch('.env.json')
-        .then(response => {
+async function loadEnvConfig() {
+    try {
+        let response = await fetch('.enva.json');
+        if (!response.ok) {
+            response = await fetch('env.example.json');
             if (!response.ok) {
-                return fetch('env.example.json').then(responseExample => {
-                    if (!responseExample.ok) {
-                        throw new Error('Impossible de charger la configuration');
-                    }
-                    return responseExample.json();
-                });
+                throw new Error('Impossible de charger la configuration');
             }
-            return response.json();
-        })
-        .catch(error => console.error('Erreur lors du chargement de la configuration:', error));
+        }
+        return await response.json();
+    } catch (error) {
+        throw error;
+    }
 }
 
 async function fetchEnvConfig() {
@@ -64,7 +63,9 @@ function loadNavigation(SHEET_ID, SHEETNAME_TO_GID) {
         .then(data => {
             document.getElementById('navigation').innerHTML = data;
             setupPageLinks();
+            injectYearLinks(SHEETNAME_TO_GID);
             setupYearLinks(SHEET_ID, SHEETNAME_TO_GID);
+            injectSheetLink(SHEET_ID);
         });
 }
 
@@ -78,8 +79,23 @@ function setupPageLinks() {
     });
 }
 
+function injectYearLinks(SHEETNAME_TO_GID) {
+    const yearNav = document.getElementById('annee-nav');
+    Object.keys(SHEETNAME_TO_GID).forEach(year => {
+        if (!isNaN(year)) {
+            const li = document.createElement('li');
+            const link = document.createElement('a');
+            link.href = '#';
+            link.textContent = year;
+            link.setAttribute('data-year', year);
+            li.appendChild(link); 
+            yearNav.appendChild(li); 
+        }
+    });
+}
+
 function setupYearLinks(SHEET_ID, SHEETNAME_TO_GID) {
-    const yearLinks = document.querySelectorAll('.year-nav a');
+    const yearLinks = document.querySelectorAll('.annee-nav a');
     const currentYear = localStorage.getItem('selectedYear') || '2024';
     yearLinks.forEach(link => {
         if (link.getAttribute('data-year') === currentYear) {
@@ -96,6 +112,15 @@ function setupYearLinks(SHEET_ID, SHEETNAME_TO_GID) {
     });
 
     loadCSV(SHEET_ID, SHEETNAME_TO_GID, currentYear);
+}
+
+function injectSheetLink(sheetId) {
+    const sheetLink = document.getElementById('sheet-nav');
+    const link = document.createElement('a');
+    link.href = `https://docs.google.com/spreadsheets/d/${sheetId}`;
+    link.textContent = 'Voir les données (sheet)';
+    link.target = '_blank';
+    sheetLink.appendChild(link);
 }
 
 function showLoader() {
