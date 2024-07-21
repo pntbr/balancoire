@@ -18,20 +18,19 @@ function init() {
         });
 }
 
-function loadEnvConfig() {
-    return fetch('.env.json')
-        .then(response => {
+async function loadEnvConfig() {
+    try {
+        let response = await fetch('.env.json');
+        if (!response.ok) {
+            response = await fetch('env.example.json');
             if (!response.ok) {
-                return fetch('env.example.json').then(responseExample => {
-                    if (!responseExample.ok) {
-                        throw new Error('Impossible de charger la configuration');
-                    }
-                    return responseExample.json();
-                });
+                throw new Error('Impossible de charger la configuration');
             }
-            return response.json();
-        })
-        .catch(error => console.error('Erreur lors du chargement de la configuration:', error));
+        }
+        return await response.json();
+    } catch (error) {
+        throw error;
+    }
 }
 
 async function fetchEnvConfig() {
@@ -64,6 +63,7 @@ function loadNavigation(SHEET_ID, SHEETNAME_TO_GID) {
         .then(data => {
             document.getElementById('navigation').innerHTML = data;
             setupPageLinks();
+            injectYearLinks(SHEETNAME_TO_GID);
             setupYearLinks(SHEET_ID, SHEETNAME_TO_GID);
         });
 }
@@ -74,6 +74,22 @@ function setupPageLinks() {
     pageLinks.forEach(link => {
         if (link.getAttribute('href') === currentPage) {
             link.parentElement.classList.add('menu-selected');
+        }
+    });
+}
+
+function injectYearLinks(SHEETNAME_TO_GID) {
+    const yearNav = document.getElementById('year-nav');
+    console.log("yearNav", document.getElementById('nav'))
+    Object.keys(SHEETNAME_TO_GID).forEach(year => {
+        if (!isNaN(year)) {
+            const li = document.createElement('li'); // Créer un élément <li>
+            const link = document.createElement('a');
+            link.href = '#';
+            link.textContent = year;
+            link.setAttribute('data-year', year);
+            li.appendChild(link); // Ajouter le lien à l'élément <li>
+            yearNav.appendChild(li); // Ajouter l'élément <li> au conteneur
         }
     });
 }
