@@ -6,6 +6,9 @@
 - [x] publier un oisiflorus.compta.com
 - [x] README
   - [x] mode d'emploi pour lancer l'environnement
+- [x] corrige le fait que github ne charge pas le .env-example
+- [ ] n'afficher que les années présentes dans .env
+- [ ] mettre les comptes dans le sheet (onglet comptes)
 
 ## US11 Faire le fichier des écritures comptables - FEC
 
@@ -16,6 +19,7 @@
 - [ ] récupérer les AN de l'exercice N-1 automatiquement
 - [ ] aller chercher l'inventaire pour les clôtures et AN
 - [ ] notice avec exemples de toutes les écritures générées
+- [ ] mettre les comptes dans le sheet
 
 - [ ] stripe écritures
 - [ ] importer directement les écritures wise
