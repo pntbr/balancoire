@@ -4,10 +4,8 @@
 
 - [x] si pas de .env - un sheet par défaut
 - [x] publier un oisiflorus.compta.com
-- [ ] mode d'emploi
-- [ ] notice avec exemples de toutes les écritures générées
-- [ ] README
-  - [ ] mode d'emploi pour lancer l'environnement
+- [x] README
+  - [x] mode d'emploi pour lancer l'environnement
 
 ## US11 Faire le fichier des écritures comptables - FEC
 
@@ -17,6 +15,7 @@
 
 - [ ] récupérer les AN de l'exercice N-1 automatiquement
 - [ ] aller chercher l'inventaire pour les clôtures et AN
+- [ ] notice avec exemples de toutes les écritures générées
 
 - [ ] stripe écritures
 - [ ] importer directement les écritures wise
