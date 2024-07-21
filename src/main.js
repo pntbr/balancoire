@@ -22,7 +22,7 @@ function loadEnvConfig() {
     return fetch('.env.json')
         .then(response => {
             if (!response.ok) {
-                return fetch('.env.example.json').then(responseExample => {
+                return fetch('env.example.json').then(responseExample => {
                     if (!responseExample.ok) {
                         throw new Error('Impossible de charger la configuration');
                     }
