@@ -1,21 +1,11 @@
 # Backlog
 
-## US9 Gérer les inventaires
-
-- [x] créer une page inventaire
-- [x] passer les sheets dans .env
-- [x] reprendre les données pour l'année choisie
-- [x] refactoriser main
-- [x] faire les totaux
-
 ## US10 Faire un bac à sable
 
-- [ ] si pas de .env - un sheet par défaut
-- [ ] publier un oisiflorus.compta.com
-- [ ] mode d'emploi
-- [ ] notice avec exemples de toutes les écritures générées
-- [ ] README
-  - [ ] mode d'emploi pour lancer l'environnement
+- [x] si pas de .env - un sheet par défaut
+- [x] publier un oisiflorus.compta.com
+- [x] README
+  - [x] mode d'emploi pour lancer l'environnement
 
 ## US11 Faire le fichier des écritures comptables - FEC
 
@@ -25,6 +15,7 @@
 
 - [ ] récupérer les AN de l'exercice N-1 automatiquement
 - [ ] aller chercher l'inventaire pour les clôtures et AN
+- [ ] notice avec exemples de toutes les écritures générées
 
 - [ ] stripe écritures
 - [ ] importer directement les écritures wise

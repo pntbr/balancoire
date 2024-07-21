@@ -10,13 +10,32 @@ import { creationInventaire, injecteInventaireEcritures } from './inventaire.js'
 document.addEventListener('DOMContentLoaded', init);
 
 function init() {
-    fetch('.env.json')
-        .then(response => response.json())
+    fetchEnvConfig()
         .then(env => {
             const { SHEET_ID, SHEETNAME_TO_GID } = env;
             setupInfoModal();
             loadNavigation(SHEET_ID, SHEETNAME_TO_GID);
         });
+}
+
+function loadEnvConfig() {
+    return fetch('.env.json')
+        .then(response => {
+            if (!response.ok) {
+                return fetch('.env.example.json').then(responseExample => {
+                    if (!responseExample.ok) {
+                        throw new Error('Impossible de charger la configuration');
+                    }
+                    return responseExample.json();
+                });
+            }
+            return response.json();
+        })
+        .catch(error => console.error('Erreur lors du chargement de la configuration:', error));
+}
+
+async function fetchEnvConfig() {
+    return loadEnvConfig();
 }
 
 function setupInfoModal() {
@@ -33,7 +52,7 @@ function setupInfoModal() {
     });
 
     window.addEventListener('click', (event) => {
-        if (event.target == infoModal) {
+        if (event.target === infoModal) {
             infoModal.style.display = 'none';
         }
     });
