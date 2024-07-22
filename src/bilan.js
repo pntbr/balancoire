@@ -1,6 +1,13 @@
 import { sommeCompteParRacine, formatToCurrency } from './utils.js';
 import { lignesEnEcritures, arretComptesClotureEcritures } from './ecritures.js';
 
+/**
+ * Crée un bilan comptable à partir des données JSON et de l'année courante.
+ *
+ * @param {Object[]} jsonData - Les données JSON contenant les écritures comptables.
+ * @param {number} currentYear - L'année courante pour filtrer les écritures.
+ * @returns {Object} - Un objet représentant le bilan comptable.
+ */
 export function creationBilan(jsonData, currentYear) {
     const ecritures = lignesEnEcritures(jsonData, currentYear);
     const ecrituresArret = arretComptesClotureEcritures(ecritures, currentYear);
@@ -57,9 +64,14 @@ export function creationBilan(jsonData, currentYear) {
             },
             'total': totalPassif
         }
-    }
+    };
 }
 
+/**
+ * Injecte les écritures du bilan dans le tableau HTML.
+ *
+ * @param {Object} soldes - Les soldes du bilan à injecter dans le tableau HTML.
+ */
 export function injecteBilanEcritures(soldes) {
     const tableBody = document.getElementById('bilan-ecritures');
     tableBody.innerHTML = `
@@ -115,7 +127,7 @@ export function injecteBilanEcritures(soldes) {
         </tr>
         <tr>
             <td>&nbsp;&nbsp;&nbsp;Réserves</td>
-            <td>${formatToCurrency(soldes.passif.capitaux.reserves)}</</td>
+            <td>${formatToCurrency(soldes.passif.capitaux.reserves)}</td>
         </tr>
         <tr>
             <td>&nbsp;&nbsp;&nbsp;Résultat de l'exercice</td>
@@ -153,5 +165,5 @@ export function injecteBilanEcritures(soldes) {
             <td><strong>Total Passif</strong></td>
             <td>${formatToCurrency(soldes.passif.total)}</td>
         </tr>
-  `
+    `;
 }

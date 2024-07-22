@@ -1,17 +1,5 @@
 # Backlog
 
-## US10 Faire un bac à sable
-
-- [x] si pas de .env - un sheet par défaut
-- [x] publier un oisiflorus.compta.com
-- [x] README
-  - [x] mode d'emploi pour lancer l'environnement
-- [x] corrige le fait que github ne charge pas le .env-example
-- [x] n'afficher que les années présentes dans .env
-- [x] ajouter un lien vers le google sheet
-- [x] ajouter des données dans le bac à sable
-- [x] tous les soirs remettre des données
-
 ## US11 Faire le fichier des écritures comptables - FEC
 
 - [ ] créer une page
@@ -19,6 +7,7 @@
 
 ### Notes
 
+- [ ] soigner les labels
 - [ ] récupérer les AN de l'exercice N-1 automatiquement
 - [ ] aller chercher l'inventaire pour les clôtures et AN
 - [ ] notice avec exemples de toutes les écritures générées
