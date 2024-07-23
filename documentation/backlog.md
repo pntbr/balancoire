@@ -2,6 +2,8 @@
 
 ## US11 Faire le fichier des écritures comptables - FEC
 
+- [x] écrit jsdoc et tests basiques (sans les passer)
+- [x] un peu d'aide en plus sur le bilan
 - [ ] créer une page
 - [ ] valider le fichier
 
