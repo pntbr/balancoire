@@ -105,178 +105,179 @@ function inventaireClotureEcriture(line) {
  * @returns {Object[]} - Une liste d'écritures comptables.
  */
 function cautionEcriture(line) {
-    const creditCompte = line['qui paye ?'] === 'B2T' ? (line["nature"] === 'esp' ? '530000' : '512000') : '467000';
-    return [
-        creationEcriture(line['date'], '275000', `caution ${line['qui reçoit']}`, convertToNumber(line['montant']), ''),
-        creationEcriture(line['date'], creditCompte, `caution ${line['qui reçoit']}`, '', convertToNumber(line['montant']))
-    ];
-}
-
-/**
- * Crée les écritures de remboursement.
- *
- * @param {Object} line - La ligne de données.
- * @returns {Object[]} - Une liste d'écritures comptables.
- */
-function remboursementEcriture(line) {
-    const checkCash = line["nature"] === 'esp';
-    return [
-        creationEcriture(line['date'], '467000', 'remboursement de frais', convertToNumber(line['montant']), ''),
-        creationEcriture(line['date'], checkCash ? '530000' : '512000', 'remboursement de frais', '', convertToNumber(line['montant']))
-    ];
-}
-
-/**
- * Crée les écritures de dépense.
- *
- * @param {Object} line - La ligne de données.
- * @param {string} numeroCompte - Le numéro de compte.
- * @returns {Object[]} - Une liste d'écritures comptables.
- */
-function depenseEcriture(line, numeroCompte) {
-    const checkCash = line["nature"] === 'esp';
-    const piece = line['facture correspondante'] ? ` - <a href="${line['facture correspondante']}">pièce</a>` : '';
-    const label = `achat B2T : ${line['qui reçoit']} ${piece}`;
-    return [
-        creationEcriture(line['date'], numeroCompte, label, convertToNumber(line['montant']), ''),
-        creationEcriture(line['date'], checkCash ? '530000' : '512000', label, '', convertToNumber(line['montant']))
-    ];
-}
-
-/**
- * Crée les écritures de dépense pour une personne.
- *
- * @param {Object} line - La ligne de données.
- * @param {string} numeroCompte - Le numéro de compte.
- * @returns {Object[]} - Une liste d'écritures comptables.
- */
-function depensePersonneEcriture(line, numeroCompte) {
-    const piece = line['facture correspondante'] ? `<a href="${line['facture correspondante']}">pièce</a>` : '';
-    const label = `achat personne : ${line['qui reçoit']} - ${piece}`;
-    return [
-        creationEcriture(line['date'], numeroCompte, label, convertToNumber(line['montant']), ''),
-        creationEcriture(line['date'], '467000', label, '', convertToNumber(line['montant']))
-    ];
-}
-
-/**
- * Crée les écritures de vente.
- *
- * @param {Object} line - La ligne de données.
- * @param {string} numeroCompte - Le numéro de compte.
- * @returns {Object[]} - Une liste d'écritures comptables.
- */
-function venteEcriture(line, numeroCompte) {
-    const checkCash = line["nature"] === 'esp';
-    const piece = line['facture correspondante'] ? `<a href="${line['facture correspondante']}">pièce</a>` : '';
-    const label = `vente : ${line['qui paye ?']} - ${piece}`;
-    return [
-        creationEcriture(line['date'], numeroCompte, label, '', convertToNumber(line['montant'])),
-        creationEcriture(line['date'], checkCash ? '530000' : '512000', label, convertToNumber(line['montant']), '')
-    ];
-}
-
-/**
- * Crée les écritures de l'impôt sur les sociétés pour l'exercice courant.
- *
- * @param {Object[]} ecritures - La liste des écritures comptables.
- * @param {number} currentYear - L'année courante.
- * @returns {Object[]} - Une liste d'écritures comptables.
- */
-function impotExercice(ecritures, currentYear) {
-    const resultat = sommeCompteParRacine(ecritures, '7') + sommeCompteParRacine(ecritures, '6');
-    const montantImpot = resultat * 0.15;
-    if (resultat <= 0) return [];
-    return [
-        creationEcriture(`31/12/${currentYear}`, '695000', 'impôt sur les sociétés', montantImpot, ''),
-        creationEcriture(`31/12/${currentYear}`, '444000', 'impôt sur les sociétés', '', montantImpot)
-    ];
-}
-
-/**
- * Convertit une ligne de données en écritures comptables pour l'année courante.
- *
- * @param {Object} line - La ligne de données.
- * @param {number} currentYear - L'année courante.
- * @returns {Object[]} - Une liste d'écritures comptables.
- * @throws {Error} - Lance une erreur si l'écriture ne peut pas être rendue.
- */
-function ligneEnEcriture(line, currentYear) {
-    const numeroCompte = trouverCompte({ label: line.poste }).compte;
-    try {
-        if (line['date'].startsWith('01/01')) {
-            return aNouveauEcriture(line, numeroCompte, currentYear);
-        }
-        // Gère la clôture
-        if (line['date'].startsWith('31/12')) {
-            if (numeroCompte === '370000') {
-                return inventaireClotureEcriture(line, numeroCompte);
-            }
-        }
-
-        // Gère les écritures courantes
-        if (numeroCompte === '275000') return cautionEcriture(line);
-        if (numeroCompte.startsWith('4')) return remboursementEcriture(line);
-        if (numeroCompte.startsWith('6')) return line['qui paye ?'] === 'B2T' ? depenseEcriture(line, numeroCompte) : depensePersonneEcriture(line, numeroCompte);
-        if (numeroCompte.startsWith('7')) return venteEcriture(line, numeroCompte);
-
-        handleError(`L'écriture ne comporte pas un compte connu`, line);
-    } catch (error) {
-        handleError(`L'écriture n'a pu être rendue`, line);
+    const creditCompte = (['B2T', 'Association'].includes(line['qui paye ?']) ? (line["nature"] === 'esp' ? '530000' : '512000') : '467000';
+        return [
+            creationEcriture(line['date'], '275000', `caution ${line['qui reçoit']}`, convertToNumber(line['montant']), ''),
+            creationEcriture(line['date'], creditCompte, `caution ${line['qui reçoit']}`, '', convertToNumber(line['montant']))
+        ];
     }
-}
 
-/**
- * Convertit les lignes de données JSON en écritures comptables pour l'année courante.
- *
- * @param {Object[]} jsonData - Les données JSON contenant les écritures comptables.
- * @param {number} currentYear - L'année courante.
- * @returns {Object[]} - Une liste d'écritures comptables triées par date.
- */
-export function lignesEnEcritures(jsonData, currentYear) {
-    const ecritures = jsonData.flatMap(ligne => ligneEnEcriture(ligne, currentYear));
+    /**
+     * Crée les écritures de remboursement.
+     *
+     * @param {Object} line - La ligne de données.
+     * @returns {Object[]} - Une liste d'écritures comptables.
+     */
+    function remboursementEcriture(line) {
+        const checkCash = line["nature"] === 'esp';
+        return [
+            creationEcriture(line['date'], '467000', 'remboursement de frais', convertToNumber(line['montant']), ''),
+            creationEcriture(line['date'], checkCash ? '530000' : '512000', 'remboursement de frais', '', convertToNumber(line['montant']))
+        ];
+    }
 
-    return ecritures
-        .concat(impotExercice(ecritures, currentYear))
-        .sort((a, b) => {
-            const dateA = new Date(a.Date.split('/').reverse().join('-'));
-            const dateB = new Date(b.Date.split('/').reverse().join('-'));
-            return dateA - dateB;
-        });
-}
+    /**
+     * Crée les écritures de dépense.
+     *
+     * @param {Object} line - La ligne de données.
+     * @param {string} numeroCompte - Le numéro de compte.
+     * @returns {Object[]} - Une liste d'écritures comptables.
+     */
+    function depenseEcriture(line, numeroCompte) {
+        const checkCash = line["nature"] === 'esp';
+        const piece = line['facture correspondante'] ? ` - <a href="${line['facture correspondante']}">pièce</a>` : '';
+        const label = `achat B2T : ${line['qui reçoit']} ${piece}`;
+        return [
+            creationEcriture(line['date'], numeroCompte, label, convertToNumber(line['montant']), ''),
+            creationEcriture(line['date'], checkCash ? '530000' : '512000', label, '', convertToNumber(line['montant']))
+        ];
+    }
 
-/**
- * Arrête les comptes et crée les écritures de clôture pour l'exercice courant.
- *
- * @param {Object[]} ecritures - La liste des écritures comptables.
- * @param {number} currentYear - L'année courante.
- * @returns {Object[]} - Une liste d'écritures comptables arrêtées.
- */
-export function arretComptesClotureEcritures(ecritures, currentYear) {
-    const resultat = sommeCompteParRacine(ecritures, '7') + sommeCompteParRacine(ecritures, '6');
-    const ecrituresArret = [...ecritures];
-    const comptesClasses6et7 = [...new Set(ecrituresArret
-        .filter(ecriture => ecriture['Compte'].startsWith('6') || ecriture['Compte'].startsWith('7'))
-        .map(ecriture => ecriture['Compte'])
-    )];
+    /**
+     * Crée les écritures de dépense pour une personne.
+     *
+     * @param {Object} line - La ligne de données.
+     * @param {string} numeroCompte - Le numéro de compte.
+     * @returns {Object[]} - Une liste d'écritures comptables.
+     */
+    function depensePersonneEcriture(line, numeroCompte) {
+        const piece = line['facture correspondante'] ? `<a href="${line['facture correspondante']}">pièce</a>` : '';
+        const label = `achat personne : ${line['qui reçoit']} - ${piece}`;
+        return [
+            creationEcriture(line['date'], numeroCompte, label, convertToNumber(line['montant']), ''),
+            creationEcriture(line['date'], '467000', label, '', convertToNumber(line['montant']))
+        ];
+    }
 
-    comptesClasses6et7.forEach(compte => {
-        const solde = sommeCompteParRacine(ecrituresArret, compte);
+    /**
+     * Crée les écritures de vente.
+     *
+     * @param {Object} line - La ligne de données.
+     * @param {string} numeroCompte - Le numéro de compte.
+     * @returns {Object[]} - Une liste d'écritures comptables.
+     */
+    function venteEcriture(line, numeroCompte) {
+        const checkCash = line["nature"] === 'esp';
+        const piece = line['facture correspondante'] ? `<a href="${line['facture correspondante']}">pièce</a>` : '';
+        const label = `vente : ${line['qui paye ?']} - ${piece}`;
+        return [
+            creationEcriture(line['date'], numeroCompte, label, '', convertToNumber(line['montant'])),
+            creationEcriture(line['date'], checkCash ? '530000' : '512000', label, convertToNumber(line['montant']), '')
+        ];
+    }
 
-        if (solde !== 0) {
-            if (solde < 0) {
-                ecrituresArret.push(creationEcriture(`31/12/${currentYear}`, compte, 'arrêt des comptes', '', Math.abs(solde)));
-            } else {
-                ecrituresArret.push(creationEcriture(`31/12/${currentYear}`, compte, 'arrêt des comptes', Math.abs(solde), ''));
+    /**
+     * Crée les écritures de l'impôt sur les sociétés pour l'exercice courant.
+     *
+     * @param {Object[]} ecritures - La liste des écritures comptables.
+     * @param {number} currentYear - L'année courante.
+     * @returns {Object[]} - Une liste d'écritures comptables.
+     */
+    function impotExercice(ecritures, currentYear) {
+        const resultat = sommeCompteParRacine(ecritures, '7') + sommeCompteParRacine(ecritures, '6');
+        const montantImpot = resultat * 0.15;
+        if (resultat <= 0) return [];
+        return [
+            creationEcriture(`31/12/${currentYear}`, '695000', 'impôt sur les sociétés', montantImpot, ''),
+            creationEcriture(`31/12/${currentYear}`, '444000', 'impôt sur les sociétés', '', montantImpot)
+        ];
+    }
+
+    /**
+     * Convertit une ligne de données en écritures comptables pour l'année courante.
+     *
+     * @param {Object} line - La ligne de données.
+     * @param {number} currentYear - L'année courante.
+     * @returns {Object[]} - Une liste d'écritures comptables.
+     * @throws {Error} - Lance une erreur si l'écriture ne peut pas être rendue.
+     */
+    function ligneEnEcriture(line, currentYear) {
+        const numeroCompte = trouverCompte({ label: line.poste }).compte;
+        try {
+            if (line['date'].startsWith('01/01')) {
+                return aNouveauEcriture(line, numeroCompte, currentYear);
+            }
+            // Gère la clôture
+            if (line['date'].startsWith('31/12')) {
+                if (numeroCompte === '370000') {
+                    return inventaireClotureEcriture(line, numeroCompte);
+                }
+            }
+
+            // Gère les écritures courantes
+            if (numeroCompte === '275000') return cautionEcriture(line);
+            if (numeroCompte.startsWith('4')) return remboursementEcriture(line);
+            if (numeroCompte.startsWith('6')) return (['B2T', 'Association'].includes(line['qui paye ?']) ? depenseEcriture(line, numeroCompte) : depensePersonneEcriture(line, numeroCompte);
+                if (numeroCompte.startsWith('7')) return venteEcriture(line, numeroCompte);
+
+                handleError(`L'écriture ne comporte pas un compte connu`, line);
+            }
+            catch (error) {
+                handleError(`L'écriture n'a pu être rendue`, line);
             }
         }
-    });
 
-    const isExcédentaire = resultat > 0;
-    const compte = isExcédentaire ? '120000' : '129000';
-    const label = isExcédentaire ? 'résultat excédentaire' : 'résultat déficitaire';
+        /**
+         * Convertit les lignes de données JSON en écritures comptables pour l'année courante.
+         *
+         * @param {Object[]} jsonData - Les données JSON contenant les écritures comptables.
+         * @param {number} currentYear - L'année courante.
+         * @returns {Object[]} - Une liste d'écritures comptables triées par date.
+         */
+        export function lignesEnEcritures(jsonData, currentYear) {
+            const ecritures = jsonData.flatMap(ligne => ligneEnEcriture(ligne, currentYear));
 
-    ecrituresArret.push(creationEcriture(`31/12/${currentYear}`, compte, label, !isExcédentaire && Math.abs(resultat), isExcédentaire && Math.abs(resultat)));
+            return ecritures
+                .concat(impotExercice(ecritures, currentYear))
+                .sort((a, b) => {
+                    const dateA = new Date(a.Date.split('/').reverse().join('-'));
+                    const dateB = new Date(b.Date.split('/').reverse().join('-'));
+                    return dateA - dateB;
+                });
+        }
 
-    return ecrituresArret;
-}
+        /**
+         * Arrête les comptes et crée les écritures de clôture pour l'exercice courant.
+         *
+         * @param {Object[]} ecritures - La liste des écritures comptables.
+         * @param {number} currentYear - L'année courante.
+         * @returns {Object[]} - Une liste d'écritures comptables arrêtées.
+         */
+        export function arretComptesClotureEcritures(ecritures, currentYear) {
+            const resultat = sommeCompteParRacine(ecritures, '7') + sommeCompteParRacine(ecritures, '6');
+            const ecrituresArret = [...ecritures];
+            const comptesClasses6et7 = [...new Set(ecrituresArret
+                .filter(ecriture => ecriture['Compte'].startsWith('6') || ecriture['Compte'].startsWith('7'))
+                .map(ecriture => ecriture['Compte'])
+            )];
+
+            comptesClasses6et7.forEach(compte => {
+                const solde = sommeCompteParRacine(ecrituresArret, compte);
+
+                if (solde !== 0) {
+                    if (solde < 0) {
+                        ecrituresArret.push(creationEcriture(`31/12/${currentYear}`, compte, 'arrêt des comptes', '', Math.abs(solde)));
+                    } else {
+                        ecrituresArret.push(creationEcriture(`31/12/${currentYear}`, compte, 'arrêt des comptes', Math.abs(solde), ''));
+                    }
+                }
+            });
+
+            const isExcédentaire = resultat > 0;
+            const compte = isExcédentaire ? '120000' : '129000';
+            const label = isExcédentaire ? 'résultat excédentaire' : 'résultat déficitaire';
+
+            ecrituresArret.push(creationEcriture(`31/12/${currentYear}`, compte, label, !isExcédentaire && Math.abs(resultat), isExcédentaire && Math.abs(resultat)));
+
+            return ecrituresArret;
+        }
