@@ -12,14 +12,13 @@ export function creationFEC(jsonData, currentYear, siren) {
     const FECName = `${siren}FEC${currentYear}1231`;
     const FECEcritures = lignesEnEcritures(jsonData, currentYear)
         .map(ecriture => {
-            console.log('ecriture', ecriture);
-            const compte = trouverCompte(ecriture['Compte']);
+            const compte = trouverCompte(ecriture['CompteNum']);
             return {
                 'JournalCode': '',
                 'JournalLib': '',
                 'EcritureNum': '',
-                'EcritureDate': ecriture['Date'],
-                'CompteNum': ecriture['Compte'],
+                'EcritureDate': ecriture['EcritureDate'],
+                'CompteNum': ecriture['CompteNum'],
                 'CompteLib': '',
                 'PieceRef': '',
                 'PieceDate': '',

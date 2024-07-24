@@ -47,6 +47,6 @@
         const checkDebit = (type !== 'C');
         const checkCredit = (type !== 'D');
         return ecritures
-            .filter(ecriture => ecriture['Compte'].startsWith(racine))
+            .filter(ecriture => ecriture['CompteNum'].startsWith(racine))
             .reduce((sum, ecriture) => sum + (checkCredit ? ecriture["Crédit (€)"] : 0) - (checkDebit ? ecriture["Débit (€)"] : 0), 0);
     }

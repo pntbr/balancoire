@@ -21,9 +21,9 @@ export function injecteJournalEcritures(journalEcritures) {
     const tableBody = document.getElementById('journal-ecritures');
     tableBody.innerHTML = journalEcritures.map(ecriture => `
         <tr>
-            <td>${ecriture['Date']}</td>
-            <td>${ecriture['Compte']}</td>
-            <td>${ecriture['Libellé']}</td>
+            <td>${ecriture['EcritureDate']}</td>
+            <td>${ecriture['CompteNum']}</td>
+            <td>${ecriture['EcritureLib']}</td>
             <td>${formatToCurrency(ecriture['Débit (€)'])}</td>
             <td>${formatToCurrency(ecriture['Crédit (€)'])}</td>
         </tr>

@@ -36,9 +36,9 @@ function handleError(message, line) {
  */
 function creationEcriture(date, compte, label, debit, credit) {
     return {
-        'Date': date,
-        'Compte': compte,
-        'Libellé': label,
+        'EcritureDate': date,
+        'CompteNum': compte,
+        'EcritureLib': label,
         'Débit (€)': debit || '',
         'Crédit (€)': credit || ''
     };
@@ -240,8 +240,8 @@ export function lignesEnEcritures(jsonData, currentYear) {
     return ecritures
         .concat(impotExercice(ecritures, currentYear))
         .sort((a, b) => {
-            const dateA = new Date(a.Date.split('/').reverse().join('-'));
-            const dateB = new Date(b.Date.split('/').reverse().join('-'));
+            const dateA = new Date(a.EcritureDate.split('/').reverse().join('-'));
+            const dateB = new Date(b.EcritureDate.split('/').reverse().join('-'));
             return dateA - dateB;
         });
 }
@@ -257,8 +257,8 @@ export function arretComptesClotureEcritures(ecritures, currentYear) {
     const resultat = sommeCompteParRacine(ecritures, '7') + sommeCompteParRacine(ecritures, '6');
     const ecrituresArret = [...ecritures];
     const comptesClasses6et7 = [...new Set(ecrituresArret
-        .filter(ecriture => ecriture['Compte'].startsWith('6') || ecriture['Compte'].startsWith('7'))
-        .map(ecriture => ecriture['Compte'])
+        .filter(ecriture => ecriture['CompteNum'].startsWith('6') || ecriture['CompteNum'].startsWith('7'))
+        .map(ecriture => ecriture['CompteNum'])
     )];
 
     comptesClasses6et7.forEach(compte => {
