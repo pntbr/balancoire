@@ -5,6 +5,10 @@
 - [x] écrit jsdoc et tests basiques (sans les passer)
 - [x] un peu d'aide en plus sur le bilan
 - [x] créer une page
+- [x] nom du fichier : SirenFECAAAAMMJJ
+- [x] importer les première données
+- [x] changer les intitulés des écritures par celles du FEC
+- [ ] ajouter les rubriques du FEC dans les écritures
 - [ ] valider le fichier
 
 ### Notes

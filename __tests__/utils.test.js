@@ -4,7 +4,7 @@ import { PLAN_COMPTABLE } from '../src/plan-comptable.js';
 describe('Fonctions Utilitaires', () => {
     describe('trouverCompte', () => {
         test('doit retourner le compte correct pour un numéro donné', () => {
-            expect(trouverCompte({ compte: '106000' })).toEqual({ compte: '106000', label: 'réserves' });
+            expect(trouverCompte({ CompteNum: '106000' })).toEqual({ compte: '106000', label: 'réserves' });
         });
 
         test('doit retourner le compte correct pour un libellé donné', () => {
@@ -12,7 +12,7 @@ describe('Fonctions Utilitaires', () => {
         });
 
         test('doit retourner non défini pour un compte inconnu', () => {
-            expect(trouverCompte({ compte: '999999' })).toEqual({ compte: 'xxxxxx', label: 'non défini' });
+            expect(trouverCompte({ CompteNum: '999999' })).toEqual({ compte: 'xxxxxx', label: 'non défini' });
         });
     });
 
@@ -38,10 +38,10 @@ describe('Fonctions Utilitaires', () => {
 
     describe('sommeCompteParRacine', () => {
         const ecritures = [
-            { 'Compte': '601000', 'Débit (€)': 100, 'Crédit (€)': 0 },
-            { 'Compte': '602000', 'Débit (€)': 200, 'Crédit (€)': 0 },
-            { 'Compte': '601000', 'Débit (€)': 50, 'Crédit (€)': 0 },
-            { 'Compte': '602000', 'Débit (€)': 0, 'Crédit (€)': 300 },
+            { 'CompteNum': '601000', 'Debit': 100, 'Credit': 0 },
+            { 'CompteNum': '602000', 'Debit': 200, 'Credit': 0 },
+            { 'CompteNum': '601000', 'Debit': 50, 'Credit': 0 },
+            { 'CompteNum': '602000', 'Debit': 0, 'Credit': 300 },
         ];
 
         test('doit calculer la somme des débits et crédits pour une racine donnée', () => {

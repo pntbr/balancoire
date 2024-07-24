@@ -12,39 +12,39 @@ export function creationGrandLivre(jsonData, currentYear) {
     const ecritures = lignesEnEcritures(jsonData, currentYear);
 
     const grandLivreEcritures = {};
-    const comptes = [...new Set(ecritures.map(({ Compte }) => Compte))].sort();
+    const comptes = [...new Set(ecritures.map(({ CompteNum }) => CompteNum))].sort();
 
     comptes.forEach(compte => {
         let totalDebit = 0;
         let totalCredit = 0;
 
         grandLivreEcritures[compte] = ecritures
-            .filter(ecriture => ecriture['Compte'] === compte)
+            .filter(ecriture => ecriture['CompteNum'] === compte)
             .map(ecriture => {
-                const debit = +ecriture['Débit (€)'];
-                const credit = +ecriture['Crédit (€)'];
+                const debit = +ecriture['Debit'];
+                const credit = +ecriture['Credit'];
                 totalDebit += debit;
                 totalCredit += credit;
                 return {
-                    Date: ecriture.Date,
-                    Libellé: ecriture.Libellé,
-                    'Débit (€)': debit,
-                    'Crédit (€)': credit
+                    EcritureDate: ecriture.EcritureDate,
+                    EcritureLib: ecriture.EcritureLib,
+                    'Debit': debit,
+                    'Credit': credit
                 };
             });
 
         grandLivreEcritures[compte].push({
-            'Date': `31/12/${currentYear}`,
-            'Libellé': 'Total',
-            'Débit (€)': totalDebit,
-            'Crédit (€)': totalCredit
+            'EcritureDate': `31/12/${currentYear}`,
+            'EcritureLib': 'Total',
+            'Debit': totalDebit,
+            'Credit': totalCredit
         });
 
         grandLivreEcritures[compte].push({
-            'Date': `31/12/${currentYear}`,
-            'Libellé': 'Solde',
-            'Débit (€)': totalDebit > totalCredit ? (totalDebit - totalCredit) : '',
-            'Crédit (€)': totalCredit > totalDebit ? (totalCredit - totalDebit) : ''
+            'EcritureDate': `31/12/${currentYear}`,
+            'EcritureLib': 'Solde',
+            'Debit': totalDebit > totalCredit ? (totalDebit - totalCredit) : '',
+            'Credit': totalCredit > totalDebit ? (totalCredit - totalDebit) : ''
         });
     });
 
@@ -74,11 +74,11 @@ export function injecteGrandLivreEcritures(grandLivreEcritures) {
                     </thead>
                     <tbody>
                         ${ecritures.map(ecriture => `
-                            <tr class="${ecriture.Libellé === 'Total' ? 'total' : ecriture.Libellé === 'Solde' ? 'solde' : ''}">
-                                <td>${ecriture.Date}</td>
-                                <td>${ecriture.Libellé}</td>
-                                <td>${formatToCurrency(ecriture['Débit (€)'])}</td>
-                                <td>${formatToCurrency(ecriture['Crédit (€)'])}</td>
+                            <tr class="${ecriture.EcritureLib === 'Total' ? 'total' : ecriture.EcritureLib === 'Solde' ? 'solde' : ''}">
+                                <td>${ecriture.EcritureDate}</td>
+                                <td>${ecriture.EcritureLib}</td>
+                                <td>${formatToCurrency(ecriture['Debit'])}</td>
+                                <td>${formatToCurrency(ecriture['Credit'])}</td>
                             </tr>
                         `).join('')}
                     </tbody>

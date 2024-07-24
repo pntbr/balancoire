@@ -15,11 +15,11 @@ document.addEventListener('DOMContentLoaded', init);
  * Charge la configuration d'environnement et configure les éléments de la page.
  */
 function init() {
-    fetchEnvConfig()
+    loadEnvConfig()
         .then(env => {
-            const { SHEET_ID, SHEETNAME_TO_GID } = env;
+            const { SHEET_ID, SHEETNAME_TO_GID, SIREN } = env;
             setupInfoModal();
-            loadNavigation(SHEET_ID, SHEETNAME_TO_GID);
+            loadNavigation(SHEET_ID, SHEETNAME_TO_GID, SIREN);
         });
 }
 
@@ -40,14 +40,6 @@ async function loadEnvConfig() {
     } catch (error) {
         throw error;
     }
-}
-
-/**
- * Récupère la configuration d'environnement.
- * @returns {Promise<Object>} La configuration d'environnement.
- */
-async function fetchEnvConfig() {
-    return loadEnvConfig();
 }
 
 /**
@@ -78,14 +70,14 @@ function setupInfoModal() {
  * @param {string} SHEET_ID - L'identifiant de la Google Sheet.
  * @param {Object} SHEETNAME_TO_GID - Les identifiants des onglets de la Google Sheet.
  */
-function loadNavigation(SHEET_ID, SHEETNAME_TO_GID) {
+function loadNavigation(SHEET_ID, SHEETNAME_TO_GID, SIREN) {
     fetch('nav.html')
         .then(response => response.text())
         .then(data => {
             document.getElementById('navigation').innerHTML = data;
             setupPageLinks();
             injectYearLinks(SHEETNAME_TO_GID);
-            setupYearLinks(SHEET_ID, SHEETNAME_TO_GID);
+            setupYearLinks(SHEET_ID, SHEETNAME_TO_GID, SIREN);
             injectSheetLink(SHEET_ID);
         });
 }
@@ -127,7 +119,7 @@ function injectYearLinks(SHEETNAME_TO_GID) {
  * @param {string} SHEET_ID - L'identifiant de la Google Sheet.
  * @param {Object} SHEETNAME_TO_GID - Les identifiants des onglets de la Google Sheet.
  */
-function setupYearLinks(SHEET_ID, SHEETNAME_TO_GID) {
+function setupYearLinks(SHEET_ID, SHEETNAME_TO_GID, SIREN) {
     const yearLinks = document.querySelectorAll('.annee-nav a');
     const currentYear = localStorage.getItem('selectedYear') || '2024';
     yearLinks.forEach(link => {
@@ -138,13 +130,13 @@ function setupYearLinks(SHEET_ID, SHEETNAME_TO_GID) {
             event.preventDefault();
             const selectedYear = event.target.getAttribute('data-year');
             localStorage.setItem('selectedYear', selectedYear);
-            loadCSV(SHEET_ID, SHEETNAME_TO_GID, selectedYear);
+            loadCSV(SHEET_ID, SHEETNAME_TO_GID, selectedYear, SIREN);
             yearLinks.forEach(l => l.classList.remove('menu-selected'));
             event.target.classList.add('menu-selected');
         });
     });
 
-    loadCSV(SHEET_ID, SHEETNAME_TO_GID, currentYear);
+    loadCSV(SHEET_ID, SHEETNAME_TO_GID, currentYear, SIREN);
 }
 
 /**
@@ -188,7 +180,7 @@ function hideErrorMessage() {
  * @param {Object} sheetNameToGid - Les identifiants des onglets de la Google Sheet.
  * @param {string} currentYear - L'année sélectionnée.
  */
-function loadCSV(sheetId, sheetNameToGid, currentYear) {
+function loadCSV(sheetId, sheetNameToGid, currentYear, siren) {
     const currentPage = location.pathname.split('/').pop();
     const sheetName = currentPage && currentPage.startsWith('inventaire') ? 'inventaire' : currentYear;
     const csvUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv&pli=1&gid=${sheetNameToGid[sheetName]}#gid=${sheetNameToGid[sheetName]}`;
@@ -203,7 +195,7 @@ function loadCSV(sheetId, sheetNameToGid, currentYear) {
         })
         .then(csvText => {
             const jsonData = parseCSV(csvText);
-            injectDataIntoPage(jsonData, currentYear);
+            injectDataIntoPage(jsonData, currentYear, siren);
             hideLoader();
         })
         .catch(error => {
@@ -217,7 +209,7 @@ function loadCSV(sheetId, sheetNameToGid, currentYear) {
  * @param {Object[]} jsonData - Les données du CSV en format JSON.
  * @param {string} currentYear - L'année sélectionnée.
  */
-function injectDataIntoPage(jsonData, currentYear) {
+function injectDataIntoPage(jsonData, currentYear, siren) {
     const mappings = [
         { id: 'journal-ecritures', create: creationJournal, inject: injecteJournalEcritures },
         { id: 'balance-ecritures', create: creationBalance, inject: injecteBalanceEcritures },
@@ -229,9 +221,9 @@ function injectDataIntoPage(jsonData, currentYear) {
     ];
 
     mappings.forEach(({ id, create, inject }) => {
-        const element = document.getElementById(id);
+        const element = document.getElementById(id);   
         if (element) {
-            const ecritures = create(jsonData, currentYear);
+            const ecritures = create(jsonData, currentYear, siren);
             inject(ecritures);
         }
     });

@@ -152,7 +152,7 @@ describe('Fonctions Principales', () => {
                 <div id="balance-ecritures"></div>
             `;
             const jsonData = [
-                { "Date": "2023-01-01", "Compte": "601000", "Libellé": "Achat de marchandises", "Débit (€)": 100, "Crédit (€)": 0 }
+                { "Date": "2023-01-01", "CompteNum": "601000", "EcritureLib": "Achat de marchandises", "Debit": 100, "Credit": 0 }
             ];
             const currentYear = '2023';
             const mappings = [

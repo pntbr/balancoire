@@ -37,17 +37,17 @@ export function creationBilan(jsonData, currentYear) {
     return {
         'actif': {
             'immobilisation': {
-                'corporelles': actifImmobilisationCorporelles,
-                'financieres': actifImmobilisationFinancieres,
-                'total': totalActifImmobilisation
+                'corporelles': -actifImmobilisationCorporelles,
+                'financieres': -actifImmobilisationFinancieres,
+                'total': -totalActifImmobilisation
             },
             'circulant': {
-                'stocks': actifCirculantStocks,
-                'creances': actifCirculantCreances,
-                'disponibilites': actifCirculantDisponibilites,
-                'total': totalActifCirculant
+                'stocks': -actifCirculantStocks,
+                'creances': -actifCirculantCreances,
+                'disponibilites': -actifCirculantDisponibilites,
+                'total': -totalActifCirculant
             },
-            'total': totalActif
+            'total': -totalActif
         },
         'passif': {
             'capitaux': {

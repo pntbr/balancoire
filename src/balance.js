@@ -12,15 +12,15 @@ export function creationBalance(jsonData, currentYear) {
     const ecritures = lignesEnEcritures(jsonData, currentYear);
 
     const balanceEcritures = [];
-    const comptes = [...new Set(ecritures.map(({ Compte }) => Compte))].sort();
+    const comptes = [...new Set(ecritures.map(({ CompteNum }) => CompteNum))].sort();
     comptes.forEach(compte => {
         const totalDebit = sommeCompteParRacine(ecritures, compte, 'D');
         const totalCredit = sommeCompteParRacine(ecritures, compte, 'C');
         balanceEcritures.push({
-            'Compte': compte,
-            'Libellé': trouverCompte({ compte: compte }).label,
-            'Débit (€)': totalDebit,
-            'Crédit (€)': totalCredit,
+            'CompteNum': compte,
+            'CompteLib': trouverCompte({ compte: compte }).label,
+            'Debit': totalDebit,
+            'Credit': totalCredit,
             'Solde (€)': (totalCredit + totalDebit)
         });
     });
@@ -37,10 +37,10 @@ export function injecteBalanceEcritures(balanceEcritures) {
     const tableBody = document.getElementById('balance-ecritures');
     tableBody.innerHTML = balanceEcritures.map(ecriture => `
         <tr>
-            <td>${ecriture['Compte']}</td>
-            <td>${ecriture['Libellé']}</td>
-            <td>${formatToCurrency(ecriture['Débit (€)'])}</td>
-            <td>${formatToCurrency(ecriture['Crédit (€)'])}</td>
+            <td>${ecriture['CompteNum']}</td>
+            <td>${ecriture['CompteLib']}</td>
+            <td>${formatToCurrency(ecriture['Debit'])}</td>
+            <td>${formatToCurrency(ecriture['Credit'])}</td>
             <td>${formatToCurrency(ecriture['Solde (€)'])}</td>
         </tr>
     `).join('');

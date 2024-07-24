@@ -8,22 +8,26 @@ import { lignesEnEcritures } from './ecritures.js';
  * @param {number} currentYear - L'année courante pour filtrer les écritures.
  * @returns {Object[]} - Une liste d'objets représentant le FEC.
  */
-export function creationFEC(jsonData, currentYear) {
-    const ecritures = lignesEnEcritures(jsonData, currentYear);
-
-    const FECEcritures = [];
-    const comptes = [...new Set(ecritures.map(({ Compte }) => Compte))].sort();
-    comptes.forEach(compte => {
-        const totalDebit = sommeCompteParRacine(ecritures, compte, 'D');
-        const totalCredit = sommeCompteParRacine(ecritures, compte, 'C');
-        FECEcritures.push({
-            'Compte': compte,
-            'Libellé': trouverCompte({ compte: compte }).label,
-            'Débit (€)': totalDebit,
-            'Crédit (€)': totalCredit,
-            'Solde (€)': (totalCredit + totalDebit)
-        });
-    });
+export function creationFEC(jsonData, currentYear, siren) {
+    const FECName = `${siren}FEC${currentYear}1231`;
+    const FECEcritures = lignesEnEcritures(jsonData, currentYear)
+        .map(ecriture => {
+            const compte = trouverCompte(ecriture['CompteNum']);
+            return {
+                'JournalCode': '',
+                'JournalLib': '',
+                'EcritureNum': '',
+                'EcritureDate': ecriture['EcritureDate'],
+                'CompteNum': ecriture['CompteNum'],
+                'CompteLib': '',
+                'PieceRef': '',
+                'PieceDate': '',
+                'EcritureLib': '',
+                'Debit': ecriture['Debit'],
+                'Credit': ecriture['Credit'],
+                'ValidDate': ''
+            };
+        })
 
     return FECEcritures;
 }
@@ -37,11 +41,18 @@ export function injecteFECEcritures(FECEcritures) {
     const tableBody = document.getElementById('FEC-ecritures');
     tableBody.innerHTML = FECEcritures.map(ecriture => `
         <tr>
-            <td>${ecriture['Compte']}</td>
-            <td>${ecriture['Libellé']}</td>
-            <td>${formatToCurrency(ecriture['Débit (€)'])}</td>
-            <td>${formatToCurrency(ecriture['Crédit (€)'])}</td>
-            <td>${formatToCurrency(ecriture['Solde (€)'])}</td>
+            <td>${ecriture.JournalCode}</td>
+            <td>${ecriture.JournalLib}</td>
+            <td>${ecriture.EcritureNum}</td>
+            <td>${ecriture.EcritureDate}</td>
+            <td>${ecriture.CompteNum}</td>
+            <td>${ecriture.CompteLib}</td>
+            <td>${ecriture.PieceRef}</td>
+            <td>${ecriture.PieceDate}</td>
+            <td>${ecriture.EcritureLib}</td>
+            <td>${formatToCurrency(ecriture.Debit)}</td>
+            <td>${formatToCurrency(ecriture.Credit)}</td>
+            <td>${ecriture.ValidDate}</td>
         </tr>
     `).join('');
 }

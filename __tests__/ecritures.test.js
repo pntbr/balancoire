@@ -21,14 +21,14 @@ describe('Ecritures', () => {
             const ecritures = lignesEnEcritures(jsonData, currentYear);
 
             expect(ecritures.length).toBeGreaterThan(0);
-            expect(ecritures[0]).toHaveProperty('Date', '01/01/2023');
+            expect(ecritures[0]).toHaveProperty('EcritureDate', '01/01/2023');
         });
     });
 
     describe('arretComptesClotureEcritures', () => {
         const ecritures = [
-            { 'Compte': '601000', 'Débit (€)': 100, 'Crédit (€)': 0 },
-            { 'Compte': '602000', 'Débit (€)': 0, 'Crédit (€)': 200 },
+            { 'CompteNum': '601000', 'Debit': 100, 'Credit': 0 },
+            { 'CompteNum': '602000', 'Debit': 0, 'Credit': 200 },
         ];
         const currentYear = 2023;
 
