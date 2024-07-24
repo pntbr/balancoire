@@ -41,8 +41,6 @@ Pour utiliser l'application de comptabilité, suivez les étapes ci-dessous :
    }
    ```
 
-PS: Vous pouvez ajouter le numéro de SIREN qui servira pour l'export du Fichier des Écritures Comptable.
-
 3. **Lancement de l'application :** En utilisant un terminal, lancez un serveur web dans le dossier de l'application. Par exemple :
 
    ```sh
@@ -118,3 +116,11 @@ Les postes utilisés par l'application sont définis dans le fichier `plan-compt
 Par exemple, pour le poste `707000`, vous pouvez indifféremment utiliser "ventes de marchandises" ou "ventes".
 
 Pour toute question ou problème, veuillez consulter la section d'aide ou contacter : stephane@pntbr.fr.
+
+#### Un nom ?
+
+- balançoire
+- dans le brouillard
+- balance tes comptes
+- le boulier
+- 
