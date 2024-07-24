@@ -137,7 +137,7 @@ function remboursementEcriture(line) {
 function depenseEcriture(line, numeroCompte) {
     const checkCash = line["nature"] === 'esp';
     const piece = line['facture correspondante'] ? ` - <a href="${line['facture correspondante']}">pièce</a>` : '';
-    const label = `achat B2T : ${line['qui reçoit']} ${piece}`;
+    const label = `achat par l'association : ${line['qui reçoit']} ${piece}`;
     return [
         creationEcriture(line['date'], numeroCompte, label, convertToNumber(line['montant']), ''),
         creationEcriture(line['date'], checkCash ? '530000' : '512000', label, '', convertToNumber(line['montant']))

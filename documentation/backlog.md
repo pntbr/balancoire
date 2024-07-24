@@ -5,6 +5,7 @@
 - [x] écrit jsdoc et tests basiques (sans les passer)
 - [x] un peu d'aide en plus sur le bilan
 - [x] créer une page
+- [ ] nom du fichier
 - [ ] valider le fichier
 
 ### Notes
