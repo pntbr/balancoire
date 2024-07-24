@@ -13,9 +13,27 @@
   <div id="navigation"></div>
   <div class="fec">
     <h1>Fichier des Écritures Comptable<button id="infoBtn">ℹ️</button></h1>
-    <div id="FEC-ecritures">
-        <!-- Les écritures seront insérées ici -->
-    </div>  
+    <table>
+      <thead> 
+        <tr>
+          <th>JournalCode</th>
+          <th>JournalLib</th>
+          <th>EcritureNum</th>
+          <th>EcritureDate</th>
+          <th>CompteNum</th>
+          <th>CompteLib</th>
+          <th>PieceRef</th>
+          <th>PieceDate</th>
+          <th>EcritureLib</th>
+          <th>Debit</th>
+          <th>Credit</th>
+          <th>ValidDate</th>
+        </tr>
+      </thead>
+      <tbody id="FEC-ecritures">
+          <!-- Les entrées du journal seront insérées ici -->
+      </tbody>
+    </table> 
 </div>
   <div id="infoModal" class="modal">
     <div class="modal-content">
