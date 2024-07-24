@@ -31,6 +31,7 @@ Pour utiliser l'application de comptabilité, suivez les étapes ci-dessous :
 
    ```json
    {
+     "SIREN": "SIREN_DE_COTRE_ASSOCIATION",
      "SHEET_ID": "VOTRE_SHEET_ID",
      "SHEETNAME_TO_GID": {
        "2024": "VOTRE_SHEET_GID",
@@ -115,3 +116,11 @@ Les postes utilisés par l'application sont définis dans le fichier `plan-compt
 Par exemple, pour le poste `707000`, vous pouvez indifféremment utiliser "ventes de marchandises" ou "ventes".
 
 Pour toute question ou problème, veuillez consulter la section d'aide ou contacter : stephane@pntbr.fr.
+
+#### Un nom ?
+
+- balançoire
+- dans le brouillard
+- balance tes comptes
+- le boulier
+- 

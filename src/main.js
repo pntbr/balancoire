@@ -6,9 +6,14 @@ import { creationCompteResultat, injecteCompteResultatEcritures } from './compte
 import { creationBilan, injecteBilanEcritures } from './bilan.js';
 import { creationJournal, injecteJournalEcritures } from './journal.js';
 import { creationInventaire, injecteInventaireEcritures } from './inventaire.js';
+import { creationFEC, injecteFECEcritures } from './fec.js';
 
 document.addEventListener('DOMContentLoaded', init);
 
+/**
+ * Initialisation de l'application.
+ * Charge la configuration d'environnement et configure les éléments de la page.
+ */
 function init() {
     fetchEnvConfig()
         .then(env => {
@@ -18,6 +23,10 @@ function init() {
         });
 }
 
+/**
+ * Charge la configuration d'environnement.
+ * @returns {Promise<Object>} La configuration d'environnement.
+ */
 async function loadEnvConfig() {
     try {
         let response = await fetch('.env.json');
@@ -33,10 +42,17 @@ async function loadEnvConfig() {
     }
 }
 
+/**
+ * Récupère la configuration d'environnement.
+ * @returns {Promise<Object>} La configuration d'environnement.
+ */
 async function fetchEnvConfig() {
     return loadEnvConfig();
 }
 
+/**
+ * Configure le modal d'information.
+ */
 function setupInfoModal() {
     const infoBtn = document.getElementById('infoBtn');
     const infoModal = document.getElementById('infoModal');
@@ -57,6 +73,11 @@ function setupInfoModal() {
     });
 }
 
+/**
+ * Charge la navigation de l'application.
+ * @param {string} SHEET_ID - L'identifiant de la Google Sheet.
+ * @param {Object} SHEETNAME_TO_GID - Les identifiants des onglets de la Google Sheet.
+ */
 function loadNavigation(SHEET_ID, SHEETNAME_TO_GID) {
     fetch('nav.html')
         .then(response => response.text())
@@ -69,6 +90,9 @@ function loadNavigation(SHEET_ID, SHEETNAME_TO_GID) {
         });
 }
 
+/**
+ * Configure les liens des pages.
+ */
 function setupPageLinks() {
     const pageLinks = document.querySelectorAll('nav ul:first-of-type li a');
     const currentPage = location.pathname.split('/').pop();
@@ -79,6 +103,10 @@ function setupPageLinks() {
     });
 }
 
+/**
+ * Injecte les liens des années dans la navigation.
+ * @param {Object} SHEETNAME_TO_GID - Les identifiants des onglets de la Google Sheet.
+ */
 function injectYearLinks(SHEETNAME_TO_GID) {
     const yearNav = document.getElementById('annee-nav');
     Object.keys(SHEETNAME_TO_GID).forEach(year => {
@@ -88,12 +116,17 @@ function injectYearLinks(SHEETNAME_TO_GID) {
             link.href = '#';
             link.textContent = year;
             link.setAttribute('data-year', year);
-            li.appendChild(link); 
-            yearNav.appendChild(li); 
+            li.appendChild(link);
+            yearNav.appendChild(li);
         }
     });
 }
 
+/**
+ * Configure les liens des années.
+ * @param {string} SHEET_ID - L'identifiant de la Google Sheet.
+ * @param {Object} SHEETNAME_TO_GID - Les identifiants des onglets de la Google Sheet.
+ */
 function setupYearLinks(SHEET_ID, SHEETNAME_TO_GID) {
     const yearLinks = document.querySelectorAll('.annee-nav a');
     const currentYear = localStorage.getItem('selectedYear') || '2024';
@@ -114,6 +147,10 @@ function setupYearLinks(SHEET_ID, SHEETNAME_TO_GID) {
     loadCSV(SHEET_ID, SHEETNAME_TO_GID, currentYear);
 }
 
+/**
+ * Injecte le lien vers la Google Sheet.
+ * @param {string} sheetId - L'identifiant de la Google Sheet.
+ */
 function injectSheetLink(sheetId) {
     const sheetLink = document.getElementById('sheet-nav');
     const link = document.createElement('a');
@@ -123,19 +160,34 @@ function injectSheetLink(sheetId) {
     sheetLink.appendChild(link);
 }
 
+/**
+ * Affiche le loader.
+ */
 function showLoader() {
     document.getElementById('loader').style.display = 'block';
 }
 
+/**
+ * Cache le loader.
+ */
 function hideLoader() {
     document.getElementById('loader').style.display = 'none';
 }
 
+/**
+ * Cache le message d'erreur.
+ */
 function hideErrorMessage() {
     const errorMessageElement = document.getElementById('error-message');
     errorMessageElement.style.display = 'none';
 }
 
+/**
+ * Charge le fichier CSV depuis la Google Sheet.
+ * @param {string} sheetId - L'identifiant de la Google Sheet.
+ * @param {Object} sheetNameToGid - Les identifiants des onglets de la Google Sheet.
+ * @param {string} currentYear - L'année sélectionnée.
+ */
 function loadCSV(sheetId, sheetNameToGid, currentYear) {
     const currentPage = location.pathname.split('/').pop();
     const sheetName = currentPage && currentPage.startsWith('inventaire') ? 'inventaire' : currentYear;
@@ -160,6 +212,11 @@ function loadCSV(sheetId, sheetNameToGid, currentYear) {
         });
 }
 
+/**
+ * Injecte les données du CSV dans la page.
+ * @param {Object[]} jsonData - Les données du CSV en format JSON.
+ * @param {string} currentYear - L'année sélectionnée.
+ */
 function injectDataIntoPage(jsonData, currentYear) {
     const mappings = [
         { id: 'journal-ecritures', create: creationJournal, inject: injecteJournalEcritures },
@@ -167,7 +224,8 @@ function injectDataIntoPage(jsonData, currentYear) {
         { id: 'grand-livre-ecritures', create: creationGrandLivre, inject: injecteGrandLivreEcritures },
         { id: 'compte-resultat-ecritures', create: creationCompteResultat, inject: injecteCompteResultatEcritures },
         { id: 'bilan-ecritures', create: creationBilan, inject: injecteBilanEcritures },
-        { id: 'inventaire-ecritures', create: creationInventaire, inject: injecteInventaireEcritures }
+        { id: 'inventaire-ecritures', create: creationInventaire, inject: injecteInventaireEcritures },
+        { id: 'FEC-ecritures', create: creationFEC, inject: injecteFECEcritures },
     ];
 
     mappings.forEach(({ id, create, inject }) => {

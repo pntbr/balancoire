@@ -1,6 +1,13 @@
 import { sommeCompteParRacine, formatToCurrency } from './utils.js';
 import { lignesEnEcritures } from './ecritures.js';
 
+/**
+ * Crée un compte de résultat à partir des données JSON et de l'année courante.
+ *
+ * @param {Object[]} jsonData - Les données JSON contenant les écritures comptables.
+ * @param {number} currentYear - L'année courante pour filtrer les écritures.
+ * @returns {Object} - Un objet représentant le compte de résultat.
+ */
 export function creationCompteResultat(jsonData, currentYear) {
     const ecritures = lignesEnEcritures(jsonData, currentYear);
 
@@ -13,7 +20,7 @@ export function creationCompteResultat(jsonData, currentYear) {
     const totalProduits = cotisations + donations + prestations + marchandises + autresProduits;
 
     const achatsMarchandises = sommeCompteParRacine(ecritures, "607") + sommeCompteParRacine(ecritures, "6097");
-    const achatsApprovisionnements = sommeCompteParRacine(ecritures, "601") + sommeCompteParRacine(ecritures, "602") + sommeCompteParRacine(ecritures, "604") + sommeCompteParRacine(ecritures, "605") + +sommeCompteParRacine(ecritures, "606");
+    const achatsApprovisionnements = sommeCompteParRacine(ecritures, "601") + sommeCompteParRacine(ecritures, "602") + sommeCompteParRacine(ecritures, "604") + sommeCompteParRacine(ecritures, "605") + sommeCompteParRacine(ecritures, "606");
     const variationStocks = sommeCompteParRacine(ecritures, "603");
     const chargesExternes = sommeCompteParRacine(ecritures, "61") + sommeCompteParRacine(ecritures, "62");
     const taxes = sommeCompteParRacine(ecritures, "63");
@@ -51,6 +58,11 @@ export function creationCompteResultat(jsonData, currentYear) {
     };
 }
 
+/**
+ * Injecte les écritures du compte de résultat dans le tableau HTML.
+ *
+ * @param {Object} soldes - Les soldes du compte de résultat à injecter dans le tableau HTML.
+ */
 export function injecteCompteResultatEcritures(soldes) {
     const tableBody = document.getElementById('compte-resultat-ecritures');
     tableBody.innerHTML = `
@@ -64,7 +76,7 @@ export function injecteCompteResultatEcritures(soldes) {
         </tr>
         <tr>
             <td>&nbsp;&nbsp;&nbsp;Dons</td>
-            <td>${formatToCurrency(soldes.produits.donations)}</td>
+            <td>${formatToCurrency(soldes.produits.dons)}</td>
         </tr>
         <tr>
             <td>&nbsp;&nbsp;&nbsp;Prestations de services</td>

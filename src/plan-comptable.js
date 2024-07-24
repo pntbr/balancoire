@@ -1,3 +1,9 @@
+/**
+ * Un objet représentant le plan comptable avec les comptes et leurs descriptions associées.
+ *
+ * @constant
+ * @type {Object.<string, string[]>}
+ */
 export const PLAN_COMPTABLE = {
     "106000": ["réserves"],
     "119000": ["report à nouveau (solde débiteur)", "report"],

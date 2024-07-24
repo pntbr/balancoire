@@ -1,6 +1,13 @@
 import { trouverCompte, formatToCurrency } from './utils.js';
 import { lignesEnEcritures } from './ecritures.js';
 
+/**
+ * Crée un grand livre comptable à partir des données JSON et de l'année courante.
+ *
+ * @param {Object[]} jsonData - Les données JSON contenant les écritures comptables.
+ * @param {number} currentYear - L'année courante pour filtrer les écritures.
+ * @returns {Object} - Un objet représentant le grand livre comptable, avec les comptes comme clés et les écritures comme valeurs.
+ */
 export function creationGrandLivre(jsonData, currentYear) {
     const ecritures = lignesEnEcritures(jsonData, currentYear);
 
@@ -44,6 +51,11 @@ export function creationGrandLivre(jsonData, currentYear) {
     return grandLivreEcritures;
 }
 
+/**
+ * Injecte les écritures du grand livre dans le conteneur HTML.
+ *
+ * @param {Object} grandLivreEcritures - Les écritures du grand livre à injecter dans le conteneur HTML.
+ */
 export function injecteGrandLivreEcritures(grandLivreEcritures) {
     const grandLivreContainer = document.getElementById('grand-livre-ecritures');
     grandLivreContainer.innerHTML = Object.entries(grandLivreEcritures).map(([compte, ecritures]) => {

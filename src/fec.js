@@ -2,21 +2,21 @@ import { trouverCompte, sommeCompteParRacine, formatToCurrency } from './utils.j
 import { lignesEnEcritures } from './ecritures.js';
 
 /**
- * Crée une balance des écritures comptables à partir des données JSON et de l'année courante.
+ * Crée un Fichier Écritures Comptables à partir des données JSON et de l'année courante.
  *
  * @param {Object[]} jsonData - Les données JSON contenant les écritures comptables.
  * @param {number} currentYear - L'année courante pour filtrer les écritures.
- * @returns {Object[]} - Une liste d'objets représentant la balance des écritures comptables.
+ * @returns {Object[]} - Une liste d'objets représentant le FEC.
  */
-export function creationBalance(jsonData, currentYear) {
+export function creationFEC(jsonData, currentYear) {
     const ecritures = lignesEnEcritures(jsonData, currentYear);
 
-    const balanceEcritures = [];
+    const FECEcritures = [];
     const comptes = [...new Set(ecritures.map(({ Compte }) => Compte))].sort();
     comptes.forEach(compte => {
         const totalDebit = sommeCompteParRacine(ecritures, compte, 'D');
         const totalCredit = sommeCompteParRacine(ecritures, compte, 'C');
-        balanceEcritures.push({
+        FECEcritures.push({
             'Compte': compte,
             'Libellé': trouverCompte({ compte: compte }).label,
             'Débit (€)': totalDebit,
@@ -25,17 +25,17 @@ export function creationBalance(jsonData, currentYear) {
         });
     });
 
-    return balanceEcritures;
+    return FECEcritures;
 }
 
 /**
- * Injecte les écritures de la balance dans le tableau HTML.
+ * Injecte les écritures du FEC dans le tableau HTML.
  *
- * @param {Object[]} balanceEcritures - La liste des écritures de la balance à injecter dans le tableau HTML.
+ * @param {Object[]} FECEcritures - La liste des écritures du FEC à injecter dans le tableau HTML.
  */
-export function injecteBalanceEcritures(balanceEcritures) {
-    const tableBody = document.getElementById('balance-ecritures');
-    tableBody.innerHTML = balanceEcritures.map(ecriture => `
+export function injecteFECEcritures(FECEcritures) {
+    const tableBody = document.getElementById('FEC-ecritures');
+    tableBody.innerHTML = FECEcritures.map(ecriture => `
         <tr>
             <td>${ecriture['Compte']}</td>
             <td>${ecriture['Libellé']}</td>
