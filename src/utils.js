@@ -22,7 +22,8 @@
      * @returns {number} Le montant converti en nombre.
      */
     export function convertToNumber(euroString) {
-        const cleanString = euroString.replace(/\\s/g, '').replace('€', '').replace(',', '.');
+        const cleanString = euroString.replace(/[^a-zA-Z0-9-.,]/g, '').replace(',', '.');
+
         return parseFloat(cleanString) || 0;
     }
 

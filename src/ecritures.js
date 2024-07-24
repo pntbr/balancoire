@@ -79,6 +79,7 @@ function aNouveauEcriture(line, numeroCompte, currentYear) {
     if (/^[12345]/.test(numeroCompte)) {
         const debit = montant < 0 ? Math.abs(montant) : '';
         const credit = montant > 0 ? Math.abs(montant) : '';
+
         return [creationEcriture(`01/01/${currentYear}`, numeroCompte, `reprise de ${line['poste']}`, debit, credit)];
     }
 
