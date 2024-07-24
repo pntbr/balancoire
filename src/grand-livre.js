@@ -21,30 +21,30 @@ export function creationGrandLivre(jsonData, currentYear) {
         grandLivreEcritures[compte] = ecritures
             .filter(ecriture => ecriture['CompteNum'] === compte)
             .map(ecriture => {
-                const debit = +ecriture['Débit (€)'];
-                const credit = +ecriture['Crédit (€)'];
+                const debit = +ecriture['Debit'];
+                const credit = +ecriture['Credit'];
                 totalDebit += debit;
                 totalCredit += credit;
                 return {
                     EcritureDate: ecriture.EcritureDate,
                     EcritureLib: ecriture.EcritureLib,
-                    'Débit (€)': debit,
-                    'Crédit (€)': credit
+                    'Debit': debit,
+                    'Credit': credit
                 };
             });
 
         grandLivreEcritures[compte].push({
             'EcritureDate': `31/12/${currentYear}`,
             'EcritureLib': 'Total',
-            'Débit (€)': totalDebit,
-            'Crédit (€)': totalCredit
+            'Debit': totalDebit,
+            'Credit': totalCredit
         });
 
         grandLivreEcritures[compte].push({
             'EcritureDate': `31/12/${currentYear}`,
             'EcritureLib': 'Solde',
-            'Débit (€)': totalDebit > totalCredit ? (totalDebit - totalCredit) : '',
-            'Crédit (€)': totalCredit > totalDebit ? (totalCredit - totalDebit) : ''
+            'Debit': totalDebit > totalCredit ? (totalDebit - totalCredit) : '',
+            'Credit': totalCredit > totalDebit ? (totalCredit - totalDebit) : ''
         });
     });
 
@@ -77,8 +77,8 @@ export function injecteGrandLivreEcritures(grandLivreEcritures) {
                             <tr class="${ecriture.EcritureLib === 'Total' ? 'total' : ecriture.EcritureLib === 'Solde' ? 'solde' : ''}">
                                 <td>${ecriture.EcritureDate}</td>
                                 <td>${ecriture.EcritureLib}</td>
-                                <td>${formatToCurrency(ecriture['Débit (€)'])}</td>
-                                <td>${formatToCurrency(ecriture['Crédit (€)'])}</td>
+                                <td>${formatToCurrency(ecriture['Debit'])}</td>
+                                <td>${formatToCurrency(ecriture['Credit'])}</td>
                             </tr>
                         `).join('')}
                     </tbody>

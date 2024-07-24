@@ -27,8 +27,8 @@ describe('Ecritures', () => {
 
     describe('arretComptesClotureEcritures', () => {
         const ecritures = [
-            { 'CompteNum': '601000', 'Débit (€)': 100, 'Crédit (€)': 0 },
-            { 'CompteNum': '602000', 'Débit (€)': 0, 'Crédit (€)': 200 },
+            { 'CompteNum': '601000', 'Debit': 100, 'Credit': 0 },
+            { 'CompteNum': '602000', 'Debit': 0, 'Credit': 200 },
         ];
         const currentYear = 2023;
 

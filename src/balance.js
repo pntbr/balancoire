@@ -19,8 +19,8 @@ export function creationBalance(jsonData, currentYear) {
         balanceEcritures.push({
             'CompteNum': compte,
             'CompteLib': trouverCompte({ compte: compte }).label,
-            'Débit (€)': totalDebit,
-            'Crédit (€)': totalCredit,
+            'Debit': totalDebit,
+            'Credit': totalCredit,
             'Solde (€)': (totalCredit + totalDebit)
         });
     });
@@ -39,8 +39,8 @@ export function injecteBalanceEcritures(balanceEcritures) {
         <tr>
             <td>${ecriture['CompteNum']}</td>
             <td>${ecriture['CompteLib']}</td>
-            <td>${formatToCurrency(ecriture['Débit (€)'])}</td>
-            <td>${formatToCurrency(ecriture['Crédit (€)'])}</td>
+            <td>${formatToCurrency(ecriture['Debit'])}</td>
+            <td>${formatToCurrency(ecriture['Credit'])}</td>
             <td>${formatToCurrency(ecriture['Solde (€)'])}</td>
         </tr>
     `).join('');

@@ -23,8 +23,8 @@ export function creationFEC(jsonData, currentYear, siren) {
                 'PieceRef': '',
                 'PieceDate': '',
                 'EcritureLib': '',
-                'Debit': ecriture['Débit (€)'],
-                'Credit': ecriture['Crédit (€)'],
+                'Debit': ecriture['Debit'],
+                'Credit': ecriture['Credit'],
                 'ValidDate': ''
             };
         })

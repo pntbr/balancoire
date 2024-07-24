@@ -13,7 +13,7 @@ jest.mock('../src/utils', () => ({
 describe('Journal', () => {
     describe('creationJournal', () => {
         const jsonData = [
-            { 'EcritureDate': '2023-01-01', 'Compte': '601000', 'EcritureLib': 'Achat de marchandises', 'Débit (€)': 100, 'Crédit (€)': 0 },
+            { 'EcritureDate': '2023-01-01', 'Compte': '601000', 'EcritureLib': 'Achat de marchandises', 'Debit': 100, 'Credit': 0 },
         ];
         const currentYear = 2023;
 
@@ -28,7 +28,7 @@ describe('Journal', () => {
         test('doit injecter les écritures du journal dans le tableau HTML', () => {
             document.body.innerHTML = '<tbody id="journal-ecritures"></tbody>';
             const journalEcritures = [
-                { 'EcritureDate': '2023-01-01', 'Compte': '601000', 'EcritureLib': 'Achat de marchandises', 'Débit (€)': 100, 'Crédit (€)': 0 },
+                { 'EcritureDate': '2023-01-01', 'Compte': '601000', 'EcritureLib': 'Achat de marchandises', 'Debit': 100, 'Credit': 0 },
             ];
             formatToCurrency.mockImplementation(value => `${value} €`);
             injecteJournalEcritures(journalEcritures);

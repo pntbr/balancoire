@@ -10,10 +10,10 @@ jest.mock('./utils', () => ({
 describe('Balance', () => {
     describe('creationBalance', () => {
         const jsonData = [
-            { 'CompteNum': '601000', 'Débit (€)': 100, 'Crédit (€)': 0 },
-            { 'CompteNum': '602000', 'Débit (€)': 200, 'Crédit (€)': 0 },
-            { 'CompteNum': '601000', 'Débit (€)': 50, 'Crédit (€)': 0 },
-            { 'CompteNum': '602000', 'Débit (€)': 0, 'Crédit (€)': 300 },
+            { 'CompteNum': '601000', 'Debit': 100, 'Credit': 0 },
+            { 'CompteNum': '602000', 'Debit': 200, 'Credit': 0 },
+            { 'CompteNum': '601000', 'Debit': 50, 'Credit': 0 },
+            { 'CompteNum': '602000', 'Debit': 0, 'Credit': 300 },
         ];
         const currentYear = 2023;
 
@@ -27,8 +27,8 @@ describe('Balance', () => {
 
             const balance = creationBalance(jsonData, currentYear);
             expect(balance).toEqual([
-                { 'CompteNum': '601000', 'EcritureLib': 'Label 601000', 'Débit (€)': 150, 'Crédit (€)': 0, 'Solde (€)': 150 },
-                { 'CompteNum': '602000', 'EcritureLib': 'Label 602000', 'Débit (€)': 0, 'Crédit (€)': 300, 'Solde (€)': 300 },
+                { 'CompteNum': '601000', 'EcritureLib': 'Label 601000', 'Debit': 150, 'Credit': 0, 'Solde (€)': 150 },
+                { 'CompteNum': '602000', 'EcritureLib': 'Label 602000', 'Debit': 0, 'Credit': 300, 'Solde (€)': 300 },
             ]);
         });
     });
@@ -37,8 +37,8 @@ describe('Balance', () => {
         test('doit injecter les écritures de la balance dans le tableau HTML', () => {
             document.body.innerHTML = '<tbody id="balance-ecritures"></tbody>';
             const balanceEcritures = [
-                { 'CompteNum': '601000', 'EcritureLib': 'Label 601000', 'Débit (€)': 150, 'Crédit (€)': 0, 'Solde (€)': 150 },
-                { 'CompteNum': '602000', 'EcritureLib': 'Label 602000', 'Débit (€)': 0, 'Crédit (€)': 300, 'Solde (€)': 300 },
+                { 'CompteNum': '601000', 'EcritureLib': 'Label 601000', 'Debit': 150, 'Credit': 0, 'Solde (€)': 150 },
+                { 'CompteNum': '602000', 'EcritureLib': 'Label 602000', 'Debit': 0, 'Credit': 300, 'Solde (€)': 300 },
             ];
             formatToCurrency.mockImplementation(value => `${value} €`);
             injecteBalanceEcritures(balanceEcritures);

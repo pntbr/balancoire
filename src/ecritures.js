@@ -39,8 +39,8 @@ function creationEcriture(date, compte, label, debit, credit) {
         'EcritureDate': date,
         'CompteNum': compte,
         'EcritureLib': label,
-        'Débit (€)': debit || '',
-        'Crédit (€)': credit || ''
+        'Debit': debit || '',
+        'Credit': credit || ''
     };
 }
 

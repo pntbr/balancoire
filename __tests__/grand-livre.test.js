@@ -14,9 +14,9 @@ jest.mock('../src/utils', () => ({
 describe('Grand Livre', () => {
     describe('creationGrandLivre', () => {
         const jsonData = [
-            { 'EcritureDate': '2023-01-01', 'CompteNum': '601000', 'EcritureLib': 'Achat de marchandises', 'Débit (€)': 100, 'Crédit (€)': 0 },
-            { 'EcritureDate': '2023-01-02', 'CompteNum': '601000', 'EcritureLib': 'Achat de fournitures', 'Débit (€)': 50, 'Crédit (€)': 0 },
-            { 'EcritureDate': '2023-01-01', 'CompteNum': '602000', 'EcritureLib': 'Vente de marchandises', 'Débit (€)': 0, 'Crédit (€)': 200 },
+            { 'EcritureDate': '2023-01-01', 'CompteNum': '601000', 'EcritureLib': 'Achat de marchandises', 'Debit': 100, 'Credit': 0 },
+            { 'EcritureDate': '2023-01-02', 'CompteNum': '601000', 'EcritureLib': 'Achat de fournitures', 'Debit': 50, 'Credit': 0 },
+            { 'EcritureDate': '2023-01-01', 'CompteNum': '602000', 'EcritureLib': 'Vente de marchandises', 'Debit': 0, 'Credit': 200 },
         ];
         const currentYear = 2023;
 
@@ -35,10 +35,10 @@ describe('Grand Livre', () => {
             document.body.innerHTML = '<div id="grand-livre-ecritures"></div>';
             const grandLivreEcritures = {
                 '601000': [
-                    { 'EcritureDate': '2023-01-01', 'EcritureLib': 'Achat de marchandises', 'Débit (€)': 100, 'Crédit (€)': 0 },
-                    { 'EcritureDate': '2023-01-02', 'EcritureLib': 'Achat de fournitures', 'Débit (€)': 50, 'Crédit (€)': 0 },
-                    { 'EcritureDate': '31/12/2023', 'EcritureLib': 'Total', 'Débit (€)': 150, 'Crédit (€)': 0 },
-                    { 'EcritureDate': '31/12/2023', 'EcritureLib': 'Solde', 'Débit (€)': 150, 'Crédit (€)': 0 }
+                    { 'EcritureDate': '2023-01-01', 'EcritureLib': 'Achat de marchandises', 'Debit': 100, 'Credit': 0 },
+                    { 'EcritureDate': '2023-01-02', 'EcritureLib': 'Achat de fournitures', 'Debit': 50, 'Credit': 0 },
+                    { 'EcritureDate': '31/12/2023', 'EcritureLib': 'Total', 'Debit': 150, 'Credit': 0 },
+                    { 'EcritureDate': '31/12/2023', 'EcritureLib': 'Solde', 'Debit': 150, 'Credit': 0 }
                 ]
             };
             trouverCompte.mockImplementation(({ compte }) => ({ label: `Label ${compte}` }));

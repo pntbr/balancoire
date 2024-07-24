@@ -24,8 +24,8 @@ export function injecteJournalEcritures(journalEcritures) {
             <td>${ecriture['EcritureDate']}</td>
             <td>${ecriture['CompteNum']}</td>
             <td>${ecriture['EcritureLib']}</td>
-            <td>${formatToCurrency(ecriture['Débit (€)'])}</td>
-            <td>${formatToCurrency(ecriture['Crédit (€)'])}</td>
+            <td>${formatToCurrency(ecriture['Debit'])}</td>
+            <td>${formatToCurrency(ecriture['Credit'])}</td>
         </tr>
     `).join('');
 }
