@@ -31,6 +31,7 @@ Pour utiliser l'application de comptabilité, suivez les étapes ci-dessous :
 
    ```json
    {
+     "SIREN": "SIREN_DE_COTRE_ASSOCIATION",
      "SHEET_ID": "VOTRE_SHEET_ID",
      "SHEETNAME_TO_GID": {
        "2024": "VOTRE_SHEET_GID",
@@ -39,6 +40,8 @@ Pour utiliser l'application de comptabilité, suivez les étapes ci-dessous :
      }
    }
    ```
+
+PS: Vous pouvez ajouter le numéro de SIREN qui servira pour l'export du Fichier des Écritures Comptable.
 
 3. **Lancement de l'application :** En utilisant un terminal, lancez un serveur web dans le dossier de l'application. Par exemple :
 

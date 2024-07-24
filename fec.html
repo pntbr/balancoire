@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Fichier des Écritures Comptables</title>
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" type="image/png" href="favicon.png" />
+<script type="module" src="./src/main.js" defer></script>
+</head>
+<body>
+  <div id="navigation"></div>
+  <div class="fec">
+    <h1>Fichier des Écritures Comptable<button id="infoBtn">ℹ️</button></h1>
+    <div id="FEC-ecritures">
+        <!-- Les écritures seront insérées ici -->
+    </div>  
+</div>
+  <div id="infoModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Notice Explicative - Fichier des Écritures Comptables</h2>
+      <p>Le Fichier des Écritures Comptables (en abrégé : FEC) est un document normalisé contenant l'ensemble des données et écritures comptables de l'association. Il est structuré sous une forme définie par l'administration fiscale, et sert à faciliter le contrôle fiscal.</p>
+      <h3>Rubriques :</h3>
+      <ul>
+        <li><strong>1. JournalCode :</strong> Code du journal comptable.</li>
+        <li><strong>2. JournalLib :</strong> Libellé du journal comptable.</li>
+        <li><strong>3. EcritureNum :</strong> Numéro d'écriture.</li>
+        <li><strong>4. EcritureDate :</strong> Date de l'écriture comptable.</li>
+        <li><strong>5. CompteNum :</strong> Numéro du compte comptable.</li>
+        <li><strong>6. CompteLib :</strong> Libellé du compte comptable.</li>
+        <li><strong>7. CompAuxNum :</strong> Numéro de compte auxiliaire (facultatif).</li>
+        <li><strong>8. CompAuxLib :</strong> Libellé du compte auxiliaire (facultatif).</li>
+        <li><strong>9. PieceRef :</strong> Référence de la pièce justificative.</li>
+        <li><strong>10. PieceDate :</strong> Date de la pièce justificative.</li>
+        <li><strong>11. EcritureLib :</strong> Libellé de l'écriture comptable.</li>
+        <li><strong>12. Debit :</strong> Montant au débit.</li>
+        <li><strong>13. Credit :</strong> Montant au crédit.</li>
+        <li><strong>14. EcritureLet :</strong> Code de lettrage de l'écriture (facultatif).</li>
+        <li><strong>15. DateLet :</strong> Date de lettrage de l'écriture (facultatif).</li>
+        <li><strong>16. ValidDate :</strong> Date de validation de l'écriture (facultatif).</li>
+        <li><strong>17. Montantdevise :</strong> Montant dans la devise de l'opération (facultatif).</li>
+        <li><strong>18. Idevise :</strong> Identifiant de la devise (facultatif).</li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

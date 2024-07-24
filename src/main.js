@@ -6,6 +6,7 @@ import { creationCompteResultat, injecteCompteResultatEcritures } from './compte
 import { creationBilan, injecteBilanEcritures } from './bilan.js';
 import { creationJournal, injecteJournalEcritures } from './journal.js';
 import { creationInventaire, injecteInventaireEcritures } from './inventaire.js';
+import { creationFEC, injecteFECEcritures } from './fec.js';
 
 document.addEventListener('DOMContentLoaded', init);
 
@@ -223,7 +224,8 @@ function injectDataIntoPage(jsonData, currentYear) {
         { id: 'grand-livre-ecritures', create: creationGrandLivre, inject: injecteGrandLivreEcritures },
         { id: 'compte-resultat-ecritures', create: creationCompteResultat, inject: injecteCompteResultatEcritures },
         { id: 'bilan-ecritures', create: creationBilan, inject: injecteBilanEcritures },
-        { id: 'inventaire-ecritures', create: creationInventaire, inject: injecteInventaireEcritures }
+        { id: 'inventaire-ecritures', create: creationInventaire, inject: injecteInventaireEcritures },
+        { id: 'FEC-ecritures', create: creationFEC, inject: injecteFECEcritures },
     ];
 
     mappings.forEach(({ id, create, inject }) => {
