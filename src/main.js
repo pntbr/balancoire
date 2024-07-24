@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', init);
  * Charge la configuration d'environnement et configure les éléments de la page.
  */
 function init() {
-    fetchEnvConfig()
+    loadEnvConfig()
         .then(env => {
             const { SHEET_ID, SHEETNAME_TO_GID } = env;
             setupInfoModal();
@@ -40,14 +40,6 @@ async function loadEnvConfig() {
     } catch (error) {
         throw error;
     }
-}
-
-/**
- * Récupère la configuration d'environnement.
- * @returns {Promise<Object>} La configuration d'environnement.
- */
-async function fetchEnvConfig() {
-    return loadEnvConfig();
 }
 
 /**
