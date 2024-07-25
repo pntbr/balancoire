@@ -8,6 +8,7 @@
 - [x] nom du fichier : SirenFECAAAAMMJJ
 - [x] importer les première données
 - [x] changer les intitulés des écritures par celles du FEC
+- [x] change le signe des actifs dans le bilan de négatif à positif - (whoopsy)
 - [ ] ajouter les rubriques du FEC dans les écritures
 - [ ] valider le fichier
 

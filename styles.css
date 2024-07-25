@@ -6,7 +6,7 @@ body {
 }
 
 .container {
-    max-width: 800px;
+
     margin: 0 auto;
     padding: 20px;
     background: #fff;
@@ -51,7 +51,16 @@ nav ul li a:hover {
 .compte-resultat,
 .bilan
  {
-    max-width: 800px;
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.fec {
+    width: 2000px;
     margin: 20px auto;
     padding: 20px;
     background: #f9f9f9;

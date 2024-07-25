@@ -1,4 +1,4 @@
-import { trouverCompte, sommeCompteParRacine, formatToCurrency } from './utils.js';
+import { trouverCompte, formatToCurrency } from './utils.js';
 import { lignesEnEcritures } from './ecritures.js';
 
 /**
@@ -12,17 +12,16 @@ export function creationFEC(jsonData, currentYear, siren) {
     const FECName = `${siren}FEC${currentYear}1231`;
     const FECEcritures = lignesEnEcritures(jsonData, currentYear)
         .map(ecriture => {
-            const compte = trouverCompte(ecriture['CompteNum']);
             return {
                 'JournalCode': '',
                 'JournalLib': '',
-                'EcritureNum': '',
+                'EcritureNum': ecriture['EcritureNum'],
                 'EcritureDate': ecriture['EcritureDate'],
                 'CompteNum': ecriture['CompteNum'],
-                'CompteLib': '',
+                'CompteLib': trouverCompte({'compte': ecriture['CompteNum']}).label,
                 'PieceRef': '',
                 'PieceDate': '',
-                'EcritureLib': '',
+                'EcritureLib': ecriture['EcritureLib'],
                 'Debit': ecriture['Debit'],
                 'Credit': ecriture['Credit'],
                 'ValidDate': ''
