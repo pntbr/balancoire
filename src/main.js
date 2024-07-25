@@ -1,5 +1,5 @@
 import { parseCSV } from './parseCSV.js';
-import { arretComptesClotureEcritures } from './ecritures.js';
+import { arretComptesClotureEcritures } from './gestion-ecritures.js';
 import { creationBalance, injecteBalanceEcritures } from './balance.js';
 import { creationGrandLivre, injecteGrandLivreEcritures } from './grand-livre.js';
 import { creationCompteResultat, injecteCompteResultatEcritures } from './compte-resultat.js';

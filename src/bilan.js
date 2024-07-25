@@ -1,5 +1,5 @@
 import { sommeCompteParRacine, formatToCurrency } from './utils.js';
-import { lignesEnEcritures, arretComptesClotureEcritures } from './ecritures.js';
+import { lignesEnEcritures, arretComptesClotureEcritures } from './gestion-ecritures.js';
 
 /**
  * Crée un bilan comptable à partir des données JSON et de l'année courante.
