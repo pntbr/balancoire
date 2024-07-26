@@ -1,4 +1,3 @@
-
 import { trouverCompte, sommeCompteParRacine } from './utils.js';
 import { aNouveauEcriture, inventaireClotureEcriture, cautionEcriture, remboursementEcriture, depenseEcriture, depensePersonneEcriture, venteEcriture, impotExercice, creationEcriture } from './creation-ecritures.js';
 
@@ -34,7 +33,7 @@ function handleError(message, line) {
  * @returns {Object[]} - Une liste d'écritures comptables.
  * @throws {Error} - Lance une erreur si l'écriture ne peut pas être rendue.
  */
-function ligneEnEcriture(line, currentYear) {
+function ligneEnEcriture(line, currentYear, lastEcritureNum) {
     const numeroCompte = trouverCompte({ label: line.poste }).compte;
     try {
         if (line['date'].startsWith('01/01')) {
@@ -43,19 +42,19 @@ function ligneEnEcriture(line, currentYear) {
         // Gère la clôture
         if (line['date'].startsWith('31/12')) {
             if (numeroCompte === '370000') {
-                return inventaireClotureEcriture(line, numeroCompte);
+                return inventaireClotureEcriture(line, lastEcritureNum);
             }
         }
 
         // Gère les écritures courantes
-        if (numeroCompte === '275000') return cautionEcriture(line);
-        if (numeroCompte.startsWith('4')) return remboursementEcriture(line);
-        if (numeroCompte.startsWith('6')) return (['B2T', 'Association'].includes(line['qui paye ?'])) ? depenseEcriture(line, numeroCompte) : depensePersonneEcriture(line, numeroCompte);
-        if (numeroCompte.startsWith('7')) return venteEcriture(line, numeroCompte);
+        if (numeroCompte === '275000') return cautionEcriture(line, lastEcritureNum);
+        if (numeroCompte.startsWith('4')) return remboursementEcriture(line, lastEcritureNum);
+        if (numeroCompte.startsWith('6')) return (['B2T', 'Association'].includes(line['qui paye ?'])) ? depenseEcriture(line, numeroCompte, lastEcritureNum) : depensePersonneEcriture(line, numeroCompte, lastEcritureNum);
+        if (numeroCompte.startsWith('7')) return venteEcriture(line, numeroCompte, lastEcritureNum);
 
         handleError(`L'écriture ne comporte pas un compte connu`, line);
     } catch (error) {
-        handleError(`L'écriture n'a pu être rendue`, line);
+        handleError(`L'écriture n'a pu être rendue : ${error}`, line);
     }
 }
 
@@ -67,10 +66,18 @@ function ligneEnEcriture(line, currentYear) {
  * @returns {Object[]} - Une liste d'écritures comptables triées par date.
  */
 export function lignesEnEcritures(jsonData, currentYear) {
-    const ecritures = jsonData.flatMap(ligne => ligneEnEcriture(ligne, currentYear));
+    let lastEcritureNum = 0;
+    const ecritures = jsonData.flatMap(ligne => {
+        const ecrituresLigne = ligneEnEcriture(ligne, currentYear, lastEcritureNum);
+        lastEcritureNum = ecrituresLigne[ecrituresLigne.length - 1].EcritureNum;
+
+        return ecrituresLigne;
+    });
+
+    lastEcritureNum = ecritures[ecritures.length - 1].EcritureNum;
 
     return ecritures
-        .concat(impotExercice(ecritures, currentYear))
+        .concat(impotExercice(ecritures, currentYear, lastEcritureNum))
         .sort((a, b) => {
             const dateA = new Date(a.EcritureDate.split('/').reverse().join('-'));
             const dateB = new Date(b.EcritureDate.split('/').reverse().join('-'));

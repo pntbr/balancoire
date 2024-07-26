@@ -10,12 +10,14 @@
 - [x] changer les intitulés des écritures par celles du FEC
 - [x] change le signe des actifs dans le bilan de négatif à positif - (whoopsy)
 - [ ] ajouter les rubriques du FEC dans les écritures
+- [ ] ajouter FEC à index
 - [ ] valider le fichier
 
 ### Notes
 
 - [ ] soigner les labels
-- [ ] récupérer les AN de l'exercice N-1 automatiquement
+- [ ] récupérer les AN de l'exercice N-1
+    - [ ] proposer de copier les AN
 - [ ] aller chercher l'inventaire pour les clôtures et AN
 - [ ] notice avec exemples de toutes les écritures générées
 - [ ] mettre les comptes dans le sheet

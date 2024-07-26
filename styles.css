@@ -6,7 +6,6 @@ body {
 }
 
 .container {
-
     margin: 0 auto;
     padding: 20px;
     background: #fff;
@@ -49,9 +48,8 @@ nav ul li a:hover {
 .grand-livre,
 .balance,
 .compte-resultat,
-.bilan
- {
-    max-width: 1200px;
+.bilan {
+    max-width: 1300px;
     margin: 20px auto;
     padding: 20px;
     background: #f9f9f9;
@@ -60,7 +58,7 @@ nav ul li a:hover {
 }
 
 .fec {
-    width: 2000px;
+    width: 2100px;
     margin: 20px auto;
     padding: 20px;
     background: #f9f9f9;
