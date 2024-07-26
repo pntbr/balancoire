@@ -11,6 +11,7 @@
 - [x] change le signe des actifs dans le bilan de négatif à positif - (whoopsy)
 - [x] termine les numéros d'écritures
 - [x] ajouter FEC à index
+- [x] ajouter les journaux au FEC
 - [ ] ajouter les autres rubriques du FEC dans les écritures
 - [ ] valider le fichier
 

@@ -4,6 +4,7 @@ import { convertToNumber, sommeCompteParRacine } from './utils.js';
  * Crée une écriture comptable.
  *
  * @param {Object} ecritureData - Les données de l'écriture.
+ * @param {string} ecritureData.JournalCode - Le code du journal.
  * @param {string} ecritureData.EcritureNum - Le numéro de l'écriture.
  * @param {string} ecritureData.EcritureDate - La date de l'écriture.
  * @param {string} ecritureData.CompteNum - Le numéro de compte.
@@ -12,8 +13,9 @@ import { convertToNumber, sommeCompteParRacine } from './utils.js';
  * @param {number|string} ecritureData.Credit - Le montant du crédit.
  * @returns {Object} - L'écriture comptable créée.
  */
-export function creationEcriture({ EcritureNum, EcritureDate, CompteNum, EcritureLib, Debit, Credit }) {
+export function creationEcriture({ JournalCode, EcritureNum, EcritureDate, CompteNum, EcritureLib, Debit, Credit }) {
     return {
+        'JournalCode': JournalCode,
         'EcritureNum': EcritureNum,
         'EcritureDate': EcritureDate,
         'CompteNum': CompteNum,
@@ -36,19 +38,19 @@ export function aNouveauEcriture(line, numeroCompte, currentYear) {
     const montant = convertToNumber(line['montant']);
     const ecritures = {
         '370000': [
-            creationEcriture({ EcritureNum: 1, EcritureDate: `01/01/${currentYear}`, CompteNum: '370000', EcritureLib: 'annulation du stock initial', Debit: montant, Credit: '' }),
-            creationEcriture({ EcritureNum: 1, EcritureDate: `01/01/${currentYear}`, CompteNum: '603700', EcritureLib: 'annulation du stock initial', Debit: montant, Credit: '' }),
-            creationEcriture({ EcritureNum: 1, EcritureDate: `01/01/${currentYear}`, CompteNum: '370000', EcritureLib: 'annulation du stock initial', Debit: '', Credit: montant })
+            creationEcriture({ JournalCode: 'AN', EcritureNum: 1, EcritureDate: `01/01/${currentYear}`, CompteNum: '370000', EcritureLib: 'annulation du stock initial', Debit: montant, Credit: '' }),
+            creationEcriture({ JournalCode: 'AN', EcritureNum: 1, EcritureDate: `01/01/${currentYear}`, CompteNum: '603700', EcritureLib: 'annulation du stock initial', Debit: montant, Credit: '' }),
+            creationEcriture({ JournalCode: 'AN', EcritureNum: 1, EcritureDate: `01/01/${currentYear}`, CompteNum: '370000', EcritureLib: 'annulation du stock initial', Debit: '', Credit: montant })
         ],
         '129000': [
-            creationEcriture({ EcritureNum: 1, EcritureDate: `01/01/${currentYear}`, CompteNum: '129000', EcritureLib: 'reprise du résultat déficitaire N-1', Debit: montant, Credit: '' }),
-            creationEcriture({ EcritureNum: 1, EcritureDate: `01/01/${currentYear}`, CompteNum: '119000', EcritureLib: 'affectation du résultat déficitaire N-1', Debit: montant, Credit: '' }),
-            creationEcriture({ EcritureNum: 1, EcritureDate: `01/01/${currentYear}`, CompteNum: '129000', EcritureLib: 'affectation du résultat déficitaire N-1', Debit: '', Credit: montant })
+            creationEcriture({ JournalCode: 'AN', EcritureNum: 1, EcritureDate: `01/01/${currentYear}`, CompteNum: '129000', EcritureLib: 'reprise du résultat déficitaire N-1', Debit: montant, Credit: '' }),
+            creationEcriture({ JournalCode: 'AN', EcritureNum: 1, EcritureDate: `01/01/${currentYear}`, CompteNum: '119000', EcritureLib: 'affectation du résultat déficitaire N-1', Debit: montant, Credit: '' }),
+            creationEcriture({ JournalCode: 'AN', EcritureNum: 1, EcritureDate: `01/01/${currentYear}`, CompteNum: '129000', EcritureLib: 'affectation du résultat déficitaire N-1', Debit: '', Credit: montant })
         ],
         '120000': [
-            creationEcriture({ EcritureNum: 1, EcritureDate: `01/01/${currentYear}`, CompteNum: '120000', EcritureLib: 'reprise du résultat déficitaire N-1', Debit: '', Credit: montant }),
-            creationEcriture({ EcritureNum: 1, EcritureDate: `01/01/${currentYear}`, CompteNum: '120000', EcritureLib: 'affectation du résultat déficitaire N-1', Debit: montant, Credit: '' }),
-            creationEcriture({ EcritureNum: 1, EcritureDate: `01/01/${currentYear}`, CompteNum: '106000', EcritureLib: 'affectation du résultat déficitaire N-1', Debit: '', Credit: montant })
+            creationEcriture({ JournalCode: 'AN', EcritureNum: 1, EcritureDate: `01/01/${currentYear}`, CompteNum: '120000', EcritureLib: 'reprise du résultat déficitaire N-1', Debit: '', Credit: montant }),
+            creationEcriture({ JournalCode: 'AN', EcritureNum: 1, EcritureDate: `01/01/${currentYear}`, CompteNum: '120000', EcritureLib: 'affectation du résultat déficitaire N-1', Debit: montant, Credit: '' }),
+            creationEcriture({ JournalCode: 'AN', EcritureNum: 1, EcritureDate: `01/01/${currentYear}`, CompteNum: '106000', EcritureLib: 'affectation du résultat déficitaire N-1', Debit: '', Credit: montant })
         ]
     };
 
@@ -60,7 +62,7 @@ export function aNouveauEcriture(line, numeroCompte, currentYear) {
         const debit = montant < 0 ? Math.abs(montant) : '';
         const credit = montant > 0 ? Math.abs(montant) : '';
 
-        return [creationEcriture({ EcritureNum: 1, EcritureDate: `01/01/${currentYear}`, CompteNum: numeroCompte, EcritureLib: `reprise de ${line['poste']}`, Debit: debit, Credit: credit })];
+        return [creationEcriture({ JournalCode: 'AN', EcritureNum: 1, EcritureDate: `01/01/${currentYear}`, CompteNum: numeroCompte, EcritureLib: `reprise de ${line['poste']}`, Debit: debit, Credit: credit })];
     }
 
     handleError(`L'écriture d'a-nouveau n'a pu être rendue`, line);
@@ -75,8 +77,8 @@ export function aNouveauEcriture(line, numeroCompte, currentYear) {
  */
 export function inventaireClotureEcriture(line, lastEcritureNum) {
     return [
-        creationEcriture({ EcritureNum: lastEcritureNum + 1, EcritureDate: line['date'], CompteNum: '370000', EcritureLib: 'clôture inventaire', Debit: convertToNumber(line['montant']), Credit: '' }, lastEcritureNum),
-        creationEcriture({ EcritureNum: lastEcritureNum + 1, EcritureDate: line['date'], CompteNum: '603700', EcritureLib: 'clôture inventaire', Debit: '', Credit: convertToNumber(line['montant']) }, lastEcritureNum)
+        creationEcriture({ JournalCode: 'OD', EcritureNum: lastEcritureNum + 1, EcritureDate: line['date'], CompteNum: '370000', EcritureLib: 'clôture inventaire', Debit: convertToNumber(line['montant']), Credit: '' }, lastEcritureNum),
+        creationEcriture({ JournalCode: 'OD', EcritureNum: lastEcritureNum + 1, EcritureDate: line['date'], CompteNum: '603700', EcritureLib: 'clôture inventaire', Debit: '', Credit: convertToNumber(line['montant']) }, lastEcritureNum)
     ];
 }
 
@@ -90,8 +92,8 @@ export function inventaireClotureEcriture(line, lastEcritureNum) {
 export function cautionEcriture(line, lastEcritureNum) {
     const creditCompte = (['B2T', 'Association'].includes(line['qui paye ?'])) ? (line["nature"] === 'esp' ? '530000' : '512000') : '467000';
     return [
-        creationEcriture({ EcritureNum: lastEcritureNum + 1, EcritureDate: line['date'], CompteNum: '275000', EcritureLib: `caution ${line['qui reçoit']}`, Debit: convertToNumber(line['montant']), Credit: '' }, lastEcritureNum),
-        creationEcriture({ EcritureNum: lastEcritureNum + 1, EcritureDate: line['date'], CompteNum: creditCompte, EcritureLib: `caution ${line['qui reçoit']}`, Debit: '', Credit: convertToNumber(line['montant']) }, lastEcritureNum)
+        creationEcriture({ JournalCode: 'OD', EcritureNum: lastEcritureNum + 1, EcritureDate: line['date'], CompteNum: '275000', EcritureLib: `caution ${line['qui reçoit']}`, Debit: convertToNumber(line['montant']), Credit: '' }, lastEcritureNum),
+        creationEcriture({ JournalCode: 'OD', EcritureNum: lastEcritureNum + 1, EcritureDate: line['date'], CompteNum: creditCompte, EcritureLib: `caution ${line['qui reçoit']}`, Debit: '', Credit: convertToNumber(line['montant']) }, lastEcritureNum)
     ];
 }
 
@@ -105,8 +107,8 @@ export function cautionEcriture(line, lastEcritureNum) {
 export function remboursementEcriture(line, lastEcritureNum) {
     const checkCash = line["nature"] === 'esp';
     return [
-        creationEcriture({ EcritureNum: lastEcritureNum + 1, EcritureDate: line['date'], CompteNum: '467000', EcritureLib: 'remboursement de frais', Debit: convertToNumber(line['montant']), Credit: '' }, lastEcritureNum),
-        creationEcriture({ EcritureNum: lastEcritureNum + 1, EcritureDate: line['date'], CompteNum: checkCash ? '530000' : '512000', EcritureLib: 'remboursement de frais', Debit: '', Credit: convertToNumber(line['montant']) }, lastEcritureNum)
+        creationEcriture({ JournalCode: 'OD', EcritureNum: lastEcritureNum + 1, EcritureDate: line['date'], CompteNum: '467000', EcritureLib: 'remboursement de frais', Debit: convertToNumber(line['montant']), Credit: '' }, lastEcritureNum),
+        creationEcriture({ JournalCode: 'OD', EcritureNum: lastEcritureNum + 1, EcritureDate: line['date'], CompteNum: checkCash ? '530000' : '512000', EcritureLib: 'remboursement de frais', Debit: '', Credit: convertToNumber(line['montant']) }, lastEcritureNum)
     ];
 }
 
@@ -123,8 +125,8 @@ export function depenseEcriture(line, numeroCompte, lastEcritureNum) {
     const piece = line['facture correspondante'] ? ` - <a href="${line['facture correspondante']}">pièce</a>` : '';
     const label = `achat par l'association : ${line['qui reçoit']} ${piece}`;
     return [
-        creationEcriture({ EcritureNum: lastEcritureNum + 1, EcritureDate: line['date'], CompteNum: numeroCompte, EcritureLib: label, Debit: convertToNumber(line['montant']), Credit: '' }, lastEcritureNum),
-        creationEcriture({ EcritureNum: lastEcritureNum + 1, EcritureDate: line['date'], CompteNum: checkCash ? '530000' : '512000', EcritureLib: label, Debit: '', Credit: convertToNumber(line['montant']) }, lastEcritureNum)
+        creationEcriture({ JournalCode: 'AC', EcritureNum: lastEcritureNum + 1, EcritureDate: line['date'], CompteNum: numeroCompte, EcritureLib: label, Debit: convertToNumber(line['montant']), Credit: '' }, lastEcritureNum),
+        creationEcriture({ JournalCode: 'AC', EcritureNum: lastEcritureNum + 1, EcritureDate: line['date'], CompteNum: checkCash ? '530000' : '512000', EcritureLib: label, Debit: '', Credit: convertToNumber(line['montant']) }, lastEcritureNum)
     ];
 }
 
@@ -140,8 +142,8 @@ export function depensePersonneEcriture(line, numeroCompte, lastEcritureNum) {
     const piece = line['facture correspondante'] ? `<a href="${line['facture correspondante']}">pièce</a>` : '';
     const label = `achat personne : ${line['qui reçoit']} - ${piece}`;
     return [
-        creationEcriture({ EcritureNum: lastEcritureNum + 1, EcritureDate: line['date'], CompteNum: numeroCompte, EcritureLib: label, Debit: convertToNumber(line['montant']), Credit: '' }, lastEcritureNum),
-        creationEcriture({ EcritureNum: lastEcritureNum + 1, EcritureDate: line['date'], CompteNum: '467000', EcritureLib: label, Debit: '', Credit: convertToNumber(line['montant']) }, lastEcritureNum)
+        creationEcriture({ JournalCode: 'AC', EcritureNum: lastEcritureNum + 1, EcritureDate: line['date'], CompteNum: numeroCompte, EcritureLib: label, Debit: convertToNumber(line['montant']), Credit: '' }, lastEcritureNum),
+        creationEcriture({ JournalCode: 'AC', EcritureNum: lastEcritureNum + 1, EcritureDate: line['date'], CompteNum: '467000', EcritureLib: label, Debit: '', Credit: convertToNumber(line['montant']) }, lastEcritureNum)
     ];
 }
 
@@ -158,8 +160,8 @@ export function venteEcriture(line, numeroCompte, lastEcritureNum) {
     const piece = line['facture correspondante'] ? `<a href="${line['facture correspondante']}">pièce</a>` : '';
     const label = `vente : ${line['qui paye ?']} - ${piece}`;
     return [
-        creationEcriture({ EcritureNum: lastEcritureNum + 1, EcritureDate: line['date'], CompteNum: numeroCompte, EcritureLib: label, Debit: '', Credit: convertToNumber(line['montant']) }, lastEcritureNum),
-        creationEcriture({ EcritureNum: lastEcritureNum + 1, EcritureDate: line['date'], CompteNum: checkCash ? '530000' : '512000', EcritureLib: label, Debit: convertToNumber(line['montant']), Credit: '' }, lastEcritureNum)
+        creationEcriture({ JournalCode: 'VT', EcritureNum: lastEcritureNum + 1, EcritureDate: line['date'], CompteNum: numeroCompte, EcritureLib: label, Debit: '', Credit: convertToNumber(line['montant']) }, lastEcritureNum),
+        creationEcriture({ JournalCode: 'VT', EcritureNum: lastEcritureNum + 1, EcritureDate: line['date'], CompteNum: checkCash ? '530000' : '512000', EcritureLib: label, Debit: convertToNumber(line['montant']), Credit: '' }, lastEcritureNum)
     ];
 }
 
@@ -176,7 +178,7 @@ export function impotExercice(ecritures, currentYear, lastEcritureNum) {
     const montantImpot = resultat * 0.15;
     if (resultat <= 0) return [];
     return [
-        creationEcriture({ EcritureNum: lastEcritureNum + 1, EcritureDate: `31/12/${currentYear}`, CompteNum: '695000', EcritureLib: 'impôt sur les sociétés', Debit: montantImpot, Credit: '' }, lastEcritureNum),
-        creationEcriture({ EcritureNum: lastEcritureNum + 1, EcritureDate: `31/12/${currentYear}`, CompteNum: '444000', EcritureLib: 'impôt sur les sociétés', Debit: '', Credit: montantImpot }, lastEcritureNum)
+        creationEcriture({ JournalCode: 'OD', EcritureNum: lastEcritureNum + 1, EcritureDate: `31/12/${currentYear}`, CompteNum: '695000', EcritureLib: 'impôt sur les sociétés', Debit: montantImpot, Credit: '' }, lastEcritureNum),
+        creationEcriture({ JournalCode: 'OD', EcritureNum: lastEcritureNum + 1, EcritureDate: `31/12/${currentYear}`, CompteNum: '444000', EcritureLib: 'impôt sur les sociétés', Debit: '', Credit: montantImpot }, lastEcritureNum)
     ];
 }

@@ -1,5 +1,6 @@
 import { trouverCompte, formatToCurrency } from './utils.js';
 import { lignesEnEcritures } from './gestion-ecritures.js';
+import { JOURNAUX_COMPTABLE } from './journaux-comptable.js';
 
 /**
  * Crée un Fichier Écritures Comptables à partir des données JSON et de l'année courante.
@@ -13,12 +14,12 @@ export function creationFEC(jsonData, currentYear, siren) {
     const FECEcritures = lignesEnEcritures(jsonData, currentYear)
         .map(ecriture => {
             return {
-                'JournalCode': '',
-                'JournalLib': '',
+                'JournalCode': ecriture['JournalCode'],
+                'JournalLib': JOURNAUX_COMPTABLE[ecriture['JournalCode']],
                 'EcritureNum': ecriture['EcritureNum'],
                 'EcritureDate': ecriture['EcritureDate'],
                 'CompteNum': ecriture['CompteNum'],
-                'CompteLib': trouverCompte({'compte': ecriture['CompteNum']}).label,
+                'CompteLib': trouverCompte({ 'compte': ecriture['CompteNum'] }).label,
                 'PieceRef': '',
                 'PieceDate': '',
                 'EcritureLib': ecriture['EcritureLib'],
