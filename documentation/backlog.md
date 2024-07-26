@@ -9,8 +9,9 @@
 - [x] importer les première données
 - [x] changer les intitulés des écritures par celles du FEC
 - [x] change le signe des actifs dans le bilan de négatif à positif - (whoopsy)
-- [ ] ajouter les rubriques du FEC dans les écritures
-- [ ] ajouter FEC à index
+- [x] termine les numéros d'écritures
+- [x] ajouter FEC à index
+- [ ] ajouter les autres rubriques du FEC dans les écritures
 - [ ] valider le fichier
 
 ### Notes
