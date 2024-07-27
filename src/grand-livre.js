@@ -34,14 +34,14 @@ export function creationGrandLivre(jsonData, currentYear) {
             });
 
         grandLivreEcritures[compte].push({
-            'EcritureDate': `31/12/${currentYear}`,
+            'EcritureDate': `${currentYear}-12-31`,
             'EcritureLib': 'Total',
             'Debit': totalDebit,
             'Credit': totalCredit
         });
 
         grandLivreEcritures[compte].push({
-            'EcritureDate': `31/12/${currentYear}`,
+            'EcritureDate': `${currentYear}-12-31`,
             'EcritureLib': 'Solde',
             'Debit': totalDebit > totalCredit ? (totalDebit - totalCredit) : '',
             'Credit': totalCredit > totalDebit ? (totalCredit - totalDebit) : ''

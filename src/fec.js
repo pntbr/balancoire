@@ -1,4 +1,4 @@
-import { trouverCompte, formatToCurrency } from './utils.js';
+import { trouverCompte, formatToCurrency, ajusterDate } from './utils.js';
 import { lignesEnEcritures } from './gestion-ecritures.js';
 import { JOURNAUX_COMPTABLE } from './journaux-comptable.js';
 
@@ -25,7 +25,7 @@ export function creationFEC(jsonData, currentYear, siren) {
                 'EcritureLib': ecriture['EcritureLib'],
                 'Debit': ecriture['Debit'],
                 'Credit': ecriture['Credit'],
-                'ValidDate': ''
+                'ValidDate': ajusterDate(ecriture['EcritureDate'])
             };
         })
 

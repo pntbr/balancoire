@@ -12,7 +12,9 @@
 - [x] termine les numéros d'écritures
 - [x] ajouter FEC à index
 - [x] ajouter les journaux au FEC
-- [ ] ajouter les autres rubriques du FEC dans les écritures
+- [x] ajouter les dates de validations des écritures à FEC
+- [ ] vérifier le format attendu et modifier en conséquence
+- [ ] ajouter les pièces au FEC dans les écritures
 - [ ] valider le fichier
 
 ### Notes

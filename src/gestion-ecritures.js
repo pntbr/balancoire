@@ -105,9 +105,9 @@ export function arretComptesClotureEcritures(ecritures, currentYear) {
 
         if (solde !== 0) {
             if (solde < 0) {
-                ecrituresArret.push(creationEcriture({ EcritureNum: `31/12/${currentYear}`, CompteNum: compte, EcritureLib: 'arrêt des comptes', Debit: '', Credit: Math.abs(solde) }));
+                ecrituresArret.push(creationEcriture({ EcritureNum: `${currentYear}-12-31`, CompteNum: compte, EcritureLib: 'arrêt des comptes', Debit: '', Credit: Math.abs(solde) }));
             } else {
-                ecrituresArret.push(creationEcriture({ EcritureNum: `31/12/${currentYear}`, CompteNum: compte, EcritureLib: 'arrêt des comptes', Debit: Math.abs(solde), Credit: '' }));
+                ecrituresArret.push(creationEcriture({ EcritureNum: `${currentYear}-12-31`, CompteNum: compte, EcritureLib: 'arrêt des comptes', Debit: Math.abs(solde), Credit: '' }));
             }
         }
     });
