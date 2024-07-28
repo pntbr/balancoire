@@ -1,5 +1,5 @@
 import { sommeCompteParRacine, formatToCurrency } from './utils.js';
-import { lignesEnEcritures } from './ecritures.js';
+import { lignesEnEcritures } from './gestion-ecritures.js';
 
 /**
  * Crée un compte de résultat à partir des données JSON et de l'année courante.

@@ -1,5 +1,5 @@
 import { formatToCurrency } from './utils.js';
-import { lignesEnEcritures } from './ecritures.js';
+import { lignesEnEcritures } from './gestion-ecritures.js';
 
 /**
  * Crée un journal comptable à partir des données JSON et de l'année courante.
@@ -9,6 +9,7 @@ import { lignesEnEcritures } from './ecritures.js';
  * @returns {Object[]} - Une liste d'écritures comptables.
  */
 export function creationJournal(jsonData, currentYear) {
+    console.log("lignesEnEcritures", lignesEnEcritures(jsonData, currentYear));
     return lignesEnEcritures(jsonData, currentYear);
 }
 

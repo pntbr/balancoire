@@ -8,13 +8,22 @@
 - [x] nom du fichier : SirenFECAAAAMMJJ
 - [x] importer les première données
 - [x] changer les intitulés des écritures par celles du FEC
-- [ ] ajouter les rubriques du FEC dans les écritures
+- [x] change le signe des actifs dans le bilan de négatif à positif - (whoopsy)
+- [x] termine les numéros d'écritures
+- [x] ajouter FEC à index
+- [x] ajouter les journaux au FEC
+- [x] ajouter les dates de validations des écritures à FEC
+- [x] ajouter les pièces au FEC dans les écritures
+- [x] ajouter la date des pièces dans FEC
+- [x] vérifier le format attendu et modifier en conséquence
+- [ ] permet le téléchargement du fichier
 - [ ] valider le fichier
 
 ### Notes
 
 - [ ] soigner les labels
-- [ ] récupérer les AN de l'exercice N-1 automatiquement
+- [ ] récupérer les AN de l'exercice N-1
+    - [ ] proposer de copier les AN
 - [ ] aller chercher l'inventaire pour les clôtures et AN
 - [ ] notice avec exemples de toutes les écritures générées
 - [ ] mettre les comptes dans le sheet

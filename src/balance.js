@@ -1,5 +1,5 @@
 import { trouverCompte, sommeCompteParRacine, formatToCurrency } from './utils.js';
-import { lignesEnEcritures } from './ecritures.js';
+import { lignesEnEcritures } from './gestion-ecritures.js';
 
 /**
  * Crée une balance des écritures comptables à partir des données JSON et de l'année courante.
