@@ -91,7 +91,7 @@ function convertirNomDeFichier(filename) {
  * @returns {string} - La date convertie au format 'YYYY-MM-DD'.
  */
 export function convertirNomDeFichierEnDate(filename) {
-    const regex = /^\d{8}[_-].*\..+$/;
+    const regex = /^\d{8}[-_].*$/;
     if (!regex.test(filename)) {
         return filename;
     }
