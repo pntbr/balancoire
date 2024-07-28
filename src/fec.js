@@ -20,7 +20,7 @@ export function creationFEC(jsonData, currentYear, siren) {
                 'EcritureDate': ecriture['EcritureDate'],
                 'CompteNum': ecriture['CompteNum'],
                 'CompteLib': trouverCompte({ 'compte': ecriture['CompteNum'] }).label,
-                'PieceRef': '',
+                'PieceRef': ecriture['PieceRef'],
                 'PieceDate': '',
                 'EcritureLib': ecriture['EcritureLib'],
                 'Debit': ecriture['Debit'],

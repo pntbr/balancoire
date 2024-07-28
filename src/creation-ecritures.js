@@ -6,20 +6,22 @@ import { convertToNumber, sommeCompteParRacine, convertirDate } from './utils.js
  * @param {Object} ecritureData - Les données de l'écriture.
  * @param {string} ecritureData.JournalCode - Le code du journal.
  * @param {string} ecritureData.EcritureNum - Le numéro de l'écriture.
- * @param {string} ecritureData.EcritureDate - La date de l'écriture.
+ * @param {string} ecritureData.EcritureDate - La date de l'écriture - YYYY-MM-DD.
+ * @param {string} ecritureData.PieceRef - La référence de la pièce comptable.
  * @param {string} ecritureData.CompteNum - Le numéro de compte.
  * @param {string} ecritureData.EcritureLib - Le libellé de l'écriture.
  * @param {number|string} ecritureData.Debit - Le montant du débit.
  * @param {number|string} ecritureData.Credit - Le montant du crédit.
  * @returns {Object} - L'écriture comptable créée.
  */
-export function creationEcriture({ JournalCode, EcritureNum, EcritureDate, CompteNum, EcritureLib, Debit, Credit }) {
+export function creationEcriture({ JournalCode, EcritureNum, EcritureDate, CompteNum, PieceRef, EcritureLib, Debit, Credit }) {
     return {
-        'JournalCode': JournalCode,
-        'EcritureNum': EcritureNum,
-        'EcritureDate': EcritureDate,
-        'CompteNum': CompteNum,
-        'EcritureLib': EcritureLib,
+        'JournalCode': JournalCode || '',
+        'EcritureNum': EcritureNum || '',
+        'EcritureDate': EcritureDate || '',
+        'CompteNum': CompteNum || '',
+        'PieceRef': PieceRef || '',
+        'EcritureLib': EcritureLib || '',
         'Debit': Debit || '',
         'Credit': Credit || ''
     };
@@ -122,11 +124,10 @@ export function remboursementEcriture(line, lastEcritureNum) {
  */
 export function depenseEcriture(line, numeroCompte, lastEcritureNum) {
     const checkCash = line["nature"] === 'esp';
-    const piece = line['facture correspondante'] ? ` - <a href="${line['facture correspondante']}">pièce</a>` : '';
-    const label = `achat par l'association : ${line['qui reçoit']} ${piece}`;
+    const label = `achat par l'association : ${line['qui reçoit']}`;
     return [
-        creationEcriture({ JournalCode: 'AC', EcritureNum: lastEcritureNum + 1, EcritureDate: convertirDate(line['date']), CompteNum: numeroCompte, EcritureLib: label, Debit: convertToNumber(line['montant']), Credit: '' }, lastEcritureNum),
-        creationEcriture({ JournalCode: 'AC', EcritureNum: lastEcritureNum + 1, EcritureDate: convertirDate(line['date']), CompteNum: checkCash ? '530000' : '512000', EcritureLib: label, Debit: '', Credit: convertToNumber(line['montant']) }, lastEcritureNum)
+        creationEcriture({ JournalCode: 'AC', EcritureNum: lastEcritureNum + 1, EcritureDate: convertirDate(line['date']), CompteNum: numeroCompte, PieceRef: line['facture correspondante'], EcritureLib: label, Debit: convertToNumber(line['montant']), Credit: '' }, lastEcritureNum),
+        creationEcriture({ JournalCode: 'AC', EcritureNum: lastEcritureNum + 1, EcritureDate: convertirDate(line['date']), CompteNum: checkCash ? '530000' : '512000', PieceRef: line['facture correspondante'], EcritureLib: label, Debit: '', Credit: convertToNumber(line['montant']) }, lastEcritureNum)
     ];
 }
 
@@ -139,11 +140,10 @@ export function depenseEcriture(line, numeroCompte, lastEcritureNum) {
  * @returns {Object[]} - Une liste d'écritures comptables.
  */
 export function depensePersonneEcriture(line, numeroCompte, lastEcritureNum) {
-    const piece = line['facture correspondante'] ? `<a href="${line['facture correspondante']}">pièce</a>` : '';
-    const label = `achat personne : ${line['qui reçoit']} - ${piece}`;
+    const label = `achat personne : ${line['qui reçoit']}`;
     return [
-        creationEcriture({ JournalCode: 'AC', EcritureNum: lastEcritureNum + 1, EcritureDate: convertirDate(line['date']), CompteNum: numeroCompte, EcritureLib: label, Debit: convertToNumber(line['montant']), Credit: '' }, lastEcritureNum),
-        creationEcriture({ JournalCode: 'AC', EcritureNum: lastEcritureNum + 1, EcritureDate: convertirDate(line['date']), CompteNum: '467000', EcritureLib: label, Debit: '', Credit: convertToNumber(line['montant']) }, lastEcritureNum)
+        creationEcriture({ JournalCode: 'AC', EcritureNum: lastEcritureNum + 1, EcritureDate: convertirDate(line['date']), CompteNum: numeroCompte, PieceRef: line['facture correspondante'], EcritureLib: label, Debit: convertToNumber(line['montant']), Credit: '' }, lastEcritureNum),
+        creationEcriture({ JournalCode: 'AC', EcritureNum: lastEcritureNum + 1, EcritureDate: convertirDate(line['date']), CompteNum: '467000', PieceRef: line['facture correspondante'], EcritureLib: label, Debit: '', Credit: convertToNumber(line['montant']) }, lastEcritureNum)
     ];
 }
 
@@ -157,11 +157,10 @@ export function depensePersonneEcriture(line, numeroCompte, lastEcritureNum) {
  */
 export function venteEcriture(line, numeroCompte, lastEcritureNum) {
     const checkCash = line["nature"] === 'esp';
-    const piece = line['facture correspondante'] ? `<a href="${line['facture correspondante']}">pièce</a>` : '';
-    const label = `vente : ${line['qui paye ?']} - ${piece}`;
+    const label = `vente : ${line['qui paye ?']}`;
     return [
-        creationEcriture({ JournalCode: 'VT', EcritureNum: lastEcritureNum + 1, EcritureDate: convertirDate(line['date']), CompteNum: numeroCompte, EcritureLib: label, Debit: '', Credit: convertToNumber(line['montant']) }, lastEcritureNum),
-        creationEcriture({ JournalCode: 'VT', EcritureNum: lastEcritureNum + 1, EcritureDate: convertirDate(line['date']), CompteNum: checkCash ? '530000' : '512000', EcritureLib: label, Debit: convertToNumber(line['montant']), Credit: '' }, lastEcritureNum)
+        creationEcriture({ JournalCode: 'VT', EcritureNum: lastEcritureNum + 1, EcritureDate: convertirDate(line['date']), CompteNum: numeroCompte, PieceRef: line['facture correspondante'], EcritureLib: label, Debit: '', Credit: convertToNumber(line['montant']) }, lastEcritureNum),
+        creationEcriture({ JournalCode: 'VT', EcritureNum: lastEcritureNum + 1, EcritureDate: convertirDate(line['date']), CompteNum: checkCash ? '530000' : '512000', PieceRef: line['facture correspondante'], EcritureLib: label, Debit: convertToNumber(line['montant']), Credit: '' }, lastEcritureNum)
     ];
 }
 
