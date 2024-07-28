@@ -6,7 +6,7 @@ import { creationCompteResultat, injecteCompteResultatEcritures } from './compte
 import { creationBilan, injecteBilanEcritures } from './bilan.js';
 import { creationJournal, injecteJournalEcritures } from './journal.js';
 import { creationInventaire, injecteInventaireEcritures } from './inventaire.js';
-import { creationFEC, injecteFECEcritures } from './fec.js';
+import { creationFEC, injecteFECEcritures, generationFichier } from './fec.js';
 
 document.addEventListener('DOMContentLoaded', init);
 
@@ -19,7 +19,7 @@ function init() {
         .then(env => {
             const { SHEET_ID, SHEETNAME_TO_GID, SIREN } = env;
             setupInfoModal();
-            loadNavigation(SHEET_ID, SHEETNAME_TO_GID, SIREN);
+            loadNavigation(SHEET_ID, SHEETNAME_TO_GID);
         });
 }
 
@@ -70,14 +70,14 @@ function setupInfoModal() {
  * @param {string} SHEET_ID - L'identifiant de la Google Sheet.
  * @param {Object} SHEETNAME_TO_GID - Les identifiants des onglets de la Google Sheet.
  */
-function loadNavigation(SHEET_ID, SHEETNAME_TO_GID, SIREN) {
+function loadNavigation(SHEET_ID, SHEETNAME_TO_GID) {
     fetch('nav.html')
         .then(response => response.text())
         .then(data => {
             document.getElementById('navigation').innerHTML = data;
             setupPageLinks();
             injectYearLinks(SHEETNAME_TO_GID);
-            setupYearLinks(SHEET_ID, SHEETNAME_TO_GID, SIREN);
+            setupYearLinks(SHEET_ID, SHEETNAME_TO_GID);
             injectSheetLink(SHEET_ID);
         });
 }
@@ -119,7 +119,7 @@ function injectYearLinks(SHEETNAME_TO_GID) {
  * @param {string} SHEET_ID - L'identifiant de la Google Sheet.
  * @param {Object} SHEETNAME_TO_GID - Les identifiants des onglets de la Google Sheet.
  */
-function setupYearLinks(SHEET_ID, SHEETNAME_TO_GID, SIREN) {
+function setupYearLinks(SHEET_ID, SHEETNAME_TO_GID) {
     const yearLinks = document.querySelectorAll('.annee-nav a');
     const currentYear = localStorage.getItem('selectedYear') || '2024';
     yearLinks.forEach(link => {
@@ -130,13 +130,13 @@ function setupYearLinks(SHEET_ID, SHEETNAME_TO_GID, SIREN) {
             event.preventDefault();
             const selectedYear = event.target.getAttribute('data-year');
             localStorage.setItem('selectedYear', selectedYear);
-            loadCSV(SHEET_ID, SHEETNAME_TO_GID, selectedYear, SIREN);
+            loadCSV(SHEET_ID, SHEETNAME_TO_GID, selectedYear);
             yearLinks.forEach(l => l.classList.remove('menu-selected'));
             event.target.classList.add('menu-selected');
         });
     });
 
-    loadCSV(SHEET_ID, SHEETNAME_TO_GID, currentYear, SIREN);
+    loadCSV(SHEET_ID, SHEETNAME_TO_GID, currentYear);
 }
 
 /**
@@ -221,7 +221,7 @@ function injectDataIntoPage(jsonData, currentYear, siren) {
     ];
 
     mappings.forEach(({ id, create, inject }) => {
-        const element = document.getElementById(id);   
+        const element = document.getElementById(id);
         if (element) {
             const ecritures = create(jsonData, currentYear, siren);
             inject(ecritures);

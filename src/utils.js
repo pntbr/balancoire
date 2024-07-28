@@ -28,6 +28,23 @@ export function convertToNumber(euroString) {
 }
 
 /**
+ * Formate un nombre en chaîne de caractères représentant un montant en euros,
+ * complété à droite par des espaces pour atteindre une longueur fixe.
+ * @param {number} number - Le nombre à formater.
+ * @returns {string} La chaîne de caractères représentant le montant en euros.
+ */
+export function convertirMontantEnFEC(montant) {
+    let montantFEC = montant || 0.00
+    let formattedNumber = montantFEC.toFixed(2).replace('.', ',');
+
+    while (formattedNumber.length < 13) {
+        formattedNumber += ' ';
+    }
+
+    return formattedNumber;
+}
+
+/**
  * Formate un nombre en chaîne de caractères représentant un montant en euros.
  * @param {number} number - Le nombre à formater.
  * @returns {string} La chaîne de caractères représentant le montant en euros.

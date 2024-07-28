@@ -1,4 +1,4 @@
-import { trouverCompte, formatToCurrency, ajusterDate, convertirNomDeFichierEnDate } from './utils.js';
+import { trouverCompte, convertirMontantEnFEC, ajusterDate, convertirNomDeFichierEnDate } from './utils.js';
 import { lignesEnEcritures } from './gestion-ecritures.js';
 import { JOURNAUX_COMPTABLE } from './journaux-comptable.js';
 
@@ -9,8 +9,7 @@ import { JOURNAUX_COMPTABLE } from './journaux-comptable.js';
  * @param {number} currentYear - L'année courante pour filtrer les écritures.
  * @returns {Object[]} - Une liste d'objets représentant le FEC.
  */
-export function creationFEC(jsonData, currentYear, siren) {
-    const FECName = `${siren}FEC${currentYear}1231`;
+export function creationFEC(jsonData, currentYear) {
     const FECEcritures = lignesEnEcritures(jsonData, currentYear)
         .map(ecriture => {
             return {
@@ -19,13 +18,19 @@ export function creationFEC(jsonData, currentYear, siren) {
                 'EcritureNum': ecriture['EcritureNum'],
                 'EcritureDate': ecriture['EcritureDate'],
                 'CompteNum': ecriture['CompteNum'],
+                'CompAuxNum': '',
+                'CompAuxLib': '',
                 'CompteLib': trouverCompte({ 'compte': ecriture['CompteNum'] }).label,
                 'PieceRef': ecriture['PieceRef'],
                 'PieceDate': convertirNomDeFichierEnDate(ecriture['PieceRef']),
                 'EcritureLib': ecriture['EcritureLib'],
-                'Debit': ecriture['Debit'],
-                'Credit': ecriture['Credit'],
-                'ValidDate': ajusterDate(ecriture['EcritureDate'])
+                'Debit': convertirMontantEnFEC(ecriture['Debit']),
+                'Credit': convertirMontantEnFEC(ecriture['Credit']),
+                'EcritureLet': '',
+                'DateLet': '',
+                'ValidDate': ajusterDate(ecriture['EcritureDate']),
+                'Montantdevise': '',
+                'Idevise': ''
             };
         })
 
@@ -50,9 +55,19 @@ export function injecteFECEcritures(FECEcritures) {
             <td>${ecriture.PieceRef}</td>
             <td>${ecriture.PieceDate}</td>
             <td>${ecriture.EcritureLib}</td>
-            <td>${formatToCurrency(ecriture.Debit)}</td>
-            <td>${formatToCurrency(ecriture.Credit)}</td>
+            <td>${ecriture.Debit}</td>
+            <td>${ecriture.Credit}</td>
             <td>${ecriture.ValidDate}</td>
         </tr>
     `).join('');
+}
+
+/**
+ * Génère un fichier FEC à partir des écritures FEC formatées.
+ * @param {Object[]} ecrituresFEC - Les écritures FEC formatées.
+ * @param {string} siren - Le numéro SIREN de l'entreprise.
+ * @returns {string} - Le nom du fichier FEC créé.
+ */
+export function generationFichier(ecrituresFEC, siren) {
+    const FECName = `${siren}FEC${currentYear}1231.txt`;
 }

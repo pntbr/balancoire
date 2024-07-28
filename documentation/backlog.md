@@ -15,7 +15,8 @@
 - [x] ajouter les dates de validations des écritures à FEC
 - [x] ajouter les pièces au FEC dans les écritures
 - [x] ajouter la date des pièces dans FEC
-- [ ] vérifier le format attendu et modifier en conséquence
+- [x] vérifier le format attendu et modifier en conséquence
+- [ ] permet le téléchargement du fichier
 - [ ] valider le fichier
 
 ### Notes
