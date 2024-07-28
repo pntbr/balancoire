@@ -33,7 +33,7 @@ export function convertToNumber(euroString) {
  * @returns {string} La chaîne de caractères représentant le montant en euros.
  */
 export function formatToCurrency(number) {
-    return number ? number.toFixed(2).replace('.', ',') + ' €' : '';
+    return number ? number.toFixed(2).replace('.', ',') : '';
 }
 
 /**
