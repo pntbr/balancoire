@@ -1,4 +1,4 @@
-import { trouverCompte, formatToCurrency, ajusterDate } from './utils.js';
+import { trouverCompte, formatToCurrency, ajusterDate, convertirNomDeFichierEnDate } from './utils.js';
 import { lignesEnEcritures } from './gestion-ecritures.js';
 import { JOURNAUX_COMPTABLE } from './journaux-comptable.js';
 
@@ -21,7 +21,7 @@ export function creationFEC(jsonData, currentYear, siren) {
                 'CompteNum': ecriture['CompteNum'],
                 'CompteLib': trouverCompte({ 'compte': ecriture['CompteNum'] }).label,
                 'PieceRef': ecriture['PieceRef'],
-                'PieceDate': '',
+                'PieceDate': convertirNomDeFichierEnDate(ecriture['PieceRef']),
                 'EcritureLib': ecriture['EcritureLib'],
                 'Debit': ecriture['Debit'],
                 'Credit': ecriture['Credit'],

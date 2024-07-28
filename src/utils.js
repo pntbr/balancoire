@@ -64,6 +64,50 @@ export function convertirDate(dateStr) {
     return dateFormatee;
 }
 
+/**
+ * Convertit une chaîne de caractères de la forme 'YYYYMMDD-heroku.pdf' en 'YYYY-MM-DD'.
+ *
+ * @param {string} filename - Le nom de fichier à convertir.
+ * @returns {string} - La date convertie au format 'YYYY-MM-DD'.
+ */
+function convertirNomDeFichier(filename) {
+    // Extraire la date de la chaîne
+    const datePart = filename.split('-')[0];
+
+    // Séparer l'année, le mois et le jour
+    const annee = datePart.substring(0, 4);
+    const mois = datePart.substring(4, 6);
+    const jour = datePart.substring(6, 8);
+
+    // Construire la nouvelle date au format 'YYYY-MM-DD'
+    const dateFormattee = `${annee}-${mois}-${jour}`;
+
+    return dateFormattee;
+}
+
+/**
+ * Convertit une chaîne de caractères de la forme 'YYYYMMDD-heroku.pdf' en 'YYYY-MM-DD'.
+ * @param {string} filename - Le nom de fichier à convertir.
+ * @returns {string} - La date convertie au format 'YYYY-MM-DD'.
+ */
+export function convertirNomDeFichierEnDate(filename) {
+    const regex = /^\d{8}-.*\..+$/;
+
+    if (!regex.test(filename)) {
+        return filename;
+    }
+
+    const datePart = filename.split('-')[0];
+
+    const annee = datePart.substring(0, 4);
+    const mois = datePart.substring(4, 6);
+    const jour = datePart.substring(6, 8);
+
+    const dateFormattee = `${annee}-${mois}-${jour}`;
+
+    return dateFormattee;
+}
+
 
 /**
  * Ajuste la date donnée selon les règles spécifiées.
