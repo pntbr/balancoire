@@ -3,6 +3,29 @@ import { lignesEnEcritures } from './gestion-ecritures.js';
 import { JOURNAUX_COMPTABLE } from './journaux-comptable.js';
 
 /**
+ * Configure le bouton de téléchargement du fichier FEC.
+ * @param {string} siren - Le numéro SIREN de l'entreprise.
+ */
+export function setupDownloadButton(siren) {
+    const downloadBtn = document.getElementById('downloadBtn');
+    downloadBtn.addEventListener('click', () => {
+        const fileContent = downloadBtn.getAttribute('data-fec');
+        if (fileContent) {
+            const blob = new Blob([fileContent], { type: 'text/plain;charset=ascii' });
+            const currentYear = localStorage.getItem('selectedYear') || new Date().getFullYear();
+            const FECName = `${siren}FEC${currentYear}1231.txt`;
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = FECName;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(link.href);
+        }
+    });
+}
+
+/**
  * Crée un Fichier Écritures Comptables à partir des données JSON et de l'année courante.
  *
  * @param {Object[]} jsonData - Les données JSON contenant les écritures comptables.
@@ -39,12 +62,11 @@ export function creationFEC(jsonData, currentYear) {
 
 /**
  * Injecte les écritures du FEC dans le tableau HTML.
- *
- * @param {Object[]} FECEcritures - La liste des écritures du FEC à injecter dans le tableau HTML.
+ * @param {Object[]} ecrituresFEC - La liste des écritures du FEC à injecter dans le tableau HTML.
  */
-export function injecteFECEcritures(FECEcritures) {
+export function injecteFECEcritures(ecrituresFEC) {
     const tableBody = document.getElementById('FEC-ecritures');
-    tableBody.innerHTML = FECEcritures.map(ecriture => `
+    tableBody.innerHTML = ecrituresFEC.map(ecriture => `
         <tr>
             <td>${ecriture.JournalCode}</td>
             <td>${ecriture.JournalLib}</td>
@@ -60,14 +82,25 @@ export function injecteFECEcritures(FECEcritures) {
             <td>${ecriture.ValidDate}</td>
         </tr>
     `).join('');
+
+    insertFECContentIntoButton(ecrituresFEC);
 }
 
 /**
- * Génère un fichier FEC à partir des écritures FEC formatées.
- * @param {Object[]} ecrituresFEC - Les écritures FEC formatées.
- * @param {string} siren - Le numéro SIREN de l'entreprise.
- * @returns {string} - Le nom du fichier FEC créé.
+ * Génère le contenu du fichier FEC et l'insère dans un attribut data-fec du bouton.
+ * @param {Object[]} ecrituresFEC - La liste des écritures du FEC à injecter dans le tableau HTML.
  */
-export function generationFichier(ecrituresFEC, siren) {
-    const FECName = `${siren}FEC${currentYear}1231.txt`;
+export function insertFECContentIntoButton(ecrituresFEC) {
+    const header = Object.keys(ecrituresFEC[0]).join('|');
+
+    const lines = ecrituresFEC.map(ecriture =>
+        Object.keys(ecriture).map(key => ecriture[key] ? ecriture[key].toString() : '').join('|')
+    );
+
+    const fileContent = [header, ...lines].join('\n');
+
+    const downloadBtn = document.getElementById('downloadBtn');
+    if (downloadBtn) {
+        downloadBtn.setAttribute('data-fec', fileContent);
+    }
 }

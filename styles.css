@@ -58,12 +58,13 @@ nav ul li a:hover {
 }
 
 .fec {
-    width: 2100px;
+    width: 1300px;
     margin: 20px auto;
     padding: 20px;
     background: #f9f9f9;
     border: 1px solid #ccc;
     border-radius: 5px;
+    font-size: 9px;
 }
 
 table {

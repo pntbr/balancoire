@@ -6,7 +6,7 @@ import { creationCompteResultat, injecteCompteResultatEcritures } from './compte
 import { creationBilan, injecteBilanEcritures } from './bilan.js';
 import { creationJournal, injecteJournalEcritures } from './journal.js';
 import { creationInventaire, injecteInventaireEcritures } from './inventaire.js';
-import { creationFEC, injecteFECEcritures, generationFichier } from './fec.js';
+import { creationFEC, injecteFECEcritures, setupDownloadButton } from './fec.js';
 
 document.addEventListener('DOMContentLoaded', init);
 
@@ -20,6 +20,9 @@ function init() {
             const { SHEET_ID, SHEETNAME_TO_GID, SIREN } = env;
             setupInfoModal();
             loadNavigation(SHEET_ID, SHEETNAME_TO_GID);
+            if (document.getElementById('downloadBtn')) {
+                setupDownloadButton(SIREN);
+            }
         });
 }
 
@@ -209,7 +212,7 @@ function loadCSV(sheetId, sheetNameToGid, currentYear, siren) {
  * @param {Object[]} jsonData - Les données du CSV en format JSON.
  * @param {string} currentYear - L'année sélectionnée.
  */
-function injectDataIntoPage(jsonData, currentYear, siren) {
+function injectDataIntoPage(jsonData, currentYear) {
     const mappings = [
         { id: 'journal-ecritures', create: creationJournal, inject: injecteJournalEcritures },
         { id: 'balance-ecritures', create: creationBalance, inject: injecteBalanceEcritures },
@@ -223,7 +226,7 @@ function injectDataIntoPage(jsonData, currentYear, siren) {
     mappings.forEach(({ id, create, inject }) => {
         const element = document.getElementById(id);
         if (element) {
-            const ecritures = create(jsonData, currentYear, siren);
+            const ecritures = create(jsonData, currentYear);
             inject(ecritures);
         }
     });
