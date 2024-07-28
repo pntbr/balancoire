@@ -91,18 +91,14 @@ function convertirNomDeFichier(filename) {
  * @returns {string} - La date convertie au format 'YYYY-MM-DD'.
  */
 export function convertirNomDeFichierEnDate(filename) {
-    const regex = /^\d{8}-.*\..+$/;
-
+    const regex = /^\d{8}[_-].*\..+$/;
     if (!regex.test(filename)) {
         return filename;
     }
-
     const datePart = filename.split('-')[0];
-
     const annee = datePart.substring(0, 4);
     const mois = datePart.substring(4, 6);
     const jour = datePart.substring(6, 8);
-
     const dateFormattee = `${annee}-${mois}-${jour}`;
 
     return dateFormattee;
