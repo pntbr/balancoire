@@ -1,16 +1,24 @@
 # Backlog
 
+## US12 Gérer stripe
+
+- [ ] modifier le README
+- [ ] se connecter
+- [ ] récupérer le CSV de base
+- [ ] récupérer les articles
+- [ ] générer les écritures
+- [ ] 
+ 
+
 ### Améliorations
 
-- [ ] valider le fichier
+- [ ] valider le fichier FEC
 - [ ] soigner les labels
 - [ ] récupérer les AN de l'exercice N-1
     - [ ] proposer de copier les AN
-- [ ] aller chercher l'inventaire pour les clôtures et AN
 - [ ] notice avec exemples de toutes les écritures générées
 - [ ] mettre les comptes dans le sheet
 
-- [ ] stripe écritures
 - [ ] importer directement les écritures wise
 - [ ] liées les factures
 - [ ] balances de clôture
