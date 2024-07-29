@@ -9,7 +9,6 @@ import { lignesEnEcritures } from './gestion-ecritures.js';
  * @returns {Object[]} - Une liste d'écritures comptables.
  */
 export function creationJournal(jsonData, currentYear) {
-    console.log("lignesEnEcritures", lignesEnEcritures(jsonData, currentYear));
     return lignesEnEcritures(jsonData, currentYear);
 }
 
