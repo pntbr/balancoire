@@ -1,5 +1,5 @@
 import { trouverCompte, sommeCompteParRacine } from './utils.js';
-import { aNouveauEcriture, inventaireClotureEcriture, cautionEcriture, remboursementEcriture, depenseEcriture, depensePersonneEcriture, venteEcriture, impotExercice, creationEcriture } from './creation-ecritures.js';
+import { aNouveauEcriture, inventaireClotureEcriture, cautionEcriture, remboursementEcriture, depenseEcriture, depensePersonneEcriture, venteEcriture, venteStripeEcriture, commissionStripeEcriture, transfertStripeEcriture, impotExercice, creationEcriture } from './creation-ecritures.js';
 
 /**
  * Affiche un message d'erreur dans l'élément HTML avec l'ID 'error-message'.
@@ -36,20 +36,26 @@ function handleError(message, line) {
 function ligneEnEcriture(line, currentYear, lastEcritureNum) {
     const numeroCompte = trouverCompte({ label: line.poste }).compte;
     try {
-        if (line['date'].startsWith('01/01')) {
+        if (line['date'].endsWith('01-01')) {
             return aNouveauEcriture(line, numeroCompte, currentYear);
         }
         // Gère la clôture
-        if (line['date'].startsWith('31/12')) {
+        if (line['date'].endsWith('12-31')) {
             if (numeroCompte === '370000') {
                 return inventaireClotureEcriture(line, lastEcritureNum);
             }
         }
 
+        if (line['qui paye ?'] === 'Stripe' || line['qui reçoit'] === 'Stripe') {
+            if (numeroCompte.startsWith('5')) return transfertStripeEcriture(line, numeroCompte, lastEcritureNum);
+            if (numeroCompte.startsWith('6')) return commissionStripeEcriture(line, numeroCompte, lastEcritureNum);
+            if (numeroCompte.startsWith('7')) return venteStripeEcriture(line, numeroCompte, lastEcritureNum);
+        }
+
         // Gère les écritures courantes
         if (numeroCompte === '275000') return cautionEcriture(line, lastEcritureNum);
         if (numeroCompte.startsWith('4')) return remboursementEcriture(line, lastEcritureNum);
-        if (numeroCompte.startsWith('6')) return (['B2T', 'Association'].includes(line['qui paye ?'])) ? depenseEcriture(line, numeroCompte, lastEcritureNum) : depensePersonneEcriture(line, numeroCompte, lastEcritureNum);
+        if (numeroCompte.startsWith('6')) return ['B2T', 'Association'].includes(line['qui paye ?']) ? depenseEcriture(line, numeroCompte, lastEcritureNum) : depensePersonneEcriture(line, numeroCompte, lastEcritureNum);
         if (numeroCompte.startsWith('7')) return venteEcriture(line, numeroCompte, lastEcritureNum);
 
         handleError(`L'écriture ne comporte pas un compte connu`, line);

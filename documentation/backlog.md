@@ -1,16 +1,20 @@
 # Backlog
 
+## US12 Consolidation-1
+
+- [x] restructuration de main
+- [x] reprendre stripe écritures
+- [x] passer les dates en ISO
+
 ### Améliorations
 
-- [ ] valider le fichier
+- [ ] valider le fichier FEC
 - [ ] soigner les labels
 - [ ] récupérer les AN de l'exercice N-1
     - [ ] proposer de copier les AN
-- [ ] aller chercher l'inventaire pour les clôtures et AN
 - [ ] notice avec exemples de toutes les écritures générées
 - [ ] mettre les comptes dans le sheet
 
-- [ ] stripe écritures
 - [ ] importer directement les écritures wise
 - [ ] liées les factures
 - [ ] balances de clôture
