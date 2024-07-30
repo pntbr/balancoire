@@ -15,7 +15,7 @@ export const PLAN_COMPTABLE = {
     "444000": ["état - impôts sur les bénéfices", "impots"],
     "467000": ["autres comptes débiteurs ou créditeurs", "remboursements", "prêts"],
     "512000": ["banques"],
-    "517000": ["autres organismes financiers"],
+    "517000": ["autres organismes financiers", "caisse stripe"],
     "530000": ["caisse"],
     "602600": ["emballages"],
     "603700": ["variation des stocks de marchandises"],

@@ -165,7 +165,7 @@ export function venteEcriture(line, numeroCompte, lastEcritureNum) {
 }
 
 /**
- * Crée les écritures de vente.
+ * Crée les écritures de vente stripe.
  *
  * @param {Object} line - La ligne de données.
  * @param {string} numeroCompte - Le numéro de compte.
@@ -173,14 +173,39 @@ export function venteEcriture(line, numeroCompte, lastEcritureNum) {
  * @returns {Object[]} - Une liste d'écritures comptables.
  */
 export function venteStripeEcriture(line, numeroCompte, lastEcritureNum) {
-    const commissionsStripe = (convertToNumber(line['montant']) * 1.5 / 100) + .25
     return [
         creationEcriture({ JournalCode: 'VT', EcritureNum: lastEcritureNum + 1, EcritureDate: convertirDate(line['date']), CompteNum: '517000', PieceRef: line['facture correspondante'], EcritureLib: 'Caisse - Stripe', Debit: convertToNumber(line['montant']), Credit: '' }),
-        creationEcriture({ JournalCode: 'VT', EcritureNum: lastEcritureNum + 1, EcritureDate: convertirDate(line['date']), CompteNum: numeroCompte, PieceRef: line['facture correspondante'], EcritureLib: `vente : ${line['qui paye ?']}`, Debit: '', Credit: convertToNumber(line['montant']) }),
-        creationEcriture({ JournalCode: 'VT', EcritureNum: lastEcritureNum + 2, EcritureDate: convertirDate(line['date']), CompteNum: '627800', PieceRef: '', EcritureLib: 'commission Stripe', Debit: commissionsStripe, Credit: '' }),
-        creationEcriture({ JournalCode: 'VT', EcritureNum: lastEcritureNum + 2, EcritureDate: convertirDate(line['date']), CompteNum: '517000', PieceRef: '', EcritureLib: 'caisse - Stripe', Debit: '', Credit: commissionsStripe }),
-        creationEcriture({ JournalCode: 'VT', EcritureNum: lastEcritureNum + 2, EcritureDate: convertirDate(line['date']), CompteNum: '512000', PieceRef: '', EcritureLib: 'transfert de fonds Stripe  ', Debit: convertToNumber(line['montant']) - commissionsStripe, Credit: '' }),
-        creationEcriture({ JournalCode: 'VT', EcritureNum: lastEcritureNum + 2, EcritureDate: convertirDate(line['date']), CompteNum: '517000', PieceRef: '', EcritureLib: 'caisse - Stripe', Debit: '', Credit: convertToNumber(line['montant']) - commissionsStripe })
+        creationEcriture({ JournalCode: 'VT', EcritureNum: lastEcritureNum + 1, EcritureDate: convertirDate(line['date']), CompteNum: numeroCompte, PieceRef: line['facture correspondante'], EcritureLib: `vente : ${line['qui paye ?']}`, Debit: '', Credit: convertToNumber(line['montant']) })
+    ];
+}
+
+/**
+ * Crée les commissions stripe.
+ *
+ * @param {Object} line - La ligne de données.
+ * @param {string} numeroCompte - Le numéro de compte.
+ * @param {number} lastEcritureNum - Le dernier numéro d'écriture.
+ * @returns {Object[]} - Une liste d'écritures comptables.
+ */
+export function commissionStripeEcriture(line, numeroCompte, lastEcritureNum) {
+    return [
+        creationEcriture({ JournalCode: 'OD', EcritureNum: lastEcritureNum + 1, EcritureDate: convertirDate(line['date']), CompteNum: numeroCompte, PieceRef: '', EcritureLib: 'commission Stripe', Debit: convertToNumber(line['montant']), Credit: '' }),
+        creationEcriture({ JournalCode: 'OD', EcritureNum: lastEcritureNum + 1, EcritureDate: convertirDate(line['date']), CompteNum: '517000', PieceRef: '', EcritureLib: 'caisse - Stripe', Debit: '', Credit: convertToNumber(line['montant']) })
+    ];
+}
+
+/**
+ * Crée les transferts stripe vers banque.
+ *
+ * @param {Object} line - La ligne de données.
+ * @param {string} numeroCompte - Le numéro de compte.
+ * @param {number} lastEcritureNum - Le dernier numéro d'écriture.
+ * @returns {Object[]} - Une liste d'écritures comptables.
+ */
+export function transfertStripeEcriture(line, numeroCompte, lastEcritureNum) {
+    return [
+        creationEcriture({ JournalCode: 'OD', EcritureNum: lastEcritureNum + 1, EcritureDate: convertirDate(line['date']), CompteNum: '512000', PieceRef: '', EcritureLib: 'transfert de fonds Stripe  ', Debit: convertToNumber(line['montant']), Credit: '' }),
+        creationEcriture({ JournalCode: 'OD', EcritureNum: lastEcritureNum + 1, EcritureDate: convertirDate(line['date']), CompteNum: numeroCompte, PieceRef: '', EcritureLib: 'caisse - Stripe', Debit: '', Credit: convertToNumber(line['montant']) })
     ];
 }
 
