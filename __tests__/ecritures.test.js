@@ -10,8 +10,8 @@ jest.mock('./utils', () => ({
 describe('Ecritures', () => {
     describe('lignesEnEcritures', () => {
         const jsonData = [
-            { 'date': '01/01/2023', 'poste': 'achat', 'montant': '100' },
-            { 'date': '31/12/2023', 'poste': 'vente', 'montant': '200' },
+            { 'date': '2023-01-01', 'poste': 'achat', 'montant': '100' },
+            { 'date': '2023-12-31', 'poste': 'vente', 'montant': '200' },
         ];
         const currentYear = 2023;
 

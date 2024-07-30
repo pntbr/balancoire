@@ -4,7 +4,7 @@
 
 - [x] restructuration de main
 - [x] reprendre stripe écritures
-- [ ] passer les dates en ISO
+- [x] passer les dates en ISO
 
 ### Améliorations
 

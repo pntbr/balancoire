@@ -69,40 +69,6 @@ export function sommeCompteParRacine(ecritures, racine, type = 'DC') {
 }
 
 /**
- * Convertit une chaîne de caractères au format 'dd/mm/yyyy' en 'YYYY-MM-DD'.
- *
- * @param {string} dateStr - La date à convertir au format 'dd/mm/yyyy'.
- * @returns {string} - La date convertie au format 'YYYY-MM-DD'.
- */
-export function convertirDate(dateStr) {
-    const [jour, mois, annee] = dateStr.split('/');
-    const dateFormatee = `${annee}-${mois}-${jour}`;
-
-    return dateFormatee;
-}
-
-/**
- * Convertit une chaîne de caractères de la forme 'YYYYMMDD-heroku.pdf' en 'YYYY-MM-DD'.
- *
- * @param {string} filename - Le nom de fichier à convertir.
- * @returns {string} - La date convertie au format 'YYYY-MM-DD'.
- */
-function convertirNomDeFichier(filename) {
-    // Extraire la date de la chaîne
-    const datePart = filename.split('-')[0];
-
-    // Séparer l'année, le mois et le jour
-    const annee = datePart.substring(0, 4);
-    const mois = datePart.substring(4, 6);
-    const jour = datePart.substring(6, 8);
-
-    // Construire la nouvelle date au format 'YYYY-MM-DD'
-    const dateFormattee = `${annee}-${mois}-${jour}`;
-
-    return dateFormattee;
-}
-
-/**
  * Convertit une chaîne de caractères de la forme 'YYYYMMDD-heroku.pdf' en 'YYYY-MM-DD'.
  * @param {string} filename - Le nom de fichier à convertir.
  * @returns {string} - La date convertie au format 'YYYY-MM-DD'.

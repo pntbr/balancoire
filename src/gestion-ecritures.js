@@ -36,11 +36,11 @@ function handleError(message, line) {
 function ligneEnEcriture(line, currentYear, lastEcritureNum) {
     const numeroCompte = trouverCompte({ label: line.poste }).compte;
     try {
-        if (line['date'].startsWith('01/01')) {
+        if (line['date'].endsWith('01-01')) {
             return aNouveauEcriture(line, numeroCompte, currentYear);
         }
         // Gère la clôture
-        if (line['date'].startsWith('31/12')) {
+        if (line['date'].endsWith('12-31')) {
             if (numeroCompte === '370000') {
                 return inventaireClotureEcriture(line, lastEcritureNum);
             }
