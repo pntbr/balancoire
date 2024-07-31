@@ -1,4 +1,4 @@
-import { convertToNumber, sommeCompteParRacine } from './utils.js';
+import { handleError, convertToNumber, sommeCompteParRacine } from './utils.js';
 
 /**
  * Crée une écriture comptable.
@@ -61,8 +61,8 @@ export function aNouveauEcriture(line, numeroCompte, currentYear) {
     }
 
     if (/^[12345]/.test(numeroCompte)) {
-        const debit = montant < 0 ? Math.abs(montant) : '';
-        const credit = montant > 0 ? Math.abs(montant) : '';
+        const debit = montant > 0 ? Math.abs(montant) : '';
+        const credit = montant < 0 ? Math.abs(montant) : '';
 
         return [creationEcriture({ JournalCode: 'AN', EcritureNum: 1, EcritureDate: `${currentYear}-01-01`, CompteNum: numeroCompte, EcritureLib: `reprise de ${line['poste']}`, Debit: debit, Credit: credit })];
     }
@@ -119,7 +119,8 @@ export function remboursementPretEcriture(line, lastEcritureNum) {
             creationEcriture({ JournalCode: 'OD', EcritureNum: lastEcritureNum + 1, EcritureDate: line['date'], CompteNum: '467000', EcritureLib: 'prêt à l\'association', Debit: '', Credit: convertToNumber(line['montant']) }),
         ];
     }
-    throw new Error('remboursementPretEcriture : ni un remboursement, ni un prêt détecté');
+
+    handleError('remboursementPretEcriture : ni un remboursement, ni un prêt détecté : ', line);
 }
 
 /**

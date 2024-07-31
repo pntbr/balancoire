@@ -3,7 +3,7 @@
 ## US12 Consolidation-3
 
 - [x] reprise des prêts et remboursements 
-- [ ] à-nouveaux en positifs dans les sheets
+- [x] à-nouveaux en positifs dans les sheets
 
 ### Améliorations
 

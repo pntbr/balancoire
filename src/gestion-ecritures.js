@@ -1,29 +1,5 @@
-import { trouverCompte, sommeCompteParRacine } from './utils.js';
+import { trouverCompte, sommeCompteParRacine, handleError } from './utils.js';
 import { aNouveauEcriture, inventaireClotureEcriture, cautionEcriture, remboursementPretEcriture, depenseEcriture, depensePersonneEcriture, venteEcriture, venteStripeEcriture, commissionStripeEcriture, transfertStripeEcriture, impotExercice, creationEcriture } from './creation-ecritures.js';
-
-/**
- * Affiche un message d'erreur dans l'élément HTML avec l'ID 'error-message'.
- *
- * @param {string} message - Le message d'erreur à afficher.
- */
-function displayErrorMessage(message) {
-    const errorMessageElement = document.getElementById('error-message');
-    errorMessageElement.textContent = message;
-    errorMessageElement.style.display = 'block';
-}
-
-/**
- * Gère une erreur en affichant un message d'erreur et en enregistrant l'erreur dans la console.
- *
- * @param {string} message - Le message d'erreur à afficher.
- * @param {Object} line - La ligne de données associée à l'erreur.
- * @throws {Error} - Lance une nouvelle erreur avec le message fourni.
- */
-function handleError(message, line) {
-    displayErrorMessage(message);
-    console.error(`Erreur: ${message} - Ligne: ${JSON.stringify(line)}`);
-    throw new Error(message);
-}
 
 /**
  * Convertit une ligne de données en écritures comptables pour l'année courante.
