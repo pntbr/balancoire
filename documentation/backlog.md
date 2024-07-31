@@ -1,10 +1,9 @@
 # Backlog
 
-## US12 Consolidation-1
+## US12 Consolidation-3
 
-- [x] restructuration de main
-- [x] reprendre stripe écritures
-- [x] passer les dates en ISO
+- [x] reprise des prêts et remboursements 
+- [ ] à-nouveaux en positifs dans les sheets
 
 ### Améliorations
 

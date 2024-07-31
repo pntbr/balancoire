@@ -106,12 +106,20 @@ export function cautionEcriture(line, lastEcritureNum) {
  * @param {number} lastEcritureNum - Le dernier numéro d'écriture.
  * @returns {Object[]} - Une liste d'écritures comptables.
  */
-export function remboursementEcriture(line, lastEcritureNum) {
+export function remboursementPretEcriture(line, lastEcritureNum) {
     const checkCash = line["nature"] === 'esp';
-    return [
-        creationEcriture({ JournalCode: 'OD', EcritureNum: lastEcritureNum + 1, EcritureDate: line['date'], CompteNum: '467000', EcritureLib: 'remboursement de frais', Debit: convertToNumber(line['montant']), Credit: '' }),
-        creationEcriture({ JournalCode: 'OD', EcritureNum: lastEcritureNum + 1, EcritureDate: line['date'], CompteNum: checkCash ? '530000' : '512000', EcritureLib: 'remboursement de frais', Debit: '', Credit: convertToNumber(line['montant']) })
-    ];
+    if (['B2T', 'Association'].includes(line['qui paye ?'])) {
+        return [
+            creationEcriture({ JournalCode: 'OD', EcritureNum: lastEcritureNum + 1, EcritureDate: line['date'], CompteNum: '467000', EcritureLib: 'remboursement de frais', Debit: convertToNumber(line['montant']), Credit: '' }),
+            creationEcriture({ JournalCode: 'OD', EcritureNum: lastEcritureNum + 1, EcritureDate: line['date'], CompteNum: checkCash ? '530000' : '512000', EcritureLib: 'remboursement de frais', Debit: '', Credit: convertToNumber(line['montant']) })
+        ];
+    } else if (['B2T', 'Association'].includes(line['qui reçoit'])) {
+        return [
+            creationEcriture({ JournalCode: 'OD', EcritureNum: lastEcritureNum + 1, EcritureDate: line['date'], CompteNum: checkCash ? '530000' : '512000', EcritureLib: 'prêt à l\'association', Debit: convertToNumber(line['montant']), Credit: '' }),
+            creationEcriture({ JournalCode: 'OD', EcritureNum: lastEcritureNum + 1, EcritureDate: line['date'], CompteNum: '467000', EcritureLib: 'prêt à l\'association', Debit: '', Credit: convertToNumber(line['montant']) }),
+        ];
+    }
+    throw new Error('remboursementPretEcriture : ni un remboursement, ni un prêt détecté');
 }
 
 /**
