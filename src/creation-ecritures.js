@@ -37,6 +37,7 @@ export function creationEcriture({ JournalCode, EcritureNum, EcritureDate, Compt
  * @returns {Object[]} - Une liste d'écritures comptables.
  */
 export function aNouveauEcriture(line, numeroCompte, currentYear) {
+    console.log('line', line)
     const montant = convertToNumber(line['montant']);
     const ecritures = {
         '370000': [
@@ -103,24 +104,25 @@ export function cautionEcriture(line, lastEcritureNum) {
  * Crée les écritures de remboursement.
  *
  * @param {Object} line - La ligne de données.
+ * @param {string} numeroCompte - Le numéro de compte.
  * @param {number} lastEcritureNum - Le dernier numéro d'écriture.
  * @returns {Object[]} - Une liste d'écritures comptables.
  */
-export function remboursementPretEcriture(line, lastEcritureNum) {
+export function remboursementEcriture(line, numeroCompte, lastEcritureNum) {
     const checkCash = line["nature"] === 'esp';
     if (['B2T', 'Association'].includes(line['qui paye ?'])) {
         return [
-            creationEcriture({ JournalCode: 'OD', EcritureNum: lastEcritureNum + 1, EcritureDate: line['date'], CompteNum: '467000', EcritureLib: 'remboursement de frais', Debit: convertToNumber(line['montant']), Credit: '' }),
+            creationEcriture({ JournalCode: 'OD', EcritureNum: lastEcritureNum + 1, EcritureDate: line['date'], CompteNum: numeroCompte, EcritureLib: 'remboursement de frais', Debit: convertToNumber(line['montant']), Credit: '' }),
             creationEcriture({ JournalCode: 'OD', EcritureNum: lastEcritureNum + 1, EcritureDate: line['date'], CompteNum: checkCash ? '530000' : '512000', EcritureLib: 'remboursement de frais', Debit: '', Credit: convertToNumber(line['montant']) })
         ];
     } else if (['B2T', 'Association'].includes(line['qui reçoit'])) {
         return [
             creationEcriture({ JournalCode: 'OD', EcritureNum: lastEcritureNum + 1, EcritureDate: line['date'], CompteNum: checkCash ? '530000' : '512000', EcritureLib: 'prêt à l\'association', Debit: convertToNumber(line['montant']), Credit: '' }),
-            creationEcriture({ JournalCode: 'OD', EcritureNum: lastEcritureNum + 1, EcritureDate: line['date'], CompteNum: '467000', EcritureLib: 'prêt à l\'association', Debit: '', Credit: convertToNumber(line['montant']) }),
+            creationEcriture({ JournalCode: 'OD', EcritureNum: lastEcritureNum + 1, EcritureDate: line['date'], CompteNum: numeroCompte, EcritureLib: 'prêt à l\'association', Debit: '', Credit: convertToNumber(line['montant']) }),
         ];
     }
 
-    handleError('remboursementPretEcriture : ni un remboursement, ni un prêt détecté : ', line);
+    handleError('remboursementEcriture : ni un remboursement, ni un prêt détecté : ', line);
 }
 
 /**
@@ -136,13 +138,23 @@ export function depenseEcriture(line, numeroCompte, lastEcritureNum) {
     const label = `achat par l'association : ${line['qui reçoit']}`;
     const montant = convertToNumber(line['montant']);
     if (montant > 0) {
-        return [
+        const ecritures = [
             creationEcriture({ JournalCode: 'AC', EcritureNum: lastEcritureNum + 1, EcritureDate: line['date'], CompteNum: numeroCompte, PieceRef: line['facture correspondante'], EcritureLib: label, Debit: montant, Credit: '' }),
-            creationEcriture({ JournalCode: 'AC', EcritureNum: lastEcritureNum + 1, EcritureDate: line['date'], CompteNum: checkCash ? '530000' : '512000', PieceRef: line['facture correspondante'], EcritureLib: label, Debit: '', Credit: montant })
+            creationEcriture({ JournalCode: 'AC', EcritureNum: lastEcritureNum + 1, EcritureDate: line['date'], CompteNum: '401000', PieceRef: line['facture correspondante'], EcritureLib: label, Debit: '', Credit: montant })
         ];
+        if (line["pointage"] || checkCash) {
+            return ecritures.concat([
+                creationEcriture({ JournalCode: 'AC', EcritureNum: lastEcritureNum + 1, EcritureDate: line['date'], CompteNum: '401000', PieceRef: line['facture correspondante'], EcritureLib: label, Debit: montant, Credit: '' }),
+                creationEcriture({ JournalCode: 'AC', EcritureNum: lastEcritureNum + 1, EcritureDate: line['date'], CompteNum: checkCash ? '530000' : '512000', PieceRef: line['facture correspondante'], EcritureLib: label, Debit: '', Credit: montant })
+            ]);
+        } else {
+            return ecritures;
+        }
     } else {
         return [
             creationEcriture({ JournalCode: 'AC', EcritureNum: lastEcritureNum + 1, EcritureDate: line['date'], CompteNum: numeroCompte, PieceRef: line['facture correspondante'], EcritureLib: label, Debit: '', Credit: -montant }),
+            creationEcriture({ JournalCode: 'AC', EcritureNum: lastEcritureNum + 1, EcritureDate: line['date'], CompteNum: '401000', PieceRef: line['facture correspondante'], EcritureLib: label, Debit: -montant, Credit: '' }),
+            creationEcriture({ JournalCode: 'AC', EcritureNum: lastEcritureNum + 1, EcritureDate: line['date'], CompteNum: '401000', PieceRef: line['facture correspondante'], EcritureLib: label, Debit: '', Credit: -montant }),
             creationEcriture({ JournalCode: 'AC', EcritureNum: lastEcritureNum + 1, EcritureDate: line['date'], CompteNum: checkCash ? '530000' : '512000', PieceRef: line['facture correspondante'], EcritureLib: label, Debit: -montant, Credit: '' })
         ];
     }

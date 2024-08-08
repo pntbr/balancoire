@@ -11,6 +11,7 @@ export const PLAN_COMPTABLE = {
     "129000": ["résultat de l'exercice (déficit)", "déficit"],
     "275000": ["dépôts et cautionnements versés", "cautions"],
     "370000": ["stocks de marchandises", "inventaire"],
+    "401000": ["fournisseurs"],
     "404000": ["fournisseurs d'immobilisations"],
     "444000": ["état - impôts sur les bénéfices", "impots"],
     "467000": ["autres comptes débiteurs ou créditeurs", "remboursements", "prêts"],

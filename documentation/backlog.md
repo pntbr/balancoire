@@ -6,10 +6,12 @@
 - [x] à-nouveaux en positifs dans les sheets
 - [x] litige, remboursement
 - [x] remboursement fournisseurs 
+- [x] ajoute les comptes fournisseurs
 - [ ] remboursement gongfucha
 
 ### Améliorations
 
+- [ ] factures non réglées : benhito 110 et Annick 833
 - [ ] factures 0VH 2023 - tél
 - [ ] valider le fichier FEC
 - [ ] soigner les labels
