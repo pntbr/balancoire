@@ -4,9 +4,13 @@
 
 - [x] reprise des prêts et remboursements 
 - [x] à-nouveaux en positifs dans les sheets
+- [x] litige, remboursement
+- [x] remboursement fournisseurs 
+- [ ] remboursement gongfucha
 
 ### Améliorations
 
+- [ ] factures 0VH 2023 - tél
 - [ ] valider le fichier FEC
 - [ ] soigner les labels
 - [ ] récupérer les AN de l'exercice N-1
@@ -18,8 +22,7 @@
 - [ ] liées les factures
 - [ ] balances de clôture
 - [ ] automatiser la normalisation du nom des factures
-
-- [ ] litige
+- [ ] « réserve de propre assureur »
 - [ ] immobilisations machine
 - [ ] refactoring github copilot
 - [ ] mettre en place tous les tests

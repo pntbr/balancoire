@@ -1,5 +1,5 @@
 import { trouverCompte, sommeCompteParRacine, handleError } from './utils.js';
-import { aNouveauEcriture, inventaireClotureEcriture, cautionEcriture, remboursementPretEcriture, depenseEcriture, depensePersonneEcriture, venteEcriture, venteStripeEcriture, commissionStripeEcriture, transfertStripeEcriture, impotExercice, creationEcriture } from './creation-ecritures.js';
+import { aNouveauEcriture, inventaireClotureEcriture, cautionEcriture, remboursementPretEcriture, depenseEcriture, depensePersonneEcriture, venteAvoirEcriture, venteStripeEcriture, commissionStripeEcriture, transfertStripeEcriture, impotExercice, creationEcriture } from './creation-ecritures.js';
 
 /**
  * Convertit une ligne de données en écritures comptables pour l'année courante.
@@ -32,7 +32,7 @@ function ligneEnEcriture(line, currentYear, lastEcritureNum) {
         if (numeroCompte === '275000') return cautionEcriture(line, lastEcritureNum);
         if (numeroCompte.startsWith('4')) return remboursementPretEcriture(line, lastEcritureNum);
         if (numeroCompte.startsWith('6')) return ['B2T', 'Association'].includes(line['qui paye ?']) ? depenseEcriture(line, numeroCompte, lastEcritureNum) : depensePersonneEcriture(line, numeroCompte, lastEcritureNum);
-        if (numeroCompte.startsWith('7')) return venteEcriture(line, numeroCompte, lastEcritureNum);
+        if (numeroCompte.startsWith('7')) return venteAvoirEcriture(line, numeroCompte, lastEcritureNum);
 
         handleError(`L'écriture ne comporte pas un compte connu`, line);
     } catch (error) {
