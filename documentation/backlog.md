@@ -7,9 +7,19 @@
 - [x] litige, remboursement
 - [x] remboursement fournisseurs 
 - [x] ajoute les comptes fournisseurs
+- [x] permet les paiements de facture N en N+1
+- [x] wise 2024
+- [ ] au lieu de -,22 remise bancaire - inversé wise à B2T
+- [ ] récup factures : amazon, heroku, free, chatgpt, la poste 8 mars, art et cult chinoise - yalin  etc.
+- [ ] facture parc aux bambous ?
 - [ ] remboursement gongfucha
+- [ ] faire les inventaires
 
 ### Améliorations
+
+- [ ] courrier stripe : 97,85 => 98,25 - 54,67 => 54,80
+- [ ] 
+
 
 - [ ] factures non réglées : benhito 110 et Annick 833
 - [ ] factures 0VH 2023 - tél
@@ -20,7 +30,6 @@
 - [ ] notice avec exemples de toutes les écritures générées
 - [ ] mettre les comptes dans le sheet
 
-- [ ] importer directement les écritures wise
 - [ ] liées les factures
 - [ ] balances de clôture
 - [ ] automatiser la normalisation du nom des factures
@@ -37,7 +46,7 @@
 - [ ] vérifier avec une comptable
 - [ ] produits bancaires (quel compte) - remboursements
 
-- [ ] wise 2024
+- [ ] importer directement les écritures wise
 - [ ] vérifier que les pointage bancaire ne correspondent pas à des dépenses Yalin ou Stéphane mais bien à B2T
 - [ ] rédiger les AGO
 - [ ] vérifier facture amazon 2024
