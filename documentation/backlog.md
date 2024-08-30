@@ -9,8 +9,15 @@
 - [x] ajoute les comptes fournisseurs
 - [x] permet les paiements de facture N en N+1
 - [x] wise 2024
-- [x] au lieu de -,22 remise bancaire - inversé wise à B2T
-- [ ] récup factures : amazon, heroku, free, chatgpt, la poste 8 mars, art et cult chinoise - yalin  etc.
+- [x] au lieu de -0,22 remise bancaire - inversé wise à B2T
+- [ ] récup factures :
+    - [x] amazon
+    - [x] heroku
+    - [x] free
+    - [x] chatgpt
+    - [ ] la poste 8 mars
+    - [ ] art et cult chinoise - yalin
+    - [ ] etc.
 - [ ] facture parc aux bambous ?
 - [ ] remboursement gongfucha
 - [ ] faire les inventaires
