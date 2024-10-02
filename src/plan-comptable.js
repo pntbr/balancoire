@@ -34,6 +34,7 @@ export const PLAN_COMPTABLE = {
     "626000": ["frais postaux et de télécommunications", "internet", "frais postaux", "télécommunications", "domiciliations"],
     "627000": ["services bancaires et assimilés", "services bancaires"],
     "627800": ["autres frais et commissions sur prestations de services", "commissions"],
+    "628000": ["divers"],
     "633300": ["participation des employeurs à la formation professionnelle continue", "formations internes"],
     "695000": ["impôts sur les bénéfices"],
     "671800": ["Autres charges exceptionnelles sur opérations de gestion", "litiges"],
