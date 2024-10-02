@@ -40,6 +40,7 @@ export const PLAN_COMPTABLE = {
     "671800": ["Autres charges exceptionnelles sur opérations de gestion", "litiges"],
     "706000": ["prestations de services", "formations"],
     "707000": ["ventes de marchandises", "ventes"],
+    "704000": ["subventions d’exploitation", "subventions"],
     "754100": ["dons manuels", "dons"],
     "756000": ["cotisations"],
     "890000": ["bilan d'ouverture"],
