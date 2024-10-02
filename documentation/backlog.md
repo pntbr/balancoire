@@ -1,26 +1,52 @@
 # Backlog
 
-## US12 Consolidation-1
+## US12 Consolidation-3
 
-- [x] restructuration de main
-- [x] reprendre stripe écritures
-- [x] passer les dates en ISO
+- [x] reprise des prêts et remboursements 
+- [x] à-nouveaux en positifs dans les sheets
+- [x] litige, remboursement
+- [x] remboursement fournisseurs 
+- [x] ajoute les comptes fournisseurs
+- [x] permet les paiements de facture N en N+1
+- [x] wise 2024
+- [x] au lieu de -0,22 remise bancaire - inversé wise à B2T
+- [x] sheet des pièces manquantes
+- [x] banque dans résultat sheet
+- [x] kevin 2023/2024
+- [x] sheet de compta perso
+- [x] compte formation
+- [ ] remboursement : stéphane à Yalin ou à un bénévole
+- [ ] gérer le nom de l'association
+- [ ] récup factures :
+    - [x] amazon
+    - [x] heroku
+    - [x] free
+    - [x] chatgpt
+    - [ ] factures 0VH 2023 - tél
+    - [ ] la poste 8 mars
+    - [ ] art et cult chinoise - yalin
+    - [ ] etc.
+- [ ] faire un truc pour les factures manquantes
+- [ ] facture parc aux bambous ?
+- [ ] remboursement gongfucha
+- [ ] faire les inventaires
+- [ ] récupérer les AN de l'exercice N-1
+    - [ ] proposer de copier les AN
+- [ ] automatiser la normalisation du nom des factures
+- [ ] 
 
 ### Améliorations
 
+- [ ] documenter stripe : 97,85 => 98,25 - 54,67 => 54,80
+- [ ] gestion des bénévoles : 4681 – Frais des bénévoles
+- [ ] factures non réglées : benhito 110 et Annick 833
 - [ ] valider le fichier FEC
 - [ ] soigner les labels
-- [ ] récupérer les AN de l'exercice N-1
-    - [ ] proposer de copier les AN
 - [ ] notice avec exemples de toutes les écritures générées
 - [ ] mettre les comptes dans le sheet
-
-- [ ] importer directement les écritures wise
 - [ ] liées les factures
 - [ ] balances de clôture
-- [ ] automatiser la normalisation du nom des factures
-
-- [ ] litige
+- [ ] « réserve de propre assureur »
 - [ ] immobilisations machine
 - [ ] refactoring github copilot
 - [ ] mettre en place tous les tests
@@ -31,13 +57,10 @@
 - [ ] faire une révision comptable - chap. 16
 - [ ] rédiger les annexes
 - [ ] vérifier avec une comptable
-- [ ] produits bancaires (quel compte) - remboursements
 
-- [ ] wise 2024
+- [ ] importer directement les écritures wise
 - [ ] vérifier que les pointage bancaire ne correspondent pas à des dépenses Yalin ou Stéphane mais bien à B2T
 - [ ] rédiger les AGO
-- [ ] vérifier facture amazon 2024
-- [ ] faire un truc pour les factures manquantes
 
 ### Liens
 

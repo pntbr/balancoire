@@ -1,29 +1,19 @@
-import { trouverCompte, sommeCompteParRacine } from './utils.js';
-import { aNouveauEcriture, inventaireClotureEcriture, cautionEcriture, remboursementEcriture, depenseEcriture, depensePersonneEcriture, venteEcriture, venteStripeEcriture, commissionStripeEcriture, transfertStripeEcriture, impotExercice, creationEcriture } from './creation-ecritures.js';
-
-/**
- * Affiche un message d'erreur dans l'élément HTML avec l'ID 'error-message'.
- *
- * @param {string} message - Le message d'erreur à afficher.
- */
-function displayErrorMessage(message) {
-    const errorMessageElement = document.getElementById('error-message');
-    errorMessageElement.textContent = message;
-    errorMessageElement.style.display = 'block';
-}
-
-/**
- * Gère une erreur en affichant un message d'erreur et en enregistrant l'erreur dans la console.
- *
- * @param {string} message - Le message d'erreur à afficher.
- * @param {Object} line - La ligne de données associée à l'erreur.
- * @throws {Error} - Lance une nouvelle erreur avec le message fourni.
- */
-function handleError(message, line) {
-    displayErrorMessage(message);
-    console.error(`Erreur: ${message} - Ligne: ${JSON.stringify(line)}`);
-    throw new Error(message);
-}
+import { trouverCompte, sommeCompteParRacine, handleError } from './utils.js';
+import {
+    aNouveauEcriture,
+    inventaireClotureEcriture,
+    cautionEcriture,
+    remboursementEcriture,
+    depenseEcriture,
+    depensePersonneEcriture,
+    venteAvoirEcriture,
+    venteStripeEcriture,
+    commissionStripeEcriture,
+    remboursementBanqueEcriture,
+    transfertStripeEcriture,
+    impotExercice,
+    creationEcriture
+} from './creation-ecritures.js';
 
 /**
  * Convertit une ligne de données en écritures comptables pour l'année courante.
@@ -54,9 +44,17 @@ function ligneEnEcriture(line, currentYear, lastEcritureNum) {
 
         // Gère les écritures courantes
         if (numeroCompte === '275000') return cautionEcriture(line, lastEcritureNum);
-        if (numeroCompte.startsWith('4')) return remboursementEcriture(line, lastEcritureNum);
-        if (numeroCompte.startsWith('6')) return ['B2T', 'Association'].includes(line['qui paye ?']) ? depenseEcriture(line, numeroCompte, lastEcritureNum) : depensePersonneEcriture(line, numeroCompte, lastEcritureNum);
-        if (numeroCompte.startsWith('7')) return venteEcriture(line, numeroCompte, lastEcritureNum);
+        if (numeroCompte.startsWith('4')) return remboursementEcriture(line, numeroCompte, lastEcritureNum);
+        if (numeroCompte.startsWith('6')) {
+            if (['B2T', 'Association'].includes(line['qui paye ?'])) {
+                return depenseEcriture(line, numeroCompte, lastEcritureNum)
+            } else if (['Banque'].includes(line['qui paye ?'])) {
+                return remboursementBanqueEcriture(line, numeroCompte, lastEcritureNum);
+            } else {
+                return depensePersonneEcriture(line, numeroCompte, lastEcritureNum);
+            }
+        }
+        if (numeroCompte.startsWith('7')) return venteAvoirEcriture(line, numeroCompte, lastEcritureNum);
 
         handleError(`L'écriture ne comporte pas un compte connu`, line);
     } catch (error) {
