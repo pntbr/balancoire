@@ -18,6 +18,7 @@ export const PLAN_COMPTABLE = {
     "512000": ["banques"],
     "517000": ["autres organismes financiers", "caisse stripe"],
     "530000": ["caisse"],
+    "580000": ["virements internes"],
     "602600": ["emballages"],
     "603700": ["variation des stocks de marchandises"],
     "604000": ["achats d'études et prestations de services", "achats prestations"],

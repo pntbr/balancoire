@@ -15,9 +15,10 @@ function init() {
             const { SHEET_ID, SHEETNAME_TO_GID, SIREN, ASSOCIATION } = env;
             setupInfoModal();
             localStorage.setItem('ASSOCIATION', ASSOCIATION);
-            loadNavigation(SHEET_ID, SHEETNAME_TO_GID, SIREN);
+            localStorage.setItem('SIREN', SIREN);
+            loadNavigation(SHEET_ID, SHEETNAME_TO_GID);
             if (document.getElementById('downloadBtn')) {
-                setupDownloadButton(SIREN);
+                setupDownloadButton();
             }
         });
 }

@@ -119,11 +119,16 @@ export function remboursementEcriture(line, numeroCompte, lastEcritureNum) {
     } else if ([association, 'Association'].includes(line['qui reçoit'])) {
         return [
             creationEcriture({ JournalCode: 'OD', EcritureNum: lastEcritureNum + 1, EcritureDate: line['date'], CompteNum: checkCash ? '530000' : '512000', EcritureLib: 'prêt à l\'association', Debit: convertToNumber(line['montant']), Credit: '' }),
-            creationEcriture({ JournalCode: 'OD', EcritureNum: lastEcritureNum + 1, EcritureDate: line['date'], CompteNum: numeroCompte, EcritureLib: 'prêt à l\'association', Debit: '', Credit: convertToNumber(line['montant']) }),
+            creationEcriture({ JournalCode: 'OD', EcritureNum: lastEcritureNum + 1, EcritureDate: line['date'], CompteNum: numeroCompte, EcritureLib: 'prêt à l\'association', Debit: '', Credit: convertToNumber(line['montant']) })
+        ];
+    } else {
+        return [
+            creationEcriture({ JournalCode: 'OD', EcritureNum: lastEcritureNum + 1, EcritureDate: line['date'], CompteNum: '580000', EcritureLib: 'remboursement bénévoles/salarié·e·s à bénévoles', Debit: convertToNumber(line['montant']), Credit: '' }),
+            creationEcriture({ JournalCode: 'OD', EcritureNum: lastEcritureNum + 1, EcritureDate: line['date'], CompteNum: numeroCompte, EcritureLib: 'remboursement bénévoles/salarié·e·s à bénévoles', Debit: '', Credit: convertToNumber(line['montant']) }),
+            creationEcriture({ JournalCode: 'OD', EcritureNum: lastEcritureNum + 1, EcritureDate: line['date'], CompteNum: '580000', EcritureLib: 'remboursement bénévoles/salarié·e·s à bénévoles', Debit: '', Credit: convertToNumber(line['montant']) }),
+            creationEcriture({ JournalCode: 'OD', EcritureNum: lastEcritureNum + 1, EcritureDate: line['date'], CompteNum: numeroCompte, EcritureLib: 'remboursement bénévoles/salarié·e·s à bénévoles', Debit: convertToNumber(line['montant']), Credit: '' })
         ];
     }
-
-    handleError('remboursementEcriture : ni un remboursement, ni un prêt détecté : ', line);
 }
 
 /**
