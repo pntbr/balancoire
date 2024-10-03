@@ -17,8 +17,10 @@
 - [x] compte formation
 - [x] remboursement : stéphane à Yalin ou à un bénévole
 - [x] passer SIREN en localstorage
-- [ ] gérer le nom de l'association
-- [ ] gérer les virements bancaire : 512 => 530 - 580
+- [x] gérer le nom de l'association
+- [x] gérer les virements bancaire : 512 => 530 - 580
+- [x] virer cb, esp, vir, prv - remplacer B2T par banque
+- [ ] journaux : BQ
 - [ ] récup factures :
     - [x] amazon
     - [x] heroku

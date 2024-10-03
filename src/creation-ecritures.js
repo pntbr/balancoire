@@ -1,4 +1,4 @@
-import { handleError, convertToNumber, sommeCompteParRacine } from './utils.js';
+import { handleError, convertToNumber, sommeCompteParRacine, trouverCompte } from './utils.js';
 
 /**
  * Crée une écriture comptable.
@@ -88,14 +88,15 @@ export function inventaireClotureEcriture(line, lastEcritureNum) {
  * Crée les écritures de caution.
  *
  * @param {Object} line - La ligne de données.
+ * @param {string} numeroCompte - Le numéro de compte.
  * @param {number} lastEcritureNum - Le dernier numéro d'écriture.
  * @returns {Object[]} - Une liste d'écritures comptables.
  */
-export function cautionEcriture(line, lastEcritureNum) {
+export function cautionEcriture(line, numeroCompte, lastEcritureNum) {
     const association = localStorage.getItem('ASSOCIATION');
     const creditCompte = ([association, 'Association'].includes(line['qui paye ?'])) ? (line["nature"] === 'esp' ? '530000' : '512000') : '467000';
     return [
-        creationEcriture({ JournalCode: 'OD', EcritureNum: lastEcritureNum + 1, EcritureDate: line['date'], CompteNum: '275000', EcritureLib: `caution ${line['qui reçoit']}`, Debit: convertToNumber(line['montant']), Credit: '' }),
+        creationEcriture({ JournalCode: 'OD', EcritureNum: lastEcritureNum + 1, EcritureDate: line['date'], CompteNum: numeroCompte, EcritureLib: `caution ${line['qui reçoit']}`, Debit: convertToNumber(line['montant']), Credit: '' }),
         creationEcriture({ JournalCode: 'OD', EcritureNum: lastEcritureNum + 1, EcritureDate: line['date'], CompteNum: creditCompte, EcritureLib: `caution ${line['qui reçoit']}`, Debit: '', Credit: convertToNumber(line['montant']) })
     ];
 }
@@ -276,5 +277,26 @@ export function impotExercice(ecritures, currentYear, lastEcritureNum) {
     return [
         creationEcriture({ JournalCode: 'OD', EcritureNum: lastEcritureNum + 1, EcritureDate: `${currentYear}-12-31`, CompteNum: '695000', EcritureLib: 'impôt sur les sociétés', Debit: montantImpot, Credit: '' }),
         creationEcriture({ JournalCode: 'OD', EcritureNum: lastEcritureNum + 1, EcritureDate: `${currentYear}-12-31`, CompteNum: '444000', EcritureLib: 'impôt sur les sociétés', Debit: '', Credit: montantImpot })
+    ];
+}
+
+/**
+ * Crée les écritures de virements internes.
+ *
+ * @param {Object} line - La ligne de données.
+ * @param {string} numeroCompte - Le numéro de compte.
+ * @param {number} lastEcritureNum - Le dernier numéro d'écriture.
+ * @returns {Object[]} - Une liste d'écritures comptables.
+ */
+export function virementEcriture(line, numeroCompte, lastEcritureNum) {
+    const compteSource = trouverCompte({ label: line['qui paye ?'] });
+    const compteDestination = trouverCompte({ label: line['qui reçoit'] });
+    const label = `virement interne de ${compteSource.label} vers ${compteDestination.label} `;
+
+    return [
+        creationEcriture({ JournalCode: 'OD', EcritureNum: lastEcritureNum + 1, EcritureDate: line['date'], CompteNum: numeroCompte, EcritureLib: label, Debit: convertToNumber(line['montant']), Credit: '' }),
+        creationEcriture({ JournalCode: 'OD', EcritureNum: lastEcritureNum + 1, EcritureDate: line['date'], CompteNum: compteSource.compte, EcritureLib: label, Debit: '', Credit: convertToNumber(line['montant']) }),
+        creationEcriture({ JournalCode: 'OD', EcritureNum: lastEcritureNum + 1, EcritureDate: line['date'], CompteNum: numeroCompte, EcritureLib: label, Debit: '', Credit: convertToNumber(line['montant']) }),
+        creationEcriture({ JournalCode: 'OD', EcritureNum: lastEcritureNum + 1, EcritureDate: line['date'], CompteNum: compteDestination.compte, EcritureLib: label, Debit: convertToNumber(line['montant']), Credit: '' })
     ];
 }

@@ -1,18 +1,19 @@
 import { trouverCompte, sommeCompteParRacine, handleError } from './utils.js';
 import {
     aNouveauEcriture,
-    inventaireClotureEcriture,
     cautionEcriture,
-    remboursementEcriture,
+    commissionStripeEcriture,
+    creationEcriture,
     depenseEcriture,
     depensePersonneEcriture,
+    impotExercice,
+    inventaireClotureEcriture,
+    transfertStripeEcriture,
+    remboursementBanqueEcriture,
+    remboursementEcriture,
     venteAvoirEcriture,
     venteStripeEcriture,
-    commissionStripeEcriture,
-    remboursementBanqueEcriture,
-    transfertStripeEcriture,
-    impotExercice,
-    creationEcriture
+    virementEcriture
 } from './creation-ecritures.js';
 
 /**
@@ -44,7 +45,8 @@ function ligneEnEcriture(line, currentYear, lastEcritureNum) {
         }
 
         // Gère les écritures courantes
-        if (numeroCompte === '275000') return cautionEcriture(line, lastEcritureNum);
+        if (numeroCompte === '275000') return cautionEcriture(line, numeroCompte, lastEcritureNum);
+        if (numeroCompte === '580000') return virementEcriture(line, numeroCompte, lastEcritureNum);
         if (numeroCompte.startsWith('4')) return remboursementEcriture(line, numeroCompte, lastEcritureNum);
         if (numeroCompte.startsWith('6')) {
             if ([association, 'Association'].includes(line['qui paye ?'])) {
