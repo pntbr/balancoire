@@ -1,18 +1,19 @@
 import { trouverCompte, sommeCompteParRacine, handleError } from './utils.js';
 import {
     aNouveauEcriture,
-    inventaireClotureEcriture,
     cautionEcriture,
-    remboursementEcriture,
+    commissionStripeEcriture,
+    creationEcriture,
     depenseEcriture,
     depensePersonneEcriture,
+    impotExercice,
+    inventaireClotureEcriture,
+    transfertStripeEcriture,
+    remboursementBanqueEcriture,
+    remboursementEcriture,
     venteAvoirEcriture,
     venteStripeEcriture,
-    commissionStripeEcriture,
-    remboursementBanqueEcriture,
-    transfertStripeEcriture,
-    impotExercice,
-    creationEcriture
+    virementEcriture
 } from './creation-ecritures.js';
 
 /**
@@ -24,6 +25,7 @@ import {
  * @throws {Error} - Lance une erreur si l'écriture ne peut pas être rendue.
  */
 function ligneEnEcriture(line, currentYear, lastEcritureNum) {
+    const association = localStorage.getItem('ASSOCIATION');
     const numeroCompte = trouverCompte({ label: line.poste }).compte;
     try {
         if (line['date'].endsWith('01-01')) {
@@ -43,10 +45,11 @@ function ligneEnEcriture(line, currentYear, lastEcritureNum) {
         }
 
         // Gère les écritures courantes
-        if (numeroCompte === '275000') return cautionEcriture(line, lastEcritureNum);
+        if (numeroCompte === '275000') return cautionEcriture(line, numeroCompte, lastEcritureNum);
+        if (numeroCompte === '580000') return virementEcriture(line, numeroCompte, lastEcritureNum);
         if (numeroCompte.startsWith('4')) return remboursementEcriture(line, numeroCompte, lastEcritureNum);
         if (numeroCompte.startsWith('6')) {
-            if (['B2T', 'Association'].includes(line['qui paye ?'])) {
+            if ([association, 'Association'].includes(line['qui paye ?'])) {
                 return depenseEcriture(line, numeroCompte, lastEcritureNum)
             } else if (['Banque'].includes(line['qui paye ?'])) {
                 return remboursementBanqueEcriture(line, numeroCompte, lastEcritureNum);

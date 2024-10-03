@@ -25,7 +25,7 @@ export function injectYearLinks(SHEETNAME_TO_GID) {
     });
 }
 
-export function setupYearLinks(SHEET_ID, SHEETNAME_TO_GID, SIREN) {
+export function setupYearLinks(SHEET_ID, SHEETNAME_TO_GID) {
     const yearLinks = document.querySelectorAll('.annee-nav a');
     const currentYear = localStorage.getItem('selectedYear') || '2024';
     yearLinks.forEach(link => {
@@ -36,13 +36,13 @@ export function setupYearLinks(SHEET_ID, SHEETNAME_TO_GID, SIREN) {
             event.preventDefault();
             const selectedYear = event.target.getAttribute('data-year');
             localStorage.setItem('selectedYear', selectedYear);
-            loadCSV(SHEET_ID, SHEETNAME_TO_GID, selectedYear, SIREN);
+            loadCSV(SHEET_ID, SHEETNAME_TO_GID, selectedYear);
             yearLinks.forEach(l => l.classList.remove('menu-selected'));
             event.target.classList.add('menu-selected');
         });
     });
 
-    loadCSV(SHEET_ID, SHEETNAME_TO_GID, currentYear, SIREN);
+    loadCSV(SHEET_ID, SHEETNAME_TO_GID, currentYear);
 }
 
 export function injectSheetLink(sheetId) {

@@ -31,7 +31,8 @@ Pour utiliser l'application de comptabilité, suivez les étapes ci-dessous :
 
    ```json
    {
-     "SIREN": "SIREN_DE_COTRE_ASSOCIATION",
+     "ASSOCIATION": "NOM_DE_VOTRE_ASSOCIATION",
+     "SIREN": "SIREN_DE_VOTRE_ASSOCIATION",
      "SHEET_ID": "VOTRE_SHEET_ID",
      "SHEETNAME_TO_GID": {
        "2024": "VOTRE_SHEET_GID",

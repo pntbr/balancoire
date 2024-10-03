@@ -4,16 +4,15 @@ import { JOURNAUX_COMPTABLE } from './journaux-comptable.js';
 
 /**
  * Configure le bouton de téléchargement du fichier FEC.
- * @param {string} siren - Le numéro SIREN de l'entreprise.
  */
-export function setupDownloadButton(siren) {
+export function setupDownloadButton() {
     const downloadBtn = document.getElementById('downloadBtn');
     downloadBtn.addEventListener('click', () => {
         const fileContent = downloadBtn.getAttribute('data-fec');
         if (fileContent) {
             const blob = new Blob([fileContent], { type: 'text/plain;charset=ascii' });
             const currentYear = localStorage.getItem('selectedYear') || new Date().getFullYear();
-            const FECName = `${siren}FEC${currentYear}1231.txt`;
+            const FECName = `${localStorage.getItem('SIREN')}FEC${currentYear}1231.txt`;
             const link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
             link.download = FECName;

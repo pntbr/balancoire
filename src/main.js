@@ -12,11 +12,13 @@ document.addEventListener('DOMContentLoaded', init);
 function init() {
     loadEnvConfig()
         .then(env => {
-            const { SHEET_ID, SHEETNAME_TO_GID, SIREN } = env;
+            const { SHEET_ID, SHEETNAME_TO_GID, SIREN, ASSOCIATION } = env;
             setupInfoModal();
-            loadNavigation(SHEET_ID, SHEETNAME_TO_GID, SIREN);
+            localStorage.setItem('ASSOCIATION', ASSOCIATION);
+            localStorage.setItem('SIREN', SIREN);
+            loadNavigation(SHEET_ID, SHEETNAME_TO_GID);
             if (document.getElementById('downloadBtn')) {
-                setupDownloadButton(SIREN);
+                setupDownloadButton();
             }
         });
 }
