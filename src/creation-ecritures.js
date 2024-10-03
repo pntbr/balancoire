@@ -165,8 +165,8 @@ export function depenseEcriture(line, numeroCompte, lastEcritureNum) {
     ];
     if (line["pointage"] || checkCash) {
         return ecritures.concat([
-            creationEcriture({ JournalCode: 'AC', EcritureNum: lastEcritureNum + 1, EcritureDate: line['date'], CompteNum: '401000', PieceRef: line['facture correspondante'], EcritureLib: label, Debit: montant, Credit: '' }),
-            creationEcriture({ JournalCode: 'AC', EcritureNum: lastEcritureNum + 1, EcritureDate: line['date'], CompteNum: checkCash ? '530000' : '512000', PieceRef: line['facture correspondante'], EcritureLib: label, Debit: '', Credit: montant })
+            creationEcriture({ JournalCode: 'BQ', EcritureNum: lastEcritureNum + 1, EcritureDate: line['date'], CompteNum: '401000', PieceRef: line['facture correspondante'], EcritureLib: label, Debit: montant, Credit: '' }),
+            creationEcriture({ JournalCode: 'BQ', EcritureNum: lastEcritureNum + 1, EcritureDate: line['date'], CompteNum: checkCash ? '530000' : '512000', PieceRef: line['facture correspondante'], EcritureLib: label, Debit: '', Credit: montant })
         ]);
     } else {
         return ecritures;
@@ -294,9 +294,9 @@ export function virementEcriture(line, numeroCompte, lastEcritureNum) {
     const label = `virement interne de ${compteSource.label} vers ${compteDestination.label} `;
 
     return [
-        creationEcriture({ JournalCode: 'OD', EcritureNum: lastEcritureNum + 1, EcritureDate: line['date'], CompteNum: numeroCompte, EcritureLib: label, Debit: convertToNumber(line['montant']), Credit: '' }),
-        creationEcriture({ JournalCode: 'OD', EcritureNum: lastEcritureNum + 1, EcritureDate: line['date'], CompteNum: compteSource.compte, EcritureLib: label, Debit: '', Credit: convertToNumber(line['montant']) }),
-        creationEcriture({ JournalCode: 'OD', EcritureNum: lastEcritureNum + 1, EcritureDate: line['date'], CompteNum: numeroCompte, EcritureLib: label, Debit: '', Credit: convertToNumber(line['montant']) }),
-        creationEcriture({ JournalCode: 'OD', EcritureNum: lastEcritureNum + 1, EcritureDate: line['date'], CompteNum: compteDestination.compte, EcritureLib: label, Debit: convertToNumber(line['montant']), Credit: '' })
+        creationEcriture({ JournalCode: 'BQ', EcritureNum: lastEcritureNum + 1, EcritureDate: line['date'], CompteNum: numeroCompte, EcritureLib: label, Debit: convertToNumber(line['montant']), Credit: '' }),
+        creationEcriture({ JournalCode: 'BQ', EcritureNum: lastEcritureNum + 1, EcritureDate: line['date'], CompteNum: compteSource.compte, EcritureLib: label, Debit: '', Credit: convertToNumber(line['montant']) }),
+        creationEcriture({ JournalCode: 'BQ', EcritureNum: lastEcritureNum + 1, EcritureDate: line['date'], CompteNum: numeroCompte, EcritureLib: label, Debit: '', Credit: convertToNumber(line['montant']) }),
+        creationEcriture({ JournalCode: 'BQ', EcritureNum: lastEcritureNum + 1, EcritureDate: line['date'], CompteNum: compteDestination.compte, EcritureLib: label, Debit: convertToNumber(line['montant']), Credit: '' })
     ];
 }
