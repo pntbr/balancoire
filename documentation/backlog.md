@@ -17,6 +17,7 @@
 - [x] compte formation
 - [ ] remboursement : stéphane à Yalin ou à un bénévole
 - [ ] gérer le nom de l'association
+- [ ] gérer les virements bancaire : 512 => 530 - 580
 - [ ] récup factures :
     - [x] amazon
     - [x] heroku

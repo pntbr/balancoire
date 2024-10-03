@@ -92,7 +92,8 @@ export function inventaireClotureEcriture(line, lastEcritureNum) {
  * @returns {Object[]} - Une liste d'écritures comptables.
  */
 export function cautionEcriture(line, lastEcritureNum) {
-    const creditCompte = (['B2T', 'Association'].includes(line['qui paye ?'])) ? (line["nature"] === 'esp' ? '530000' : '512000') : '467000';
+    const association = localStorage.getItem('ASSOCIATION');
+    const creditCompte = ([association, 'Association'].includes(line['qui paye ?'])) ? (line["nature"] === 'esp' ? '530000' : '512000') : '467000';
     return [
         creationEcriture({ JournalCode: 'OD', EcritureNum: lastEcritureNum + 1, EcritureDate: line['date'], CompteNum: '275000', EcritureLib: `caution ${line['qui reçoit']}`, Debit: convertToNumber(line['montant']), Credit: '' }),
         creationEcriture({ JournalCode: 'OD', EcritureNum: lastEcritureNum + 1, EcritureDate: line['date'], CompteNum: creditCompte, EcritureLib: `caution ${line['qui reçoit']}`, Debit: '', Credit: convertToNumber(line['montant']) })
@@ -108,13 +109,14 @@ export function cautionEcriture(line, lastEcritureNum) {
  * @returns {Object[]} - Une liste d'écritures comptables.
  */
 export function remboursementEcriture(line, numeroCompte, lastEcritureNum) {
+    const association = localStorage.getItem('ASSOCIATION');
     const checkCash = line["nature"] === 'esp';
-    if (['B2T', 'Association'].includes(line['qui paye ?'])) {
+    if ([association, 'Association'].includes(line['qui paye ?'])) {
         return [
             creationEcriture({ JournalCode: 'OD', EcritureNum: lastEcritureNum + 1, EcritureDate: line['date'], CompteNum: numeroCompte, EcritureLib: 'remboursement de frais', Debit: convertToNumber(line['montant']), Credit: '' }),
             creationEcriture({ JournalCode: 'OD', EcritureNum: lastEcritureNum + 1, EcritureDate: line['date'], CompteNum: checkCash ? '530000' : '512000', EcritureLib: 'remboursement de frais', Debit: '', Credit: convertToNumber(line['montant']) })
         ];
-    } else if (['B2T', 'Association'].includes(line['qui reçoit'])) {
+    } else if ([association, 'Association'].includes(line['qui reçoit'])) {
         return [
             creationEcriture({ JournalCode: 'OD', EcritureNum: lastEcritureNum + 1, EcritureDate: line['date'], CompteNum: checkCash ? '530000' : '512000', EcritureLib: 'prêt à l\'association', Debit: convertToNumber(line['montant']), Credit: '' }),
             creationEcriture({ JournalCode: 'OD', EcritureNum: lastEcritureNum + 1, EcritureDate: line['date'], CompteNum: numeroCompte, EcritureLib: 'prêt à l\'association', Debit: '', Credit: convertToNumber(line['montant']) }),
@@ -190,14 +192,15 @@ export function depensePersonneEcriture(line, numeroCompte, lastEcritureNum) {
  * @returns {Object[]} - Une liste d'écritures comptables.
  */
 export function venteAvoirEcriture(line, numeroCompte, lastEcritureNum) {
+    const association = localStorage.getItem('ASSOCIATION');
     const checkCash = line["nature"] === 'esp';
-    if (['B2T', 'Association'].includes(line['qui paye ?'])) {
+    if ([association, 'Association'].includes(line['qui paye ?'])) {
         const label = `avoir : ${line['qui reçoit']}`;
         return [
             creationEcriture({ JournalCode: 'VT', EcritureNum: lastEcritureNum + 1, EcritureDate: line['date'], CompteNum: numeroCompte, PieceRef: line['facture correspondante'], EcritureLib: label, Debit: convertToNumber(line['montant']), Credit: '' }),
             creationEcriture({ JournalCode: 'VT', EcritureNum: lastEcritureNum + 1, EcritureDate: line['date'], CompteNum: checkCash ? '530000' : '512000', PieceRef: line['facture correspondante'], EcritureLib: label, Debit: '', Credit: convertToNumber(line['montant']) })
         ];
-    } else if (['B2T', 'Association'].includes(line['qui reçoit'])) {
+    } else if ([association, 'Association'].includes(line['qui reçoit'])) {
         const label = `vente : ${line['qui paye ?']}`;
         return [
             creationEcriture({ JournalCode: 'VT', EcritureNum: lastEcritureNum + 1, EcritureDate: line['date'], CompteNum: checkCash ? '530000' : '512000', PieceRef: line['facture correspondante'], EcritureLib: label, Debit: convertToNumber(line['montant']), Credit: '' }),

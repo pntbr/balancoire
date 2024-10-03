@@ -12,8 +12,9 @@ document.addEventListener('DOMContentLoaded', init);
 function init() {
     loadEnvConfig()
         .then(env => {
-            const { SHEET_ID, SHEETNAME_TO_GID, SIREN } = env;
+            const { SHEET_ID, SHEETNAME_TO_GID, SIREN, ASSOCIATION } = env;
             setupInfoModal();
+            localStorage.setItem('ASSOCIATION', ASSOCIATION);
             loadNavigation(SHEET_ID, SHEETNAME_TO_GID, SIREN);
             if (document.getElementById('downloadBtn')) {
                 setupDownloadButton(SIREN);
