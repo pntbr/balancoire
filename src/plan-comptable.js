@@ -37,6 +37,8 @@ export const PLAN_COMPTABLE = {
     "627800": ["autres frais et commissions sur prestations de services", "commissions"],
     "628000": ["divers"],
     "633300": ["participation des employeurs à la formation professionnelle continue", "formations internes"],
+    "641000": ["rémunérations du personnel", "salaires"],
+    "645200": ["cotisations aux mutuelles", "mutuelle"],
     "695000": ["impôts sur les bénéfices"],
     "671800": ["Autres charges exceptionnelles sur opérations de gestion", "litiges"],
     "706000": ["prestations de services", "formations"],
