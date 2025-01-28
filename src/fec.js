@@ -11,7 +11,7 @@ export function setupDownloadButton() {
         const fileContent = downloadBtn.getAttribute('data-fec');
         if (fileContent) {
             const blob = new Blob([fileContent], { type: 'text/plain;charset=ascii' });
-            const currentYear = localStorage.getItem('selectedYear') || new Date().getFullYear();
+            const currentYear = localStorage.getItem('compta_selectedYear') || new Date().getFullYear();
             const FECName = `${localStorage.getItem('SIREN')}FEC${currentYear}1231.txt`;
             const link = document.createElement('a');
             link.href = URL.createObjectURL(blob);

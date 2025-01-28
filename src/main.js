@@ -12,11 +12,14 @@ document.addEventListener('DOMContentLoaded', init);
 function init() {
     loadEnvConfig()
         .then(env => {
-            const { SHEET_ID, SHEETNAME_TO_GID, SIREN, ASSOCIATION } = env;
+            const { SHEETNAME_TO_GID, SIREN, ASSOCIATION } = env;
             setupInfoModal();
+            if (!localStorage.getItem('compta_sheetId')) {
+                localStorage.setItem('compta_sheetId', '1EjBuZN2Brq9x1UoLKqCcipUxZRoG5gSFHu0eoXpy0oY');
+            }
             localStorage.setItem('ASSOCIATION', ASSOCIATION);
             localStorage.setItem('SIREN', SIREN);
-            loadNavigation(SHEET_ID, SHEETNAME_TO_GID);
+            loadNavigation(SHEETNAME_TO_GID);
             if (document.getElementById('downloadBtn')) {
                 setupDownloadButton();
             }
