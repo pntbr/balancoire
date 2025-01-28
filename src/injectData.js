@@ -6,7 +6,7 @@ import { creationBilan, injecteBilanEcritures } from './bilan.js';
 import { creationInventaire, injecteInventaireEcritures } from './inventaire.js';
 import { creationFEC, injecteFECEcritures } from './fec.js';
 
-export function injectDataIntoPage(jsonData, currentYear, siren) {
+export function injectDataIntoPage(jsonData, currentYear) {
     const mappings = [
         { id: 'journal-ecritures', create: creationJournal, inject: injecteJournalEcritures },
         { id: 'balance-ecritures', create: creationBalance, inject: injecteBalanceEcritures },
@@ -20,7 +20,7 @@ export function injectDataIntoPage(jsonData, currentYear, siren) {
     mappings.forEach(({ id, create, inject }) => {
         const element = document.getElementById(id);
         if (element) {
-            const ecritures = create(jsonData, currentYear, siren);
+            const ecritures = create(jsonData, currentYear);
             inject(ecritures);
         }
     });

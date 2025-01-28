@@ -1,4 +1,6 @@
 import { loadCSV } from './loadCSV.js';
+import { injectDataIntoPage } from './injectData.js';
+import { showLoader, hideLoader, hideErrorMessage } from './loader.js';
 
 export function setupPageLinks() {
     const pageLinks = document.querySelectorAll('nav ul:first-of-type li a');
@@ -25,7 +27,8 @@ export function injectYearLinks(SHEETNAME_TO_GID) {
     });
 }
 
-export function setupYearLinks(SHEETNAME_TO_GID) {
+export function setupYearLinks() {
+    const sheetTabId = '929320585'
     const yearLinks = document.querySelectorAll('.annee-nav a');
     const storedCurrentYear = localStorage.getItem('compta_selectedYear') || '2025';
     yearLinks.forEach(link => {
@@ -36,13 +39,21 @@ export function setupYearLinks(SHEETNAME_TO_GID) {
             event.preventDefault();
             const selectedYear = event.target.getAttribute('data-year');
             localStorage.setItem('compta_selectedYear', selectedYear);
-            loadCSV(SHEETNAME_TO_GID, selectedYear);
+            showLoader();
+            loadCSV(sheetTabId).then(parseCSV => {
+                hideLoader();
+                injectDataIntoPage(parseCSV, selectedYear);
+            });
             yearLinks.forEach(l => l.classList.remove('menu-selected'));
             event.target.classList.add('menu-selected');
         });
     });
 
-    loadCSV(SHEETNAME_TO_GID, storedCurrentYear);
+    showLoader();
+    loadCSV(sheetTabId).then(parseCSV => {
+        hideLoader();
+        injectDataIntoPage(parseCSV, storedCurrentYear);
+    });
 }
 
 export function injectSheetLink() {

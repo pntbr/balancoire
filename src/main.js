@@ -19,7 +19,7 @@ function init() {
             }
             localStorage.setItem('ASSOCIATION', ASSOCIATION);
             localStorage.setItem('SIREN', SIREN);
-            loadNavigation(SHEETNAME_TO_GID);
+            loadNavigation(SHEETNAME_TO_GID);;
             if (document.getElementById('downloadBtn')) {
                 setupDownloadButton();
             }

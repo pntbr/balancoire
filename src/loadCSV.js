@@ -1,25 +1,21 @@
 import { parseCSV } from './parseCSV.js';
-import { injectDataIntoPage } from './injectData.js';
 import { showLoader, hideLoader, hideErrorMessage } from './loader.js';
 
-export function loadCSV(sheetNameToGid, currentYear, siren) {
+export function loadCSV(sheetTabId) {
     const storedId = localStorage.getItem('compta_sheetId');
-    const currentPage = location.pathname.split('/').pop();
-    const sheetName = currentPage && currentPage.startsWith('inventaire') ? 'inventaire' : currentYear;
-    const csvUrl = `https://docs.google.com/spreadsheets/d/${storedId}/export?format=csv&pli=1&gid=${sheetNameToGid[sheetName]}#gid=${sheetNameToGid[sheetName]}`;
+    const csvUrl = `https://docs.google.com/spreadsheets/d/${storedId}/export?format=csv&gid=${sheetTabId}`;
 
     hideErrorMessage();
     showLoader();
 
-    fetch(csvUrl)
+    return fetch(csvUrl)
         .then(response => {
-            if (!response.ok) throw new Error('Network response was not ok');
+            if (!response.ok) throw new Error("J'ai l'impression qu'il n'y a pas de connexion");
             return response.text();
         })
         .then(csvText => {
-            const jsonData = parseCSV(csvText);
-            injectDataIntoPage(jsonData, currentYear, siren);
             hideLoader();
+            return parseCSV(csvText);
         })
         .catch(error => {
             console.error("Je n'arrive pas à charger les données :", error);

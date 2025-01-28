@@ -7,7 +7,7 @@ export function loadNavigation(SHEETNAME_TO_GID) {
             document.getElementById('navigation').innerHTML = data;
             setupPageLinks();
             injectYearLinks(SHEETNAME_TO_GID);
-            setupYearLinks(SHEETNAME_TO_GID);
+            setupYearLinks();
             injectSheetLink();
         });
 }
