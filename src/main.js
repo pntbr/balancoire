@@ -1,3 +1,4 @@
+import { loadCSV } from './loadCSV.js';
 import { loadEnvConfig } from './loadEnvConfig.js';
 import { setupInfoModal } from './setupInfoModal.js';
 import { loadNavigation } from './loadNavigation.js';
@@ -12,14 +13,15 @@ document.addEventListener('DOMContentLoaded', init);
 function init() {
     loadEnvConfig()
         .then(env => {
-            const { SHEETNAME_TO_GID, SIREN, ASSOCIATION } = env;
+            const { SIREN, ASSOCIATION } = env;
+
             setupInfoModal();
             if (!localStorage.getItem('compta_sheetId')) {
                 localStorage.setItem('compta_sheetId', '1EjBuZN2Brq9x1UoLKqCcipUxZRoG5gSFHu0eoXpy0oY');
             }
             localStorage.setItem('ASSOCIATION', ASSOCIATION);
             localStorage.setItem('SIREN', SIREN);
-            loadNavigation(SHEETNAME_TO_GID);;
+            loadNavigation();
             if (document.getElementById('downloadBtn')) {
                 setupDownloadButton();
             }

@@ -1,13 +1,12 @@
 import { setupPageLinks, injectYearLinks, setupYearLinks, injectSheetLink } from './navigationUtils.js';
 
-export function loadNavigation(SHEETNAME_TO_GID) {
+export function loadNavigation() {
     fetch('nav.html')
         .then(response => response.text())
         .then(data => {
             document.getElementById('navigation').innerHTML = data;
             setupPageLinks();
-            injectYearLinks(SHEETNAME_TO_GID);
-            setupYearLinks();
+            injectYearLinks();
             injectSheetLink();
         });
 }
