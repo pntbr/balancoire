@@ -41,6 +41,7 @@ export const PLAN_COMPTABLE = {
     "641000": ["rémunérations du personnel", "salaires"],
     "645100": ["cotisations à l’URSSAF", "urssaf"],
     "645200": ["cotisations aux mutuelles", "mutuelle"],
+    "647500": ["médecine du travail, pharmacie", "médecine du travail"],
     "695000": ["impôts sur les bénéfices"],
     "671800": ["Autres charges exceptionnelles sur opérations de gestion", "litiges"],
     "706000": ["prestations de services", "formations"],

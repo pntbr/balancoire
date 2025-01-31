@@ -26,4 +26,8 @@ document.addEventListener("DOMContentLoaded", () => {
       input.value = DEFAULT_SHEET_ID;
       message.textContent = "Revenu au SheetID par défaut.";
     });
+
+    document.getElementById("sheetIdButton").addEventListener("click", function() {
+      location.reload();
+    });
   });

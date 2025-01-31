@@ -1,6 +1,6 @@
 import { loadCSV } from './loadCSV.js';
 import { injectDataIntoPage } from './injectData.js';
-import { showLoader, hideLoader, hideErrorMessage } from './loader.js';
+import { showLoader, hideLoader } from './loader.js';
 
 export function setupPageLinks() {
     const pageLinks = document.querySelectorAll('nav ul:first-of-type li a');

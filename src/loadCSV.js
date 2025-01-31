@@ -1,5 +1,6 @@
 import { parseCSV } from './parseCSV.js';
 import { showLoader, hideLoader, hideErrorMessage } from './loader.js';
+import { handleError } from './utils.js';
 
 export function loadCSV(sheetTabId) {
     const storedId = localStorage.getItem('compta_sheetId');
@@ -18,7 +19,8 @@ export function loadCSV(sheetTabId) {
             return parseCSV(csvText);
         })
         .catch(error => {
-            console.error("Je n'arrive pas à charger les données :", error);
+            handleError(`Je n'arrive pas à charger les données`)
+            console.error(error);
             console.error("url :", csvUrl);
             hideLoader();
         });

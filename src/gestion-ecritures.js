@@ -59,7 +59,7 @@ function ligneEnEcriture(line, currentYear, lastEcritureNum) {
         }
         if (numeroCompte.startsWith('7')) return venteAvoirEcriture(line, numeroCompte, lastEcritureNum);
 
-        handleError(`L'écriture ne comporte pas un compte connu`, line);
+        handleError(`compte inconnu - (cf. date : ${line['date']})`, line);
     } catch (error) {
         handleError(`L'écriture n'a pu être rendue : ${error}`, line);
     }

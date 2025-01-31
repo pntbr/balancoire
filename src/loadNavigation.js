@@ -1,4 +1,4 @@
-import { setupPageLinks, injectYearLinks, setupYearLinks, injectSheetLink } from './navigationUtils.js';
+import { setupPageLinks, injectYearLinks, injectSheetLink } from './navigationUtils.js';
 
 export function loadNavigation() {
     fetch('nav.html')
