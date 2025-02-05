@@ -1,5 +1,8 @@
 export function showLoader() {
-    document.getElementById('loader').style.display = 'block';
+    const loaderElement = document.getElementById('loader');
+    if (loaderElement) {
+        loaderElement.style.display = 'none';
+    }
 }
 
 export function hideLoader() {
@@ -8,5 +11,7 @@ export function hideLoader() {
 
 export function hideErrorMessage() {
     const errorMessageElement = document.getElementById('error-message');
-    errorMessageElement.style.display = 'none';
+    if (errorMessageElement) {
+        errorMessageElement.style.display = 'none';
+    }
 }

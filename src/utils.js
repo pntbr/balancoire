@@ -1,4 +1,45 @@
-import { PLAN_COMPTABLE } from './plan-comptable.js';
+import { loadCSV } from './loadCSV.js';
+
+/**
+ * Stocke les parammètres du sheet dans localStorage.
+ *
+ */
+export function storeParams() {
+    loadCSV('0').then(params => {
+        const sheetTabsToGID = params.reduce((acc, { Onglets, ID }) => {
+            acc[Onglets] = ID;
+            return acc;
+        }, {});
+        localStorage.setItem('compta_params', JSON.stringify(sheetTabsToGID));
+    })
+}
+
+/**
+ * Récupérer le plan comptable.
+ *
+ */
+export function storePlanComptable() {
+    const sheetTabsToGID = JSON.parse(localStorage.getItem('compta_params'))
+    const sheetTabID = sheetTabsToGID['plan comptable']
+    loadCSV(sheetTabID).then(parseCSV => {
+        const planComptable = parseCSV.reduce((acc, compte) => {
+            const numero = compte["N°"];
+            const libelles = [compte["Libellé officiel"]];
+  
+            for (let i = 1; i <= 3; i++) {
+                const key = `libellé perso${i}`;
+                if (compte[key] && compte[key].trim() !== "") {
+                    libelles.push(compte[key]);
+                }
+            }
+  
+            acc[numero] = libelles;
+            return acc;
+        }, {});
+
+        localStorage.setItem('compta_planComptable', JSON.stringify(planComptable));
+    });
+}
 
 /**
  * Affiche un message d'erreur dans l'élément HTML avec l'ID 'error-message'.
@@ -33,7 +74,8 @@ export function handleError(message, line) {
  * @returns {Object} Le compte trouvé ou un compte non défini.
  */
 export function trouverCompte({ compte, label }) {
-    for (const [key, value] of Object.entries(PLAN_COMPTABLE)) {
+    const plan_comptable = JSON.parse(localStorage.getItem('compta_planComptable'));
+    for (const [key, value] of Object.entries(plan_comptable)) {
         if (compte === key || value.includes(label)) {
             return { compte: key, label: value[0] };
         }

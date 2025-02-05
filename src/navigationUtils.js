@@ -13,28 +13,21 @@ export function setupPageLinks() {
 }
 
 export function injectYearLinks() {
-    showLoader();
-    loadCSV('0').then(parseCSV => {
-        hideLoader;
-        const yearNav = document.getElementById('annee-nav');
-        const sheetTabsToGID = parseCSV.reduce((acc, { Onglets, ID }) => {
-            acc[Onglets] = ID;
-            return acc;
-        }, {});
+    const yearNav = document.getElementById('annee-nav');
+    const sheetTabsToGID = JSON.parse(localStorage.getItem('compta_params'))
 
-        Object.keys(sheetTabsToGID).forEach(year => {
-            if (!isNaN(year)) {
-                const li = document.createElement('li');
-                const link = document.createElement('a');
-                link.href = '#';
-                link.textContent = year;
-                link.setAttribute('data-year', year);
-                li.appendChild(link);
-                yearNav.appendChild(li);
-            }
-        });
-        setupYearLinks(sheetTabsToGID);
+    Object.keys(sheetTabsToGID).forEach(year => {
+        if (!isNaN(year)) {
+            const li = document.createElement('li');
+            const link = document.createElement('a');
+            link.href = '#';
+            link.textContent = year;
+            link.setAttribute('data-year', year);
+            li.appendChild(link);
+            yearNav.appendChild(li);
+        }
     });
+    setupYearLinks(sheetTabsToGID);
 }
 
 export function setupYearLinks(sheetTabsToGID) {
@@ -48,9 +41,7 @@ export function setupYearLinks(sheetTabsToGID) {
             event.preventDefault();
             const selectedYear = event.target.getAttribute('data-year');
             localStorage.setItem('compta_selectedYear', selectedYear);
-            showLoader();
             loadCSV(sheetTabsToGID[selectedYear]).then(parseCSV => {
-                hideLoader();
                 injectDataIntoPage(parseCSV, selectedYear);
             });
             yearLinks.forEach(l => l.classList.remove('menu-selected'));

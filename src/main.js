@@ -1,8 +1,8 @@
-import { loadCSV } from './loadCSV.js';
 import { loadEnvConfig } from './loadEnvConfig.js';
 import { setupInfoModal } from './setupInfoModal.js';
 import { loadNavigation } from './loadNavigation.js';
 import { setupDownloadButton } from './fec.js';
+import { storePlanComptable, storeParams } from './utils.js';
 
 document.addEventListener('DOMContentLoaded', init);
 
@@ -21,7 +21,10 @@ function init() {
             }
             localStorage.setItem('ASSOCIATION', ASSOCIATION);
             localStorage.setItem('SIREN', SIREN);
+            storeParams();
+            storePlanComptable();
             loadNavigation();
+
             if (document.getElementById('downloadBtn')) {
                 setupDownloadButton();
             }
