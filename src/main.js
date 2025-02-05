@@ -3,6 +3,7 @@ import { setupInfoModal } from './setupInfoModal.js';
 import { loadNavigation } from './loadNavigation.js';
 import { setupDownloadButton } from './fec.js';
 import { storePlanComptable, storeParams } from './utils.js';
+import { loadAndInjectData } from './injectData.js';
 
 document.addEventListener('DOMContentLoaded', init);
 
@@ -14,6 +15,7 @@ function init() {
     loadEnvConfig()
         .then(env => {
             const { SIREN, ASSOCIATION } = env;
+            const storedCurrentYear = localStorage.getItem('compta_selectedYear') || '2025';
             localStorage.setItem('compta_params', '');
             localStorage.setItem('compta_planComptable', '');
             setupInfoModal();
@@ -25,10 +27,10 @@ function init() {
             storeParams().then(params => {
                 storePlanComptable(); 
                 loadNavigation();
+                loadAndInjectData(storedCurrentYear)
             });
-
             if (document.getElementById('downloadBtn')) {
                 setupDownloadButton();
             }
-        });
+    });
 }

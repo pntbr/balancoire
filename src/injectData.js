@@ -1,3 +1,4 @@
+import { loadCSV } from './loadCSV.js';
 import { creationJournal, injecteJournalEcritures } from './journal.js';
 import { creationBalance, injecteBalanceEcritures } from './balance.js';
 import { creationGrandLivre, injecteGrandLivreEcritures } from './grand-livre.js';
@@ -5,6 +6,13 @@ import { creationCompteResultat, injecteCompteResultatEcritures } from './compte
 import { creationBilan, injecteBilanEcritures } from './bilan.js';
 import { creationInventaire, injecteInventaireEcritures } from './inventaire.js';
 import { creationFEC, injecteFECEcritures } from './fec.js';
+
+export function loadAndInjectData(year) {
+    const sheetTabsToGID = JSON.parse(localStorage.getItem('compta_params'))
+    loadCSV(sheetTabsToGID[year]).then(parseCSV => {
+        injectDataIntoPage(parseCSV, year);
+    });
+}
 
 export function injectDataIntoPage(jsonData, currentYear) {
     const mappings = [
