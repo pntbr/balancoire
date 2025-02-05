@@ -5,7 +5,7 @@ import { loadCSV } from './loadCSV.js';
  *
  */
 export function storeParams() {
-    loadCSV('0').then(params => {
+    return loadCSV('0').then(params => {
         const sheetTabsToGID = params.reduce((acc, { Onglets, ID }) => {
             acc[Onglets] = ID;
             return acc;
@@ -48,8 +48,10 @@ export function storePlanComptable() {
  */
 function displayErrorMessage(message) {
     const errorMessageElement = document.getElementById('error-message');
-    errorMessageElement.textContent = message;
-    errorMessageElement.style.display = 'block';
+    if (errorMessageElement) {
+        errorMessageElement.textContent = message;
+        errorMessageElement.style.display = 'block';
+    }
 }
 
 /**

@@ -14,16 +14,18 @@ function init() {
     loadEnvConfig()
         .then(env => {
             const { SIREN, ASSOCIATION } = env;
-
+            localStorage.setItem('compta_params', '');
+            localStorage.setItem('compta_planComptable', '');
             setupInfoModal();
             if (!localStorage.getItem('compta_sheetId')) {
                 localStorage.setItem('compta_sheetId', '1bmzkejvxIFkOqsKe0zUWeWvHnTSBJMK1yKe81quIJQs');
             }
             localStorage.setItem('ASSOCIATION', ASSOCIATION);
             localStorage.setItem('SIREN', SIREN);
-            storeParams();
-            storePlanComptable();
-            loadNavigation();
+            storeParams().then(params => {
+                storePlanComptable(); 
+                loadNavigation();
+            });
 
             if (document.getElementById('downloadBtn')) {
                 setupDownloadButton();

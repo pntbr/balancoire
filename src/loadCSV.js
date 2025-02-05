@@ -5,7 +5,6 @@ import { handleError } from './utils.js';
 export function loadCSV(sheetTabId) {
     const storedId = localStorage.getItem('compta_sheetId');
     const csvUrl = `https://docs.google.com/spreadsheets/d/${storedId}/export?format=csv&gid=${sheetTabId}`;
-
     hideErrorMessage();
     showLoader();
 
@@ -19,9 +18,9 @@ export function loadCSV(sheetTabId) {
             return parseCSV(csvText);
         })
         .catch(error => {
-            handleError(`Je n'arrive pas à charger les données`)
             console.error(error);
             console.error("url :", csvUrl);
+            handleError(`Je n'arrive pas à charger les données`)
             hideLoader();
         });
 }

@@ -1,12 +1,15 @@
 export function showLoader() {
     const loaderElement = document.getElementById('loader');
     if (loaderElement) {
-        loaderElement.style.display = 'none';
+        loaderElement.style.display = 'block';
     }
 }
 
 export function hideLoader() {
-    document.getElementById('loader').style.display = 'none';
+    const loaderElement = document.getElementById('loader');
+    if (loaderElement) {
+        loaderElement.style.display = 'none';
+    }
 }
 
 export function hideErrorMessage() {
