@@ -27,21 +27,7 @@ Pour utiliser l'application de comptabilité, suivez les étapes ci-dessous :
 
 1. **Installation :** Après avoir téléchargé les fichiers de l'application, placez-les dans le répertoire de votre choix.
 
-2. **Configuration :** Créez un fichier `.env.json` dans le répertoire principal de l'application avec le contenu suivant, en remplaçant `VOTRE_SHEET_ID` par l'identifiant de votre Google Sheet et pour chaque identifiant de vos onglets :
-
-   ```json
-   {
-     "ASSOCIATION": "NOM_DE_VOTRE_ASSOCIATION",
-     "SIREN": "SIREN_DE_VOTRE_ASSOCIATION",
-     "SHEET_ID": "VOTRE_SHEET_ID",
-     "SHEETNAME_TO_GID": {
-       "2024": "VOTRE_SHEET_GID",
-       "2023": "VOTRE_SHEET_GID",
-       "inventaire": "VOTRE_SHEET_GID"
-     }
-   }
-   ```
-
+2. **Configuration :**
 3. **Lancement de l'application :** En utilisant un terminal, lancez un serveur web dans le dossier de l'application. Par exemple :
 
    ```sh
@@ -124,4 +110,4 @@ Pour toute question ou problème, veuillez consulter la section d'aide ou contac
 - dans le brouillard
 - balance tes comptes
 - le boulier
-- 
+-

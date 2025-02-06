@@ -25,7 +25,6 @@ import {
  * @throws {Error} - Lance une erreur si l'écriture ne peut pas être rendue.
  */
 function ligneEnEcriture(line, currentYear, lastEcritureNum) {
-    const association = localStorage.getItem('ASSOCIATION');
     const numeroCompte = trouverCompte({ label: line.poste }).compte;
     try {
         if (line['date'].endsWith('01-01')) {
@@ -49,7 +48,7 @@ function ligneEnEcriture(line, currentYear, lastEcritureNum) {
         if (numeroCompte === '580000') return virementEcriture(line, numeroCompte, lastEcritureNum);
         if (numeroCompte.startsWith('4')) return remboursementEcriture(line, numeroCompte, lastEcritureNum);
         if (numeroCompte.startsWith('6')) {
-            if ([association, 'Association'].includes(line['qui paye ?'])) {
+            if (['Association'].includes(line['qui paye ?'])) {
                 return depenseEcriture(line, numeroCompte, lastEcritureNum)
             } else if (['Banque'].includes(line['qui paye ?'])) {
                 return remboursementBanqueEcriture(line, numeroCompte, lastEcritureNum);
