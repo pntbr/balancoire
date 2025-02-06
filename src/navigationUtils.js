@@ -48,14 +48,19 @@ export function setupYearLinks() {
 
 export function injectSheetLink() {
     const sheetLink = document.getElementById('sheet-nav');
-    const input = document.getElementById('sheetIdInput');
+    const input = document.getElementById('sheetIDInput');
     const storedId = localStorage.getItem('compta_sheetId');
+    const connectButton = document.querySelector("#sheetIDButton");
     
     input.value = storedId;
     
     input.addEventListener('input', (e) => {
         localStorage.setItem('compta_sheetId', e.target.value);
         updateSheetLink();
+    });
+
+    connectButton.addEventListener("click", () => {
+        location.reload();
     });
 
     function updateSheetLink() {
