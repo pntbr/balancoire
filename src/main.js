@@ -4,6 +4,7 @@ import { loadNavigation } from './loadNavigation.js';
 import { setupDownloadButton } from './fec.js';
 import { storePlanComptable, storeParams } from './utils.js';
 import { loadAndInjectData } from './injectData.js';
+import { hideLoader } from './loader.js';
 
 document.addEventListener('DOMContentLoaded', init);
 
@@ -24,10 +25,13 @@ function init() {
             }
             localStorage.setItem('ASSOCIATION', ASSOCIATION);
             localStorage.setItem('SIREN', SIREN);
-            storeParams().then(params => {
-                storePlanComptable(); 
-                loadNavigation();
-                loadAndInjectData(storedCurrentYear)
+            storeParams().then(() => {
+
+                storePlanComptable().then(() => {
+                    loadNavigation();
+                    loadAndInjectData(storedCurrentYear);
+                    hideLoader();
+                });
             });
             if (document.getElementById('downloadBtn')) {
                 setupDownloadButton();

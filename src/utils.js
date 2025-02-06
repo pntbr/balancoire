@@ -19,9 +19,10 @@ export function storeParams() {
  *
  */
 export function storePlanComptable() {
-    const sheetTabsToGID = JSON.parse(localStorage.getItem('compta_params'))
-    const sheetTabID = sheetTabsToGID['plan comptable']
-    loadCSV(sheetTabID).then(parseCSV => {
+    const sheetTabsToGID = JSON.parse(localStorage.getItem('compta_params'));
+    const sheetTabID = sheetTabsToGID['plan comptable'];
+
+    return loadCSV(sheetTabID).then(parseCSV => {
         const planComptable = parseCSV.reduce((acc, compte) => {
             const numero = compte["N°"];
             const libelles = [compte["Libellé officiel"]];
