@@ -1,17 +1,17 @@
-# Application de comptabilité pour Brut de Thé
+# Application de comptabilité pour les associaitions
 
-L'objectif est de réaliser une application simple de comptabilité d'engagement pour pouvoir répondre aux exigences légales.
+L'objectif est de réaliser une application simple de comptabilité d'engagement pour que les associations puissent répondre, tout en douceur, aux exigences légales.
 
 ## Contexte
 
-Brut de Thé est une association à but non lucratif ayant une activité commerciale
+Association à but non lucratif ayant une activité commerciale
 
-- Régime Réel Simplifié - RSI
+- Régime Réel Simplifié
 - Franchise de TVA
 
 ## Obligations légales
 
-Les associations soumises au régime réel simplifié doivent tenir une comptabilité classique : un bilan, un compte de résultat et des annexes. Des dispositions particulières s’appliquent pour alléger vos obligations comptables :
+Les associations soumises au régime Réel Simplifié doivent tenir une comptabilité classique : un bilan, un compte de résultat et des annexes. Des dispositions particulières s’appliquent pour alléger vos obligations comptables :
 
 - le livre journal n’enregistre journellement que les recettes encaissées et les dépenses payées,
 - les créances et les dettes sont constatées à la clôture de l’exercice,
@@ -23,12 +23,26 @@ L'association doit établir un inventaire au moins une fois par an pour évaluer
 
 ## Mode d'emploi
 
-Pour utiliser l'application de comptabilité, suivez les étapes ci-dessous :
+### Pour utiliser l'outil en mode : "bac à sable"
+
+En cliquant sur le lien : https://balancoire.pntbr.fr  
+Vous pouvez utiliser en toute décontraction le fichier exemple. L'application vous présente les différents artefacts comptable générés à partir de la feuille de calcul (google sheet).
+Vous pouvez modifier sans crainte les données de chaque année, elles sont remises à zéro tous les soirs à minuit.
+
+### Pour utiliser l'outil avec vos propre données
+
+Le plus simple est sans doute de faire une copie de la feuille de calcul d'exemple, et de remplir vos données à la place des autres.
+
+Pour que l'application puisse se connecter à votre feuille personnelle, vous devez saisir son identifiant et cliquer sur le bouton : "connecter".
+
+Par exemple, pour cette feuille :
+https://docs.google.com/spreadsheets/d/1bmzkejvxIFkOqsKe0zUWeWvHnTSBJMK1yKe81quIJQs
+L'identifiant est : 1bmzkejvxIFkOqsKe0zUWeWvHnTSBJMK1yKe81quIJQs
+
+### Pour les personnes développeuses et pour l'utiliser en local
 
 1. **Installation :** Après avoir téléchargé les fichiers de l'application, placez-les dans le répertoire de votre choix.
-
-2. **Configuration :**
-3. **Lancement de l'application :** En utilisant un terminal, lancez un serveur web dans le dossier de l'application. Par exemple :
+2. **Lancement de l'application :** En utilisant un terminal, lancez un serveur web dans le dossier de l'application. Par exemple :
 
    ```sh
    cd le_chemin_vers_votre_dossier
@@ -42,7 +56,7 @@ Pour utiliser l'application de comptabilité, suivez les étapes ci-dessous :
    python3 -m http.server 8000
    ```
 
-   Ouvrez votre navigateur et accédez à `http://localhost:8000` pour voir l'application en action.
+Ouvrez votre navigateur et accédez à `http://localhost:8000` pour voir l'application en action.
 
 4. **Utilisation :** Naviguez dans l'application pour accéder aux différentes fonctionnalités comme la saisie des écritures, la consultation du grand livre, du bilan, etc.
 
@@ -51,11 +65,15 @@ Pour utiliser l'application de comptabilité, suivez les étapes ci-dessous :
 L'application utilise un Google Sheet pour saisir les écritures comptables. Ce Google Sheet doit contenir plusieurs onglets :
 
 - **Onglets Année :** Chaque année doit avoir son propre onglet pour enregistrer les écritures. Les colonnes typiques incluent : "qui paye ?", "date", "qui reçoit", "poste", "montant", "nature", "pointage", "note", "facture correspondante".
-- **Onglet Résultat :** Cet onglet calcule le résultat pour l'année sélectionnée. Une cellule permet de changer l'année pour afficher les résultats correspondants.
+- **Onglet résultats :** Cet onglet calcule le résultat pour l'année sélectionnée. Une cellule permet de changer l'année pour afficher les résultats correspondants.
 
-- **Onglet Inventaire :** Permet de gérer les variations de stocks pour toutes les années avec les colonnes : "année", "description", "numéro", "quantité", "valeur unique", "valeur totale", "notes".
+- **Onglet inventaires :** Permet de gérer les variations de stocks pour toutes les années avec les colonnes : "année", "description", "numéro", "quantité", "valeur unique", "valeur totale", "notes".
 
-- **Onglet Poste :** Gère automatiquement les différents postes comptables.
+- **Onglet postes :** Gère automatiquement les différents postes comptables.
+
+- **Onglet plan comptable :** Qui permet de retrouver les postes, et qui peut vous permettre de personnaliser vos intitulés.
+
+- **Onglet paramètres :** Permet d'indiquer à l'application les identifiants des différents onglets.
 
 Chaque fois qu'une opération est entrée, il suffit de réactualiser la page du navigateur pour qu'elle soit prise en compte.
 
@@ -64,7 +82,7 @@ Pour tester l'application si l'utilisateur n'a pas renseigné son propre tableau
 
 ## Postes Comptables
 
-Les postes utilisés par l'application sont définis dans le fichier `plan-comptables.js`. Voici une liste des principaux postes avec leurs synonymes possibles :
+Les postes utilisés par l'application sont définis dans le fichier l'onglet : [plan comptable](https://docs.google.com/spreadsheets/d/1bmzkejvxIFkOqsKe0zUWeWvHnTSBJMK1yKe81quIJQs/edit?gid=377402254#gid=377402254). Voici une liste des principaux postes avec leurs synonymes possibles :
 
 - `"106000": ["réserves"]`
 - `"119000": ["report à nouveau (solde débiteur)", "report"]`
@@ -103,11 +121,3 @@ Les postes utilisés par l'application sont définis dans le fichier `plan-compt
 Par exemple, pour le poste `707000`, vous pouvez indifféremment utiliser "ventes de marchandises" ou "ventes".
 
 Pour toute question ou problème, veuillez consulter la section d'aide ou contacter : stephane@pntbr.fr.
-
-#### Un nom ?
-
-- balançoire
-- dans le brouillard
-- balance tes comptes
-- le boulier
--
