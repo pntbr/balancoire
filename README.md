@@ -61,13 +61,14 @@ Pour les associations à but non lucratif avec activité commerciale :
 
 ## 🧮 Structure du Google Sheet
 
-| **Onglet** | Description | Lien exemple
-| **ANNÉE-XXXX** | Écritures comptables par exercice | [Voir](https://docs.google.com/spreadsheets/d/1bmzkejvxIFkOqsKe0zUWeWvHnTSBJMK1yKe81quIJQs/edit?gid=1036658743#gid=1036658743)
-| **Résultats** | Calculs automatiques par année | [Voir](https://docs.google.com/spreadsheets/d/1bmzkejvxIFkOqsKe0zUWeWvHnTSBJMK1yKe81quIJQs/edit?gid=981539826#gid=981539826)
-| **Inventaires** | Gestion des stocks (quantité + valeur) | [Voir](https://docs.google.com/spreadsheets/d/1bmzkejvxIFkOqsKe0zUWeWvHnTSBJMK1yKe81quIJQs/edit?gid=1841174573#gid=1841174573)
-| **Plan comptable** | Personnalisation des postes & synonymes | [Voir](https://docs.google.com/spreadsheets/d/1bmzkejvxIFkOqsKe0zUWeWvHnTSBJMK1yKe81quIJQs/edit?gid=377402254#gid=377402254)
-| **Postes** | Liste automatisée des postes utilisés | [Voir](https://docs.google.com/spreadsheets/d/1bmzkejvxIFkOqsKe0zUWeWvHnTSBJMK1yKe81quIJQs/edit?gid=183366098#gid=183366098)
-| **Paramètres** | Configuration des identifiants d'onglets | [Voir](https://docs.google.com/spreadsheets/d/1bmzkejvxIFkOqsKe0zUWeWvHnTSBJMK1yKe81quIJQs/edit?gid=0#gid=0)
+| **Onglet**         | Description                              | Lien exemple                                                                                                                   |
+| ------------------ | ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| **ANNÉE-XXXX**     | Écritures comptables par exercice        | [Voir](https://docs.google.com/spreadsheets/d/1bmzkejvxIFkOqsKe0zUWeWvHnTSBJMK1yKe81quIJQs/edit?gid=1036658743#gid=1036658743) |
+| **Résultats**      | Calculs automatiques par année           | [Voir](https://docs.google.com/spreadsheets/d/1bmzkejvxIFkOqsKe0zUWeWvHnTSBJMK1yKe81quIJQs/edit?gid=981539826#gid=981539826)   |
+| **Inventaires**    | Gestion des stocks (quantité + valeur)   | [Voir](https://docs.google.com/spreadsheets/d/1bmzkejvxIFkOqsKe0zUWeWvHnTSBJMK1yKe81quIJQs/edit?gid=1841174573#gid=1841174573) |
+| **Plan comptable** | Personnalisation des postes & synonymes  | [Voir](https://docs.google.com/spreadsheets/d/1bmzkejvxIFkOqsKe0zUWeWvHnTSBJMK1yKe81quIJQs/edit?gid=377402254#gid=377402254)   |
+| **Postes**         | Liste automatisée des postes utilisés    | [Voir](https://docs.google.com/spreadsheets/d/1bmzkejvxIFkOqsKe0zUWeWvHnTSBJMK1yKe81quIJQs/edit?gid=183366098#gid=183366098)   |
+| **Paramètres**     | Configuration des identifiants d'onglets | [Voir](https://docs.google.com/spreadsheets/d/1bmzkejvxIFkOqsKe0zUWeWvHnTSBJMK1yKe81quIJQs/edit?gid=0#gid=0)                   |
 
 Chaque fois qu'une opération est entrée, il suffit de réactualiser la page du navigateur pour qu'elle soit prise en compte.
 
@@ -76,12 +77,13 @@ Pour tester l'application si l'utilisateur n'a pas renseigné son propre tableau
 
 ## 📋 Plan Comptable Simplifié
 
-| Code | Intitulé principal | Synonymes courants |
-| 512000 | Banques |
-| 707000 | Ventes de marchandises | "ventes", "boutique"
-| 625000 | Déplacements et missions | "restauration", "hébergements"
-| 756000 | Cotisations
-| [...] | [...] | [...]
+| Code   | Intitulé principal       | Synonymes courants             |
+| ------ | ------------------------ | ------------------------------ |
+| 512000 | Banques                  |
+| 707000 | Ventes de marchandises   | "ventes", "boutique"           |
+| 625000 | Déplacements et missions | "restauration", "hébergements" |
+| 756000 | Cotisations              |
+| [...]  | [...]                    | [...]                          |
 
 Les postes utilisés par l'application sont définis dans le fichier l'onglet : [plan comptable](https://docs.google.com/spreadsheets/d/1bmzkejvxIFkOqsKe0zUWeWvHnTSBJMK1yKe81quIJQs/edit?gid=377402254#gid=377402254).
 
