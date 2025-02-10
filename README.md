@@ -14,14 +14,14 @@ Pour les associations à but non lucratif avec activité commerciale :
   - Inventaire annuel des actifs/passifs
   - Dépôt des tableaux 2033A + formulaire 2065 sous 3 mois après clôture
 
-- **Spécificités** :  
-  🟢 Livre journal  
-  🟢 Grand livre  
-  🟢 Compte de résultat  
-  🟢 Bilan fiscal simplifié  
-  🟢 Inventaires  
-  🟢 Fichier des Écritures Comptables  
-  🟢 Balances
+- **Spécificités** :
+  - Le journal
+  - Grand livre
+  - Compte de résultat
+  - Bilan fiscal simplifié
+  - Inventaires
+  - Fichier des Écritures Comptables
+  - Balance
 
 ---
 
