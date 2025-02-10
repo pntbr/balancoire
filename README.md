@@ -1,4 +1,4 @@
-# 📊 Balançoire - Application de comptabilité simplifiée pour associations
+# 📊 Balançoire - comptabilité simplifiée pour les assos
 
 Outil minimaliste pour répondre, en douceur, aux obligations comptables des associations.
 
@@ -15,12 +15,12 @@ Pour les associations à but non lucratif avec activité commerciale :
   - Dépôt des tableaux 2033A + formulaire 2065 sous 3 mois après clôture
 
 - **Spécificités** :  
-  🟢 Livre journal
-  🟢 Grand livre
+  🟢 Livre journal  
+  🟢 Grand livre  
   🟢 Compte de résultat  
-  🟢 Bilan fiscal simplifié
-  🟢 Inventaires
-  🟢 Fichier des Écritures Comptables
+  🟢 Bilan fiscal simplifié  
+  🟢 Inventaires  
+  🟢 Fichier des Écritures Comptables  
   🟢 Balances
 
 ---
