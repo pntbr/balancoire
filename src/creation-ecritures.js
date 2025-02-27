@@ -40,7 +40,7 @@ export function aNouveauEcriture(line, numeroCompte, currentYear) {
     const montant = convertToNumber(line['montant']);
     const ecritures = {
         '370': [
-            creationEcriture({ JournalCode: 'AN', EcritureNum: 1, EcritureDate: `${currentYear}-01-01`, CompteNum: '370', EcritureLib: 'annulation du stock initial', Debit: montant, Credit: '' }),
+            creationEcriture({ JournalCode: 'AN', EcritureNum: 1, EcritureDate: `${currentYear}-01-01`, CompteNum: '370', EcritureLib: 'reprise du stock initial', Debit: montant, Credit: '' }),
             creationEcriture({ JournalCode: 'AN', EcritureNum: 1, EcritureDate: `${currentYear}-01-01`, CompteNum: '6037', EcritureLib: 'annulation du stock initial', Debit: montant, Credit: '' }),
             creationEcriture({ JournalCode: 'AN', EcritureNum: 1, EcritureDate: `${currentYear}-01-01`, CompteNum: '370', EcritureLib: 'annulation du stock initial', Debit: '', Credit: montant })
         ],
@@ -306,9 +306,9 @@ export function arretComptesClotureEcritures(lines, currentYear, lastEcritureNum
 
         if (solde !== 0) {
             if (solde < 0) {
-                ecrituresArret.push(creationEcriture({ JournalCode: 'OD', EcritureNum: lastEcritureNum + 1, EcritureDate: `${currentYear}-12-31`, CompteNum: compte, EcritureLib: 'arrêt des comptes', Debit: '', Credit: Math.abs(solde) }));
+                ecrituresArret.push(creationEcriture({ JournalCode: 'OD', EcritureNum: lastEcritureNum + 1, EcritureDate: `${currentYear}-12-31`, CompteNum: compte, EcritureLib: 'clôture du compte', Debit: '', Credit: Math.abs(solde) }));
             } else {
-                ecrituresArret.push(creationEcriture({ JournalCode: 'OD', EcritureNum: lastEcritureNum + 1, EcritureDate: `${currentYear}-12-31`, CompteNum: compte, EcritureLib: 'arrêt des comptes', Debit: Math.abs(solde), Credit: '' }));
+                ecrituresArret.push(creationEcriture({ JournalCode: 'OD', EcritureNum: lastEcritureNum + 1, EcritureDate: `${currentYear}-12-31`, CompteNum: compte, EcritureLib: 'clôture du compte', Debit: Math.abs(solde), Credit: '' }));
             }
         }
     });
@@ -318,7 +318,7 @@ export function arretComptesClotureEcritures(lines, currentYear, lastEcritureNum
     const label = isExcédentaire ? 'résultat excédentaire' : 'résultat déficitaire';
 
     ecrituresArret.push(creationEcriture({ JournalCode: 'OD', EcritureNum: lastEcritureNum + 1, EcritureDate: `${currentYear}-12-31`, CompteNum: compte, EcritureLib: label, Debit: !isExcédentaire && Math.abs(resultat), Credit: isExcédentaire && Math.abs(resultat) }));
-
+ 
     return ecrituresArret;
 }
 

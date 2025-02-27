@@ -11,25 +11,27 @@ import { lignesEnEcritures } from './gestion-ecritures.js';
 export function creationCompteResultat(jsonData, currentYear) {
     const ecritures = lignesEnEcritures(jsonData, currentYear);
 
-    const cotisations = sommeCompteParRacine(ecritures, "756000");
-    const donations = sommeCompteParRacine(ecritures, "754100");
-    const prestations = sommeCompteParRacine(ecritures, "706000");
-    const marchandises = sommeCompteParRacine(ecritures, "707000");
-    const autresProduits = sommeCompteParRacine(ecritures, "7") - cotisations - donations - prestations - marchandises;
+    const ecrituresSansCloture = ecritures.filter(ecriture => ecriture.EcritureLib !== "clôture du compte");
+
+    const cotisations = sommeCompteParRacine(ecrituresSansCloture, "756000");
+    const donations = sommeCompteParRacine(ecrituresSansCloture, "754100");
+    const prestations = sommeCompteParRacine(ecrituresSansCloture, "706000");
+    const marchandises = sommeCompteParRacine(ecrituresSansCloture, "707000");
+    const autresProduits = sommeCompteParRacine(ecrituresSansCloture, "7") - cotisations - donations - prestations - marchandises;
 
     const totalProduits = cotisations + donations + prestations + marchandises + autresProduits;
 
-    const achatsMarchandises = sommeCompteParRacine(ecritures, "607") + sommeCompteParRacine(ecritures, "6097");
-    const achatsApprovisionnements = sommeCompteParRacine(ecritures, "601") + sommeCompteParRacine(ecritures, "602") + sommeCompteParRacine(ecritures, "604") + sommeCompteParRacine(ecritures, "605") + sommeCompteParRacine(ecritures, "606");
-    const variationStocks = sommeCompteParRacine(ecritures, "603");
-    const chargesExternes = sommeCompteParRacine(ecritures, "61") + sommeCompteParRacine(ecritures, "62");
-    const taxes = sommeCompteParRacine(ecritures, "63");
-    const autresCharges = sommeCompteParRacine(ecritures, "6") - achatsMarchandises - achatsApprovisionnements - variationStocks - chargesExternes - taxes - sommeCompteParRacine(ecritures, "695");
+    const achatsMarchandises = sommeCompteParRacine(ecrituresSansCloture, "607") + sommeCompteParRacine(ecrituresSansCloture, "6097");
+    const achatsApprovisionnements = sommeCompteParRacine(ecrituresSansCloture, "601") + sommeCompteParRacine(ecrituresSansCloture, "602") + sommeCompteParRacine(ecrituresSansCloture, "604") + sommeCompteParRacine(ecrituresSansCloture, "605") + sommeCompteParRacine(ecrituresSansCloture, "606");
+    const variationStocks = sommeCompteParRacine(ecrituresSansCloture, "603");
+    const chargesExternes = sommeCompteParRacine(ecrituresSansCloture, "61") + sommeCompteParRacine(ecrituresSansCloture, "62");
+    const taxes = sommeCompteParRacine(ecrituresSansCloture, "63");
+    const autresCharges = sommeCompteParRacine(ecrituresSansCloture, "6") - achatsMarchandises - achatsApprovisionnements - variationStocks - chargesExternes - taxes - sommeCompteParRacine(ecrituresSansCloture, "695");
 
     const totalCharges = achatsMarchandises + achatsApprovisionnements + variationStocks + chargesExternes + taxes + autresCharges;
 
     const resultatAvantImpots = totalProduits + totalCharges;
-    const impots = sommeCompteParRacine(ecritures, "695");
+    const impots = sommeCompteParRacine(ecrituresSansCloture, "695");
     const resultatNet = resultatAvantImpots + impots;
 
     return {

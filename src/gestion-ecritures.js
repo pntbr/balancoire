@@ -91,3 +91,4 @@ export function lignesEnEcritures(jsonData, currentYear) {
             return dateA - dateB;
         });
 }
+
