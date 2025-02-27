@@ -1,9 +1,9 @@
-import { trouverCompte, sommeCompteParRacine, handleError } from './utils.js';
+import { trouverCompte, handleError } from './utils.js';
 import {
     aNouveauEcriture,
+    arretComptesClotureEcritures,
     cautionEcriture,
     commissionStripeEcriture,
-    creationEcriture,
     depenseEcriture,
     depensePersonneEcriture,
     impotExercice,
@@ -32,7 +32,7 @@ function ligneEnEcriture(line, currentYear, lastEcritureNum) {
         }
         // Gère la clôture
         if (line['date'].endsWith('12-31')) {
-            if (numeroCompte === '370000') {
+            if (numeroCompte === '370') {
                 return inventaireClotureEcriture(line, lastEcritureNum);
             }
         }
@@ -44,8 +44,8 @@ function ligneEnEcriture(line, currentYear, lastEcritureNum) {
         }
 
         // Gère les écritures courantes
-        if (numeroCompte === '275000') return cautionEcriture(line, numeroCompte, lastEcritureNum);
-        if (numeroCompte === '580000') return virementEcriture(line, numeroCompte, lastEcritureNum);
+        if (numeroCompte === '275') return cautionEcriture(line, numeroCompte, lastEcritureNum);
+        if (numeroCompte === '580') return virementEcriture(line, numeroCompte, lastEcritureNum);
         if (numeroCompte.startsWith('4')) return remboursementEcriture(line, numeroCompte, lastEcritureNum);
         if (numeroCompte.startsWith('6')) {
             if (['Association'].includes(line['qui paye ?'])) {
@@ -84,45 +84,10 @@ export function lignesEnEcritures(jsonData, currentYear) {
 
     return ecritures
         .concat(impotExercice(ecritures, currentYear, lastEcritureNum))
+        .concat(arretComptesClotureEcritures(ecritures, currentYear, lastEcritureNum))
         .sort((a, b) => {
             const dateA = new Date(a.EcritureDate.split('/').reverse().join('-'));
             const dateB = new Date(b.EcritureDate.split('/').reverse().join('-'));
             return dateA - dateB;
         });
-}
-
-/**
- * Arrête les comptes et crée les écritures de clôture pour l'exercice courant.
- *
- * @param {Object[]} ecritures - La liste des écritures comptables.
- * @param {number} currentYear - L'année courante.
- * @returns {Object[]} - Une liste d'écritures comptables arrêtées.
- */
-export function arretComptesClotureEcritures(ecritures, currentYear) {
-    const resultat = sommeCompteParRacine(ecritures, '7') + sommeCompteParRacine(ecritures, '6');
-    const ecrituresArret = [...ecritures];
-    const comptesClasses6et7 = [...new Set(ecrituresArret
-        .filter(ecriture => ecriture['CompteNum'].startsWith('6') || ecriture['CompteNum'].startsWith('7'))
-        .map(ecriture => ecriture['CompteNum'])
-    )];
-
-    comptesClasses6et7.forEach(compte => {
-        const solde = sommeCompteParRacine(ecrituresArret, compte);
-
-        if (solde !== 0) {
-            if (solde < 0) {
-                ecrituresArret.push(creationEcriture({ EcritureNum: `${currentYear}-12-31`, CompteNum: compte, EcritureLib: 'arrêt des comptes', Debit: '', Credit: Math.abs(solde) }));
-            } else {
-                ecrituresArret.push(creationEcriture({ EcritureNum: `${currentYear}-12-31`, CompteNum: compte, EcritureLib: 'arrêt des comptes', Debit: Math.abs(solde), Credit: '' }));
-            }
-        }
-    });
-
-    const isExcédentaire = resultat > 0;
-    const compte = isExcédentaire ? '120000' : '129000';
-    const label = isExcédentaire ? 'résultat excédentaire' : 'résultat déficitaire';
-
-    ecrituresArret.push(creationEcriture({ EcritureNum: `31/12/${currentYear}`, CompteNum: compte, EcritureLib: label, Debit: !isExcédentaire && Math.abs(resultat), Credit: isExcédentaire && Math.abs(resultat) }));
-
-    return ecrituresArret;
 }

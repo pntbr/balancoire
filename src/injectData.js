@@ -6,7 +6,6 @@ import { creationCompteResultat, injecteCompteResultatEcritures } from './compte
 import { creationBilan, injecteBilanEcritures } from './bilan.js';
 import { creationInventaire, injecteInventaireEcritures } from './inventaire.js';
 import { creationFEC, injecteFECEcritures } from './fec.js';
-import { hideLoader } from './loader.js';
 
 export function loadAndInjectData(year) {
     const sheetTabsToGID = JSON.parse(localStorage.getItem('compta_params'))

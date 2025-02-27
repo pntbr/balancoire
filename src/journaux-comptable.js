@@ -8,5 +8,6 @@ export const JOURNAUX_COMPTABLE = {
     "AC": "achat",
     "VT": "vente",
     "AN": "à-nouveaux",
-    "OD": "opérations diverses"
+    "OD": "opérations diverses",
+    "BQ": "banque"
 };
