@@ -27,7 +27,7 @@ export function storePlanComptable() {
             const numero = compte["N°"];
             const libelles = [compte["Libellé officiel"]];
   
-            for (let i = 1; i <= 3; i++) {
+            for (let i = 1; i <= 4; i++) {
                 const key = `libellé perso${i}`;
                 if (compte[key] && compte[key].trim() !== "") {
                     libelles.push(compte[key]);
