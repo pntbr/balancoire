@@ -13,11 +13,11 @@ export function creationCompteResultat(jsonData, currentYear) {
 
     const ecrituresSansCloture = ecritures.filter(ecriture => ecriture.EcritureLib !== "clôture du compte");
 
-    const cotisations = sommeCompteParRacine(ecrituresSansCloture, "756000");
-    const donations = sommeCompteParRacine(ecrituresSansCloture, "754100");
-    const prestations = sommeCompteParRacine(ecrituresSansCloture, "706000");
-    const marchandises = sommeCompteParRacine(ecrituresSansCloture, "707000");
-    const autresProduits = sommeCompteParRacine(ecrituresSansCloture, "7") - cotisations - donations - prestations - marchandises;
+    const cotisations = sommeCompteParRacine(ecrituresSansCloture, "706", "C") + sommeCompteParRacine(ecrituresSansCloture, "706", "D");
+    const donations = sommeCompteParRacine(ecrituresSansCloture, "7541", "C") + sommeCompteParRacine(ecrituresSansCloture, "7541", "D");
+    const prestations = sommeCompteParRacine(ecrituresSansCloture, "706", "C") + sommeCompteParRacine(ecrituresSansCloture, "706", "D");
+    const marchandises = sommeCompteParRacine(ecrituresSansCloture, "707", "C") + sommeCompteParRacine(ecrituresSansCloture, "707", "D");
+    const autresProduits = (sommeCompteParRacine(ecrituresSansCloture, "7", "C") + sommeCompteParRacine(ecrituresSansCloture, "7", "D")) - cotisations - donations - prestations - marchandises;
 
     const totalProduits = cotisations + donations + prestations + marchandises + autresProduits;
 
