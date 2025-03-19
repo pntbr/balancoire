@@ -1,6 +1,5 @@
 import { sommeCompteParRacine, formatToCurrency } from './utils.js';
 import { lignesEnEcritures } from './gestion-ecritures.js';
-import {arretComptesClotureEcritures } from './creation-ecritures.js'
 
 /**
  * Crée un bilan comptable à partir des données JSON et de l'année courante.
@@ -28,7 +27,7 @@ export function creationBilan(jsonData, currentYear) {
     const passifCapitauxExercices = sommeCompteParRacine(ecritures, '12');
     const passifCapitauxReport = sommeCompteParRacine(ecritures, '119');
     const totalPassifCapitaux = passifCapitauxReserves + passifCapitauxExercices + passifCapitauxReport;
-    const passifCirculantFournisseurs = 0;
+    const passifCirculantFournisseurs = sommeCompteParRacine(ecritures, '401');
     const passifCirculantDettesFiscales = compte444 > 0 ? compte444 : 0;
     const passifCirculantDettes = compte45 > 0 ? compte45 : 0;
     const totalPassifCirculant = passifCirculantFournisseurs + passifCirculantDettes;
