@@ -205,7 +205,7 @@ export function venteAvoirEcriture(line, numeroCompte, lastEcritureNum) {
             creationEcriture({ JournalCode: 'VT', EcritureNum: lastEcritureNum + 1, EcritureDate: line['date'], CompteNum: checkCash ? '530' : '512', PieceRef: line['facture correspondante'], EcritureLib: label, Debit: '', Credit: montant })
         ];
     } else if (['Association'].includes(line['qui reçoit'])) {
-        const label = `vente : ${line['qui paye ?']}`;
+        const label = `vente : ${line['note']}`;
         const ecritures = [
             creationEcriture({ JournalCode: 'VT', EcritureNum: lastEcritureNum + 1, EcritureDate: line['date'], CompteNum: numeroCompte, PieceRef: line['facture correspondante'], EcritureLib: label, Debit: '', Credit: montant })
         ];
@@ -234,7 +234,7 @@ export function venteAvoirEcriture(line, numeroCompte, lastEcritureNum) {
 export function venteStripeEcriture(line, numeroCompte, lastEcritureNum) {
     return [
         creationEcriture({ JournalCode: 'VT', EcritureNum: lastEcritureNum + 1, EcritureDate: line['date'], CompteNum: '517', PieceRef: line['facture correspondante'], EcritureLib: 'Caisse - Stripe', Debit: convertToNumber(line['montant']), Credit: '' }),
-        creationEcriture({ JournalCode: 'VT', EcritureNum: lastEcritureNum + 1, EcritureDate: line['date'], CompteNum: numeroCompte, PieceRef: line['facture correspondante'], EcritureLib: `vente : ${line['qui paye ?']}`, Debit: '', Credit: convertToNumber(line['montant']) })
+        creationEcriture({ JournalCode: 'VT', EcritureNum: lastEcritureNum + 1, EcritureDate: line['date'], CompteNum: numeroCompte, PieceRef: line['facture correspondante'], EcritureLib: `vente : ${line['note']}`, Debit: '', Credit: convertToNumber(line['montant']) })
     ];
 }
 
